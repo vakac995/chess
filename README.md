@@ -25,6 +25,9 @@ A minimalist chess web application built with modern web technologies. This app 
 - **Code Quality**:
   - ESLint
   - Prettier
+- **Testing**:
+  - Vitest 3.1.1
+  - React Testing Library 16.3.0
 - **Desktop App**: Tauri
 - **Package Manager**: npm
 - **State Management**: React's built-in hooks with chess.js (Core Game State approach)
@@ -56,9 +59,25 @@ npm run build
 # Preview production build
 npm run preview
 
+# Run tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Open tests in UI
+npm run test:ui
+
+# Generate test coverage
+npm run coverage
+
 # Build desktop app with Tauri
 npm run tauri build
 ```
+
+## Project Structure
+
+The project follows a clean, modular organization with separate directories for components, hooks, utils, and tests. See PROJECT_STRUCTURE.md for a detailed breakdown.
 
 ## License
 
