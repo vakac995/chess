@@ -38,6 +38,18 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ width = 500 }) => {
     return move !== null;
   }
 
+  function getGameStatus() {
+    if (game.isCheckmate()) {
+      return 'Checkmate!';
+    }
+    if (game.isDraw()) {
+      return 'Draw!';
+    }
+    
+    const currentPlayer = game.turn() === 'w' ? 'White' : 'Black';
+    return `${currentPlayer}'s turn`;
+  }
+
   return (
     <div className="flex flex-col items-center">
       <div className={`${styles.chessboard} rounded-md overflow-hidden`}>
@@ -53,11 +65,7 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ width = 500 }) => {
         </button>
 
         <div className="text-gray-700 font-medium">
-          {game.isCheckmate()
-            ? 'Checkmate!'
-            : game.isDraw()
-              ? 'Draw!'
-              : `${game.turn() === 'w' ? 'White' : 'Black'}'s turn`}
+          {getGameStatus()}
         </div>
       </div>
     </div>
