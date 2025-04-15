@@ -36,6 +36,7 @@ dist-ssr
 /build
 /out
 /coverage
+/html
 
 # Tauri
 src-tauri/target
