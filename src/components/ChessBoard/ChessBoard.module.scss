@@ -1,8 +1,8 @@
 .chessboard {
   // Custom styles for the chessboard container
-  border: 4px solid #8B4513;
+  border: 4px solid #8b4513;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  
+
   // Example of more complex styling that would be harder with just Tailwind
   &:hover {
     transform: scale(1.01);

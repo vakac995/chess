@@ -18,7 +18,7 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ width = 500 }) => {
 
   function makeAMove(move: ChessMove) {
     const gameCopy = new Chess(game.fen());
-    
+
     try {
       const result = gameCopy.move(move);
       setGame(gameCopy);
@@ -41,25 +41,23 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ width = 500 }) => {
   return (
     <div className="flex flex-col items-center">
       <div className={`${styles.chessboard} rounded-md overflow-hidden`}>
-        <Chessboard 
-          position={game.fen()} 
-          onPieceDrop={onDrop} 
-          boardWidth={width} 
-        />
+        <Chessboard position={game.fen()} onPieceDrop={onDrop} boardWidth={width} />
       </div>
-      
+
       <div className={`${styles.controlsWrapper} w-full`} style={{ maxWidth: width }}>
-        <button 
+        <button
           className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={() => setGame(new Chess())}
         >
           Reset
         </button>
-        
+
         <div className="text-gray-700 font-medium">
-          {game.isCheckmate() ? "Checkmate!" : 
-           game.isDraw() ? "Draw!" : 
-           `${game.turn() === 'w' ? "White" : "Black"}'s turn`}
+          {game.isCheckmate()
+            ? 'Checkmate!'
+            : game.isDraw()
+              ? 'Draw!'
+              : `${game.turn() === 'w' ? 'White' : 'Black'}'s turn`}
         </div>
       </div>
     </div>
