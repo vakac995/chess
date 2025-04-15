@@ -5,9 +5,9 @@ import App from '../App';
 // Mock ChessBoard component
 vi.mock('../components/ChessBoard', () => {
   return {
-    default: vi.fn().mockImplementation(() => (
-      <div data-testid="mock-chess-board">Mock Chess Board</div>
-    ))
+    default: vi
+      .fn()
+      .mockImplementation(() => <div data-testid="mock-chess-board">Mock Chess Board</div>),
   };
 });
 

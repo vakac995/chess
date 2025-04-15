@@ -15,7 +15,7 @@ const mockChessInstance = {
 
 vi.mock('chess.js', () => {
   return {
-    Chess: vi.fn().mockImplementation(() => mockChessInstance)
+    Chess: vi.fn().mockImplementation(() => mockChessInstance),
   };
 });
 

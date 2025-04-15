@@ -45,7 +45,7 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ width = 500 }) => {
     if (game.isDraw()) {
       return 'Draw!';
     }
-    
+
     const currentPlayer = game.turn() === 'w' ? 'White' : 'Black';
     return `${currentPlayer}'s turn`;
   }
@@ -64,9 +64,7 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ width = 500 }) => {
           Reset
         </button>
 
-        <div className="text-gray-700 font-medium">
-          {getGameStatus()}
-        </div>
+        <div className="text-gray-700 font-medium">{getGameStatus()}</div>
       </div>
     </div>
   );
