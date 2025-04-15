@@ -1,0 +1,21 @@
+{
+  "name": "chess",
+  "version": "1.0.0",
+  "description": "A minimalist chess web application built with modern web technologies. This app provides a fully functional chess game with standard rules enforcement that can be played locally by two players.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vakac995/chess.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/vakac995/chess/issues"
+  },
+  "homepage": "https://github.com/vakac995/chess#readme"
+}
