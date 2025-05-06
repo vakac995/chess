@@ -34,4 +34,4 @@ const Sidebar = ({ children, isOpen, onToggle }: SidebarProps) => {
   );
 };
 
-export default Sidebar;
+export { Sidebar };

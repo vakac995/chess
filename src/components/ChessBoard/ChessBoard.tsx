@@ -70,4 +70,4 @@ const ChessBoard = ({ width = 500 }: Readonly<ChessBoardProps>) => {
   );
 };
 
-export default ChessBoard;
+export { ChessBoard };

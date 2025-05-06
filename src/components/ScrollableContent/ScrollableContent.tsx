@@ -37,4 +37,4 @@ const ScrollableContent = ({ children, onScroll }: ScrollableContentProps) => {
   );
 };
 
-export default ScrollableContent;
+export { ScrollableContent };

@@ -9,7 +9,7 @@ vi.mock('../hooks/useAuth', () => ({
 
 vi.mock('../components/ChessBoard', () => {
   return {
-    default: vi
+    ChessBoard: vi
       .fn()
       .mockImplementation(() => <div data-testid="mock-chess-board">Mock Chess Board</div>),
   };

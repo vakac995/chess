@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import ChessBoard from '../ChessBoard';
+import { ChessBoard } from '../ChessBoard';
 import { Chess } from 'chess.js';
 
 const mockMove = vi.fn();

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useAuth } from './hooks/useAuth';
-import ChessBoard from './components/ChessBoard';
+import { ChessBoard } from './components/ChessBoard';
 import { LoginForm } from './features/Authentication/LoginForm/LoginForm';
 import { Header } from './components/Header/Header';
 import { AuthenticationStatus } from './components/AuthenticationStatus/AuthenticationStatus';

@@ -49,4 +49,4 @@ const Dialog = ({ isOpen, onClose, title, children }: Readonly<DialogProps>) => 
   );
 };
 
-export default Dialog;
+export { Dialog };
