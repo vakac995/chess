@@ -1,0 +1,18 @@
+/* Corporate theme - default */
+:root[data-vision="corporate"],
+:root { /* Default to corporate if no data-vision or for base styles */
+  --color-primary: 217 91% 60%; /* e.g., HSL for a professional blue */
+  --color-secondary: 215 28% 17%; /* e.g., HSL for a dark gray */
+  --color-accent: 25 95% 53%;    /* e.g., HSL for an orange accent */
+  --color-background: 0 0% 100%; /* White */
+  --color-text: 215 28% 17%;     /* Dark Gray */
+  --color-text-muted: 215 20% 45%; /* Lighter Gray */
+  --color-border: 215 20% 90%;   /* Light Gray Border */
+
+  --font-sans: 'Inter', sans-serif; /* Clean, modern sans-serif */
+  --font-serif: 'Georgia', serif;
+
+  --spacing-container-padding: 1.5rem;
+  --border-radius-card: 0.5rem;
+  --border-radius-button: 0.375rem;
+}

@@ -26,14 +26,9 @@ Here's a suggested order of operations:
     *   Test each refactored component under both visions.
 7.  **Refactor Page-Level Styles**:
     *   Go through individual pages and layouts, replacing specific styles with theme-aware utilities.
-8.  **Testing**:
-    *   Thoroughly test the entire application in all defined visions. Check for visual consistency, readability, and usability.
-    *   Test on different browsers and devices.
-9.  **Documentation**:
+8.  **Documentation**:
     *   Document the theming system: how it works, how to switch visions, how to use themed utilities in new components.
     *   Explain how to add a new vision or modify existing ones.
-10. **Refinement**:
-    *   Based on testing and usage, refine the set of CSS variables or add new ones if common patterns emerge that would benefit from theming.
 
 ## Current Tailwind CSS Setup
 

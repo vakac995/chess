@@ -1,3 +1,6 @@
+@import './themes/corporate.css';
+@import './themes/casual.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

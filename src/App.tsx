@@ -6,6 +6,7 @@ import { Header } from './components/Header/Header';
 import { AuthenticationStatus } from './components/AuthenticationStatus/AuthenticationStatus';
 import { Footer } from './components/Footer';
 import { ScrollableContent } from './components/ScrollableContent';
+import { VisionSwitcher } from './components/VisionSwitcher';
 
 const content = {
   authenticated: <ChessBoard width={480} />,
@@ -31,6 +32,7 @@ const App: React.FC = () => {
 
       <ScrollableContent onScroll={handleScroll}>
         <main className="flex flex-grow flex-col items-center justify-center p-4">
+          <VisionSwitcher />
           <AuthenticationStatus />
           <div className="mt-8 flex w-full justify-center">{Content}</div>
         </main>

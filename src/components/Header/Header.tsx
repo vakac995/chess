@@ -1,4 +1,6 @@
 import { useAuth } from '../../hooks/useAuth';
+import clsx from 'clsx';
+import { Button } from '../Button';
 
 interface HeaderProps {
   readonly scrolledPastHeader?: boolean;
@@ -7,18 +9,22 @@ interface HeaderProps {
 export const Header = ({ scrolledPastHeader }: HeaderProps) => {
   const { user, isAuthenticated, isLoading, error, login, logout } = useAuth();
 
-  const headerBaseClasses =
-    'sticky top-0 z-50 bg-gray-900 text-white transition-all duration-300 ease-in-out';
-  const headerNormalClasses = 'py-3 h-16';
-  const headerScrolledClasses = 'py-1 h-12';
+  const headerClasses = clsx(
+    'sticky top-0 z-50 bg-secondary text-white transition-all duration-300 ease-in-out',
+    {
+      'py-3 h-16': !scrolledPastHeader,
+      'py-1 h-12': scrolledPastHeader,
+    }
+  );
 
   return (
-    <header
-      className={`${headerBaseClasses} ${scrolledPastHeader ? headerScrolledClasses : headerNormalClasses}`}
-    >
+    <header className={headerClasses}>
       <div className="container mx-auto flex h-full items-center justify-between px-4">
         <h1
-          className={`font-bold ${scrolledPastHeader ? 'text-md' : 'text-lg'} transition-all duration-300 ease-in-out`}
+          className={clsx(
+            'font-bold transition-all duration-300 ease-in-out',
+            scrolledPastHeader ? 'text-md' : 'text-lg'
+          )}
         >
           Chess Web Application
         </h1>
@@ -32,25 +38,27 @@ export const Header = ({ scrolledPastHeader }: HeaderProps) => {
 
           {isAuthenticated ? (
             <>
-              <span className={`text-sm ${scrolledPastHeader ? 'hidden md:inline' : ''}`}>
+              <span className={clsx('text-sm', scrolledPastHeader ? 'hidden md:inline' : '')}>
                 Welcome, {user?.username ?? user?.email}
               </span>
-              <button
-                onClick={() => logout()}
+              <Button 
+                intent="danger" 
+                size="sm" 
+                onClick={() => logout()} 
                 disabled={isLoading}
-                className="rounded bg-red-600 px-3 py-1 text-sm text-white transition duration-150 hover:bg-red-700 disabled:opacity-50"
               >
                 Logout
-              </button>
+              </Button>
             </>
           ) : (
-            <button
+            <Button
+              intent="primary"
+              size="sm"
               onClick={() => login({ email: 'user@example.com', password: 'password123' })}
               disabled={isLoading}
-              className="rounded bg-blue-600 px-3 py-1 text-sm text-white transition duration-150 hover:bg-blue-700 disabled:opacity-50"
             >
               {isLoading ? 'Logging in...' : 'Login (Test)'}
-            </button>
+            </Button>
           )}
         </div>
       </div>
