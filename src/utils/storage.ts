@@ -1,14 +1,11 @@
-// Supported storage types
 export type StorageType = 'localStorage' | 'sessionStorage';
 
-// Storage operation result type
 export interface StorageResult<T> {
   success: boolean;
   value?: T;
   error?: Error;
 }
 
-// Storage validation options
 export interface StorageValidationOptions {
   validateSchema?: boolean;
   allowNull?: boolean;
