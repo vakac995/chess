@@ -80,10 +80,7 @@ export const loginAtom: WritableAtom<
   }
 );
 
-export const logoutAtom: WritableAtom<null, [], boolean> = atom(
-  null,
-  (_, set): boolean => {
-    set(authAtom, initialState);
-    return true;
-  }
-);
+export const logoutAtom: WritableAtom<null, [], boolean> = atom(null, (_, set): boolean => {
+  set(authAtom, initialState);
+  return true;
+});
