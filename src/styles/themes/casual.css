@@ -1,12 +1,12 @@
 /* Casual theme */
-:root[data-vision="casual"] {
-  --color-primary: 350 80% 60%;  /* e.g., HSL for a vibrant pink/red */
-  --color-secondary: 190 70% 50%;/* e.g., HSL for a playful teal */
-  --color-accent: 45 100% 50%;   /* e.g., HSL for a bright yellow */
+:root[data-vision='casual'] {
+  --color-primary: 350 80% 60%; /* e.g., HSL for a vibrant pink/red */
+  --color-secondary: 190 70% 50%; /* e.g., HSL for a playful teal */
+  --color-accent: 45 100% 50%; /* e.g., HSL for a bright yellow */
   --color-background: 30 50% 98%; /* Off-white, slightly warm */
-  --color-text: 30 30% 20%;      /* Dark, warm gray */
-  --color-text-muted: 30 25% 40%;  /* Softer warm gray */
-  --color-border: 30 30% 85%;    /* Soft warm border */
+  --color-text: 30 30% 20%; /* Dark, warm gray */
+  --color-text-muted: 30 25% 40%; /* Softer warm gray */
+  --color-border: 30 30% 85%; /* Soft warm border */
 
   --font-sans: 'Poppins', sans-serif; /* Friendly, rounded sans-serif */
   --font-serif: 'Lora', serif;

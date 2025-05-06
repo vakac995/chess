@@ -100,13 +100,13 @@ export function RegistrationForm() {
   const submissionSuccess = combinedStatus === LoadingStatus.FULFILLED;
 
   return (
-    <div className="mx-auto max-w-md rounded-lg bg-white p-6 shadow-md">
-      <h2 className="mb-4 text-xl font-bold">
+    <div className="rounded-card bg-background p-container-padding mx-auto max-w-md shadow-md">
+      <h2 className="text-text mb-4 text-xl font-bold">
         Register {step === 1 ? '(Step 1/2: Basic Info)' : '(Step 2/2: Personal Details)'}
       </h2>
 
       {combinedStatus === LoadingStatus.REJECTED && submissionError && (
-        <div className="mb-4 rounded border border-red-300 bg-red-100 p-3 text-red-700">
+        <div className="border-accent/30 bg-accent/10 text-accent mb-4 rounded border p-3">
           <ErrorInfo error={submissionError} />
         </div>
       )}
@@ -114,9 +114,9 @@ export function RegistrationForm() {
       {submissionSuccess ? (
         <div className="p-4 text-center">
           <div className="mb-2 text-3xl text-green-500">✓</div>
-          <h3 className="mb-2 text-lg font-medium">Registration Complete!</h3>
-          <p className="text-gray-600">Thank you for registering.</p>
-          <pre className="mt-4 overflow-auto rounded bg-gray-100 p-2 text-left text-xs">
+          <h3 className="text-text mb-2 text-lg font-medium">Registration Complete!</h3>
+          <p className="text-text-muted">Thank you for registering.</p>
+          <pre className="bg-background/50 text-text mt-4 overflow-auto rounded p-2 text-left text-xs">
             {JSON.stringify(combinedDataForDisplay, null, 2)}
           </pre>
         </div>
@@ -133,7 +133,7 @@ export function RegistrationForm() {
                       {...field}
                       type="email"
                       placeholder="Enter your email"
-                      className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`rounded-button text-text w-full border px-3 py-2 ${error ? 'border-accent' : 'border-border'}`}
                     />
                     {error && <ErrorInfo error={error} className="mt-1" />}
                   </>
@@ -148,7 +148,7 @@ export function RegistrationForm() {
                       {...field}
                       type="password"
                       placeholder="Create a password"
-                      className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`rounded-button text-text w-full border px-3 py-2 ${error ? 'border-accent' : 'border-border'}`}
                     />
                     {error && <ErrorInfo error={error} className="mt-1" />}
                   </>
@@ -163,7 +163,7 @@ export function RegistrationForm() {
                       {...field}
                       type="password"
                       placeholder="Confirm your password"
-                      className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`rounded-button text-text w-full border px-3 py-2 ${error ? 'border-accent' : 'border-border'}`}
                     />
                     {error && <ErrorInfo error={error} className="mt-1" />}
                   </>
@@ -172,7 +172,7 @@ export function RegistrationForm() {
               <button
                 type="submit"
                 disabled={basicInfoForm.formState.isSubmitting}
-                className="w-full rounded bg-blue-600 px-4 py-2 text-white transition duration-150 hover:bg-blue-700 disabled:opacity-50"
+                className="rounded-button bg-primary hover:bg-primary/80 w-full px-4 py-2 text-white transition duration-150 disabled:opacity-50"
               >
                 Continue
               </button>
@@ -190,7 +190,7 @@ export function RegistrationForm() {
                       {...field}
                       type="text"
                       placeholder="Enter your first name"
-                      className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`rounded-button text-text w-full border px-3 py-2 ${error ? 'border-accent' : 'border-border'}`}
                     />
                     {error && <ErrorInfo error={error} className="mt-1" />}
                   </>
@@ -205,7 +205,7 @@ export function RegistrationForm() {
                       {...field}
                       type="text"
                       placeholder="Enter your last name"
-                      className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`rounded-button text-text w-full border px-3 py-2 ${error ? 'border-accent' : 'border-border'}`}
                     />
                     {error && <ErrorInfo error={error} className="mt-1" />}
                   </>
@@ -224,7 +224,7 @@ export function RegistrationForm() {
                       }
                       value={field.value === 0 ? '' : field.value}
                       placeholder="Enter your age"
-                      className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`rounded-button text-text w-full border px-3 py-2 ${error ? 'border-accent' : 'border-border'}`}
                     />
                     {error && <ErrorInfo error={error} className="mt-1" />}
                   </>
@@ -239,12 +239,12 @@ export function RegistrationForm() {
                       type="checkbox"
                       id="agreeToTermsReg"
                       checked={field.value}
-                      className={`mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 ${error ? 'border-red-500' : ''}`}
+                      className={`border-border text-primary focus:ring-primary/50 mt-1 h-4 w-4 rounded ${error ? 'border-accent' : ''}`}
                     />
                     <div className="flex-1">
-                      <label htmlFor="agreeToTermsReg" className="text-sm text-gray-700">
+                      <label htmlFor="agreeToTermsReg" className="text-text-muted text-sm">
                         I agree to the{' '}
-                        <a href="#" className="text-blue-600 hover:underline">
+                        <a href="#" className="text-primary hover:underline">
                           terms and conditions
                         </a>
                       </label>
@@ -258,14 +258,14 @@ export function RegistrationForm() {
                   type="button"
                   onClick={handleBack}
                   disabled={isSubmitting}
-                  className="w-1/2 rounded bg-gray-300 px-4 py-2 text-gray-800 transition duration-150 hover:bg-gray-400 disabled:opacity-50"
+                  className="rounded-button bg-secondary/80 hover:bg-secondary w-1/2 px-4 py-2 text-white transition duration-150 disabled:opacity-50"
                 >
                   Back
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting || personalInfoForm.formState.isSubmitting}
-                  className="w-1/2 rounded bg-blue-600 px-4 py-2 text-white transition duration-150 hover:bg-blue-700 disabled:opacity-50"
+                  className="rounded-button bg-primary hover:bg-primary/80 w-1/2 px-4 py-2 text-white transition duration-150 disabled:opacity-50"
                 >
                   {isSubmitting ? 'Registering...' : 'Register'}
                 </button>

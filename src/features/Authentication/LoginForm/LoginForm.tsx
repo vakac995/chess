@@ -6,11 +6,11 @@ export function LoginForm() {
   const { form, onSubmit, isPending, displayError, formStatus } = useAuthForm();
 
   return (
-    <div className="mx-auto max-w-md rounded-lg bg-white p-6 shadow-md">
-      <h2 className="mb-4 text-xl font-bold">Login</h2>
+    <div className="rounded-card bg-background p-container-padding mx-auto max-w-md shadow-md">
+      <h2 className="text-text mb-4 text-xl font-bold">Login</h2>
 
       {displayError && (
-        <div className="mb-4 rounded border border-red-300 bg-red-100 p-3 text-red-700">
+        <div className="border-accent/30 bg-accent/10 text-accent mb-4 rounded border p-3">
           <ErrorInfo error={displayError} />
         </div>
       )}
@@ -25,7 +25,7 @@ export function LoginForm() {
                 {...field}
                 type="email"
                 placeholder="Enter your email (user@example.com)"
-                className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
+                className={`rounded-button text-text w-full border px-3 py-2 ${error ? 'border-accent' : 'border-border'}`}
                 aria-invalid={error ? 'true' : 'false'}
               />
               {error && <ErrorInfo error={error} className="mt-1" />}
@@ -42,7 +42,7 @@ export function LoginForm() {
                 {...field}
                 type="password"
                 placeholder="Enter your password (password123)"
-                className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
+                className={`rounded-button text-text w-full border px-3 py-2 ${error ? 'border-accent' : 'border-border'}`}
                 aria-invalid={error ? 'true' : 'false'}
               />
               {error && <ErrorInfo error={error} className="mt-1" />}
@@ -53,7 +53,7 @@ export function LoginForm() {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full rounded bg-blue-600 px-4 py-2 text-white transition duration-150 hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-button bg-primary hover:bg-primary/80 w-full px-4 py-2 text-white transition duration-150 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isPending ? 'Logging in...' : 'Login'}
         </button>

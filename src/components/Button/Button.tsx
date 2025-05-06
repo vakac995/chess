@@ -9,9 +9,11 @@ const buttonStyles = cva(
     variants: {
       intent: {
         primary: 'bg-primary text-white border-primary hover:bg-primary/80 focus:ring-primary/50',
-        secondary: 'bg-secondary text-white border-secondary hover:bg-secondary/80 focus:ring-secondary/50',
-        danger: 'bg-red-600 text-white border-red-600 hover:bg-red-700 focus:ring-red-500', 
-        outline: 'bg-transparent text-primary border-primary hover:bg-primary/10 focus:ring-primary/50',
+        secondary:
+          'bg-secondary text-white border-secondary hover:bg-secondary/80 focus:ring-secondary/50',
+        danger: 'bg-red-600 text-white border-red-600 hover:bg-red-700 focus:ring-red-500',
+        outline:
+          'bg-transparent text-primary border-primary hover:bg-primary/10 focus:ring-primary/50',
       },
       size: {
         sm: 'py-1 px-2 text-sm',
@@ -31,7 +33,7 @@ const buttonStyles = cva(
       },
       {
         intent: 'outline',
-        className: 'hover:bg-transparent', 
+        className: 'hover:bg-transparent',
       },
     ],
     defaultVariants: {
@@ -52,7 +54,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={clsx(
           buttonStyles({ intent, size, fullWidth }),
-          disabled && 'opacity-50 cursor-not-allowed',
+          disabled && 'cursor-not-allowed opacity-50',
           className
         )}
         disabled={disabled}

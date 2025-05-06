@@ -3,9 +3,10 @@ import React, { useRef, useEffect } from 'react';
 interface ScrollableContentProps {
   children: React.ReactNode;
   onScroll?: (scrollTop: number) => void;
+  className?: string;
 }
 
-const ScrollableContent = ({ children, onScroll }: ScrollableContentProps) => {
+const ScrollableContent = ({ children, onScroll, className = '' }: ScrollableContentProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,7 +32,10 @@ const ScrollableContent = ({ children, onScroll }: ScrollableContentProps) => {
   }, [onScroll]);
 
   return (
-    <div ref={scrollRef} className="flex-grow overflow-y-auto">
+    <div
+      ref={scrollRef}
+      className={`bg-background text-text flex-grow overflow-y-auto ${className}`}
+    >
       {children}
     </div>
   );

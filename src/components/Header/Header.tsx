@@ -41,12 +41,7 @@ export const Header = ({ scrolledPastHeader }: HeaderProps) => {
               <span className={clsx('text-sm', scrolledPastHeader ? 'hidden md:inline' : '')}>
                 Welcome, {user?.username ?? user?.email}
               </span>
-              <Button 
-                intent="danger" 
-                size="sm" 
-                onClick={() => logout()} 
-                disabled={isLoading}
-              >
+              <Button intent="danger" size="sm" onClick={() => logout()} disabled={isLoading}>
                 Logout
               </Button>
             </>

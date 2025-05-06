@@ -8,33 +8,34 @@ const VisionSwitcher: React.FC = () => {
   const [currentVision, setCurrentVision] = React.useState<Vision>(() => {
     // Get the current vision from localStorage or default to whatever is in the HTML attribute
     const storedVision = localStorage.getItem('app-vision') as Vision | null;
-    return (storedVision ?? 
-      (document.documentElement.getAttribute('data-vision') as Vision)) || 
-      'corporate';
+    return (
+      (storedVision ?? (document.documentElement.getAttribute('data-vision') as Vision)) ||
+      'corporate'
+    );
   });
 
   const toggleVision = () => {
     const newVision: Vision = currentVision === 'corporate' ? 'casual' : 'corporate';
     setCurrentVision(newVision);
-    
+
     // Update both localStorage and HTML attribute
     document.documentElement.setAttribute('data-vision', newVision);
     localStorage.setItem('app-vision', newVision);
   };
 
   return (
-    <Container 
-      display="flex" 
-      orientation="row" 
-      items="center" 
+    <Container
+      display="flex"
+      orientation="row"
+      items="center"
       justify="between"
       padding="default"
       rounded="md"
       shadow="md"
-      className="bg-background border border-border mb-4"
+      className="bg-background border-border mb-4 border"
     >
       <div className="text-text">
-        Current Vision: <span className="font-bold text-primary">{currentVision}</span>
+        Current Vision: <span className="text-primary font-bold">{currentVision}</span>
       </div>
       <Button intent="primary" onClick={toggleVision}>
         Switch to {currentVision === 'corporate' ? 'Casual' : 'Corporate'} Vision

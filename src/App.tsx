@@ -27,11 +27,11 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app-container flex h-screen flex-col overflow-hidden">
+    <div className="app-container bg-background text-text flex h-screen flex-col overflow-hidden">
       <Header scrolledPastHeader={scrolledPastHeader} />
 
       <ScrollableContent onScroll={handleScroll}>
-        <main className="flex flex-grow flex-col items-center justify-center p-4">
+        <main className="p-container-padding flex flex-grow flex-col items-center justify-center">
           <VisionSwitcher />
           <AuthenticationStatus />
           <div className="mt-8 flex w-full justify-center">{Content}</div>

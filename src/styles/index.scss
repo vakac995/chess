@@ -6,12 +6,23 @@
   padding: 0;
 }
 
+/* Remove default focus rings globally */
+*:focus {
+  outline: none !important;
+}
+
+/* Optional: Add a custom focus style that's more subtle but still accessible */
+*:focus-visible {
+  outline: 2px solid hsl(var(--color-primary) / 0.5) !important;
+  outline-offset: 2px;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: hsl(var(--color-background));
   color: hsl(var(--color-text));
   line-height: 1.6;
-  transition: 
+  transition:
     background-color 0.3s ease,
     color 0.3s ease;
 }
