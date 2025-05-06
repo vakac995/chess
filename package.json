@@ -6,14 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint eslint.config.js postcss.config.js tailwind.config.js vite.config.ts vitest.config.ts src --ext ts,tsx,js --report-unused-disable-directives",
-    "format": "prettier --write \"*.{js,ts,tsx,scss,css,json}\" \"src/**/*.{ts,tsx,scss,css,json}\"",
-    "lint:fix": "eslint eslint.config.js postcss.config.js tailwind.config.js vite.config.ts vitest.config.ts src --ext ts,tsx,js --fix",
     "preview": "vite preview",
+    "lint": "eslint eslint.config.js postcss.config.js tailwind.config.js vite.config.ts vitest.config.ts src --ext ts,tsx,js --report-unused-disable-directives",
+    "lint:fix": "eslint eslint.config.js postcss.config.js tailwind.config.js vite.config.ts vitest.config.ts src --ext ts,tsx,js --fix",
+    "format": "prettier --write \"*.{js,ts,tsx,scss,css,json}\" \"src/**/*.{ts,tsx,scss,css,json}\"",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "dev:all": "npm run lint && npm run format && npm run test && npm run build && npm run dev"
   },
   "repository": {
     "type": "git",
