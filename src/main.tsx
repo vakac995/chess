@@ -4,12 +4,11 @@ import { Provider } from 'jotai';
 import App from './App';
 import './styles/index.scss';
 
-// Vision type and utility functions for theme switching
 type Vision = 'corporate' | 'casual';
 
 const applyVision = (vision: Vision) => {
   document.documentElement.setAttribute('data-vision', vision);
-  localStorage.setItem('app-vision', vision); // Persist preference
+  localStorage.setItem('app-vision', vision);
 };
 
 const loadVision = () => {
@@ -17,11 +16,10 @@ const loadVision = () => {
   if (storedVision) {
     applyVision(storedVision);
   } else {
-    applyVision('corporate'); // Default vision
+    applyVision('corporate');
   }
 };
 
-// Load vision early in application setup
 loadVision();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

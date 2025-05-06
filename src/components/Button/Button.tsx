@@ -3,17 +3,14 @@ import React from 'react';
 import clsx from 'clsx';
 
 const buttonStyles = cva(
-  // Base classes applied to all variants
-  'font-semibold border rounded-button transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2',
+  'font-semibold border rounded-button transition-colors duration-150 focus:outline-none',
   {
     variants: {
       intent: {
-        primary: 'bg-primary text-white border-primary hover:bg-primary/80 focus:ring-primary/50',
-        secondary:
-          'bg-secondary text-white border-secondary hover:bg-secondary/80 focus:ring-secondary/50',
-        danger: 'bg-red-600 text-white border-red-600 hover:bg-red-700 focus:ring-red-500',
-        outline:
-          'bg-transparent text-primary border-primary hover:bg-primary/10 focus:ring-primary/50',
+        primary: 'bg-primary text-white border-primary hover:bg-primary/80',
+        secondary: 'bg-secondary text-white border-secondary hover:bg-secondary/80',
+        danger: 'bg-red-600 text-white border-red-600 hover:bg-red-700',
+        outline: 'bg-transparent text-primary border-primary hover:bg-primary/10',
       },
       size: {
         sm: 'py-1 px-2 text-sm',
@@ -23,13 +20,12 @@ const buttonStyles = cva(
       fullWidth: {
         true: 'w-full',
       },
-      // Removed the disabled variant to avoid conflict with HTML disabled attribute
     },
     compoundVariants: [
       {
         intent: 'primary',
         size: 'lg',
-        className: 'py-4', // Additional classes for this specific combination
+        className: 'py-4',
       },
       {
         intent: 'outline',

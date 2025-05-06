@@ -6,7 +6,6 @@ type Vision = 'corporate' | 'casual';
 
 const VisionSwitcher: React.FC = () => {
   const [currentVision, setCurrentVision] = React.useState<Vision>(() => {
-    // Get the current vision from localStorage or default to whatever is in the HTML attribute
     const storedVision = localStorage.getItem('app-vision') as Vision | null;
     return (
       (storedVision ?? (document.documentElement.getAttribute('data-vision') as Vision)) ||
@@ -18,7 +17,6 @@ const VisionSwitcher: React.FC = () => {
     const newVision: Vision = currentVision === 'corporate' ? 'casual' : 'corporate';
     setCurrentVision(newVision);
 
-    // Update both localStorage and HTML attribute
     document.documentElement.setAttribute('data-vision', newVision);
     localStorage.setItem('app-vision', newVision);
   };

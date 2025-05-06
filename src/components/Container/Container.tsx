@@ -5,14 +5,13 @@ import { cva, type VariantProps } from 'class-variance-authority';
 const containerStyles = cva('w-full', {
   variants: {
     padding: {
-      default: 'p-container-padding', // Uses the themed variable
+      default: 'p-container-padding',
       none: '',
-      // Add more specific padding variants if needed e.g. p-4, p-8 etc.
     },
     display: {
       flex: 'flex',
       grid: 'grid',
-      block: 'block', // Added block display option
+      block: 'block',
     },
     orientation: {
       col: 'flex-col',
@@ -22,15 +21,15 @@ const containerStyles = cva('w-full', {
       start: 'items-start',
       center: 'items-center',
       end: 'items-end',
-      stretch: 'items-stretch', // Added stretch option
+      stretch: 'items-stretch',
     },
     justify: {
       start: 'justify-start',
       center: 'justify-center',
       end: 'justify-end',
       between: 'justify-between',
-      around: 'justify-around', // Added justify-around
-      evenly: 'justify-evenly', // Added justify-evenly
+      around: 'justify-around',
+      evenly: 'justify-evenly',
     },
     shadow: {
       none: '',
@@ -49,13 +48,13 @@ const containerStyles = cva('w-full', {
       xl: 'rounded-xl',
       '2xl': 'rounded-2xl',
       full: 'rounded-full',
-      card: 'rounded-card', // Use themed border radius for cards
-      button: 'rounded-button', // Use themed border radius for buttons
+      card: 'rounded-card',
+      button: 'rounded-button',
     },
   },
   defaultVariants: {
     padding: 'default',
-    display: 'block', // Changed default to block
+    display: 'block',
     shadow: 'none',
     rounded: 'none',
   },
@@ -64,16 +63,16 @@ const containerStyles = cva('w-full', {
 export interface ContainerProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof containerStyles> {
-  as?: React.ElementType; // Use as prop instead of tag for dynamic element
-  gridCols?: string; // Direct string input for Tailwind grid-cols-* classes
-  gap?: string; // Direct string input for Tailwind gap-* classes
+  as?: React.ElementType;
+  gridCols?: string;
+  gap?: string;
 }
 
 export const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
   (
     {
       className,
-      as: Component = 'div', // Default to div
+      as: Component = 'div',
       padding,
       display,
       orientation,
@@ -88,7 +87,6 @@ export const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
     },
     ref
   ) => {
-    // Dynamically construct gridCols and gap classes if they are provided
     const gridColsClass = gridCols ? `grid-cols-${gridCols}` : '';
     const gapClass = gap ? `gap-${gap}` : '';
 

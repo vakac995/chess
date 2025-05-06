@@ -239,7 +239,7 @@ export function RegistrationForm() {
                       type="checkbox"
                       id="agreeToTermsReg"
                       checked={field.value}
-                      className={`border-border text-primary focus:ring-primary/50 mt-1 h-4 w-4 rounded ${error ? 'border-accent' : ''}`}
+                      className={`border-border text-primary mt-1 h-4 w-4 rounded ${error ? 'border-accent' : ''}`}
                     />
                     <div className="flex-1">
                       <label htmlFor="agreeToTermsReg" className="text-text-muted text-sm">
