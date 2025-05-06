@@ -3,7 +3,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import ChessBoard from '../ChessBoard';
 import { Chess } from 'chess.js';
 
-// Mock chess.js
 const mockMove = vi.fn();
 const mockChessInstance = {
   fen: vi.fn().mockReturnValue('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'),
@@ -19,7 +18,6 @@ vi.mock('chess.js', () => {
   };
 });
 
-// Mock react-chessboard
 vi.mock('react-chessboard', () => {
   return {
     Chessboard: vi.fn().mockImplementation(({ position, onPieceDrop, boardWidth }) => (
