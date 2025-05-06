@@ -15,6 +15,8 @@ export interface StorageValidationOptions {
   maxSize?: number; // in bytes
 }
 
+const MAX_STORAGE_SIZE_BYTES = 2 * 1024 * 1024; // 2MB
+
 /**
  * A wrapper around web storage (localStorage/sessionStorage) with type safety and error handling
  */
@@ -40,8 +42,7 @@ export const storage = {
       const serializedValue = JSON.stringify(value);
 
       // Check storage quota
-      if (serializedValue.length > 2097152) {
-        // 2MB limit
+      if (serializedValue.length > MAX_STORAGE_SIZE_BYTES) {
         throw new Error(`Storage value exceeds maximum size (2MB) for key: ${key}`);
       }
 

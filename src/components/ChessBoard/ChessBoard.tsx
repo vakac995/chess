@@ -13,7 +13,7 @@ interface ChessMove {
   promotion?: string;
 }
 
-const ChessBoard: React.FC<ChessBoardProps> = ({ width = 500 }) => {
+const ChessBoard: React.FC<Readonly<ChessBoardProps>> = ({ width = 500 }) => {
   const [game, setGame] = useState(new Chess());
 
   function makeAMove(move: ChessMove) {

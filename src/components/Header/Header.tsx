@@ -1,12 +1,27 @@
 import { useAuth } from '../../hooks/useAuth';
 
-export function Header() {
+interface HeaderProps {
+  readonly scrolledPastHeader?: boolean;
+}
+
+export function Header({ scrolledPastHeader }: HeaderProps) {
   const { user, isAuthenticated, isLoading, error, login, logout } = useAuth();
 
+  const headerBaseClasses =
+    'sticky top-0 z-50 bg-gray-900 text-white transition-all duration-300 ease-in-out';
+  const headerNormalClasses = 'py-3 h-16';
+  const headerScrolledClasses = 'py-1 h-12';
+
   return (
-    <header>
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        <h1 className="text-lg font-bold">Chess Web Application</h1>
+    <header
+      className={`${headerBaseClasses} ${scrolledPastHeader ? headerScrolledClasses : headerNormalClasses}`}
+    >
+      <div className="container mx-auto px-4 flex justify-between items-center h-full">
+        <h1
+          className={`font-bold ${scrolledPastHeader ? 'text-md' : 'text-lg'} transition-all duration-300 ease-in-out`}
+        >
+          Chess Web Application
+        </h1>
 
         <div className="flex items-center space-x-4">
           {error && !isLoading && (
@@ -17,7 +32,9 @@ export function Header() {
 
           {isAuthenticated ? (
             <>
-              <span className="text-sm">Welcome, {user?.username ?? user?.email}</span>
+              <span className={`text-sm ${scrolledPastHeader ? 'hidden md:inline' : ''}`}>
+                Welcome, {user?.username ?? user?.email}
+              </span>
               <button
                 onClick={() => logout()}
                 disabled={isLoading}
