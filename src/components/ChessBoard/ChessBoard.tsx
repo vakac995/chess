@@ -32,7 +32,7 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ width = 500 }) => {
     const move = makeAMove({
       from: sourceSquare,
       to: targetSquare,
-      promotion: 'q', // Default promotion to queen
+      promotion: 'q',
     });
 
     return move !== null;

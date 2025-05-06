@@ -35,7 +35,7 @@ vi.mock('react-chessboard', () => {
 describe('ChessBoard Component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockMove.mockReturnValue({ from: 'e2', to: 'e4' }); // Ensure move returns a valid result
+    mockMove.mockReturnValue({ from: 'e2', to: 'e4' });
   });
 
   it('renders with default props', () => {
@@ -59,7 +59,6 @@ describe('ChessBoard Component', () => {
     render(<ChessBoard />);
     const mockPiece = screen.getByTestId('mock-piece');
     fireEvent.click(mockPiece);
-    // The Chess mock's move function should have been called
     expect(mockMove).toHaveBeenCalled();
   });
 
@@ -67,7 +66,6 @@ describe('ChessBoard Component', () => {
     render(<ChessBoard />);
     const resetButton = screen.getByText('Reset');
     fireEvent.click(resetButton);
-    // A new Chess instance should have been created
     expect(Chess).toHaveBeenCalled();
   });
 });
