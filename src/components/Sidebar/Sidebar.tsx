@@ -6,7 +6,7 @@ interface SidebarProps {
   onToggle: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ children, isOpen, onToggle }) => {
+const Sidebar = ({ children, isOpen, onToggle }: SidebarProps) => {
   return (
     <>
       {isOpen && (

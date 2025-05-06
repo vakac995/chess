@@ -13,7 +13,7 @@ interface ContainerProps {
   shadow?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'inner' | 'none';
 }
 
-const Container: React.FC<ContainerProps> = ({
+const Container = ({
   children,
   className = '',
   padding = 'p-4',
@@ -24,7 +24,7 @@ const Container: React.FC<ContainerProps> = ({
   gridCols = 'grid-cols-1',
   gap = 'gap-4',
   shadow = 'none',
-}) => {
+}: ContainerProps) => {
   const baseClasses = 'w-full';
   const flexClasses = !useGrid ? `flex ${orientation} ${items} ${justify}` : '';
   const gridClasses = useGrid ? `grid ${gridCols} ${gap}` : '';

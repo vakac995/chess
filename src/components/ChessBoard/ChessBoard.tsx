@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Chessboard } from 'react-chessboard';
 import { Chess } from 'chess.js';
 import styles from './ChessBoard.module.scss';
@@ -13,7 +13,7 @@ interface ChessMove {
   promotion?: string;
 }
 
-const ChessBoard: React.FC<Readonly<ChessBoardProps>> = ({ width = 500 }) => {
+const ChessBoard = ({ width = 500 }: Readonly<ChessBoardProps>) => {
   const [game, setGame] = useState(new Chess());
 
   function makeAMove(move: ChessMove) {

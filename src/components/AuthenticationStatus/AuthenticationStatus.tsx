@@ -1,7 +1,7 @@
 import { useAuth } from '../../hooks/useAuth';
 import { ErrorInfo } from '../../components/Form';
 
-export function AuthenticationStatus() {
+export const AuthenticationStatus = () => {
   const { user, isAuthenticated, isLoading, error, login, logout } = useAuth();
 
   const handleLogin = async () => {
@@ -56,4 +56,4 @@ export function AuthenticationStatus() {
       </div>
     </div>
   );
-}
+};

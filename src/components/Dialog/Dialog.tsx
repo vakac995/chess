@@ -7,7 +7,7 @@ interface DialogProps {
   children: React.ReactNode;
 }
 
-const Dialog: React.FC<Readonly<DialogProps>> = ({ isOpen, onClose, title, children }) => {
+const Dialog = ({ isOpen, onClose, title, children }: Readonly<DialogProps>) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {

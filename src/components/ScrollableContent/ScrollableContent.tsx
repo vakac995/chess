@@ -5,7 +5,7 @@ interface ScrollableContentProps {
   onScroll?: (scrollTop: number) => void;
 }
 
-const ScrollableContent: React.FC<ScrollableContentProps> = ({ children, onScroll }) => {
+const ScrollableContent = ({ children, onScroll }: ScrollableContentProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

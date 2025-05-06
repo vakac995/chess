@@ -6,7 +6,7 @@ interface ErrorInfoProps {
   className?: string;
 }
 
-export function ErrorInfo({ error, className = '' }: Readonly<ErrorInfoProps>) {
+export const ErrorInfo = ({ error, className = '' }: Readonly<ErrorInfoProps>) => {
   if (!error) return null;
 
   const isCustomError = isFieldErrorInfo(error);
@@ -34,4 +34,4 @@ export function ErrorInfo({ error, className = '' }: Readonly<ErrorInfoProps>) {
       </div>
     </div>
   );
-}
+};

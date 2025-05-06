@@ -8,12 +8,12 @@ interface FormProps<TFieldValues extends FieldValues> {
   className?: string;
 }
 
-export function Form<TFieldValues extends FieldValues>({
+export const Form = <TFieldValues extends FieldValues>({
   form,
   onSubmit,
   children,
   className,
-}: Readonly<FormProps<TFieldValues>>) {
+}: Readonly<FormProps<TFieldValues>>) => {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={className}>
@@ -21,4 +21,4 @@ export function Form<TFieldValues extends FieldValues>({
       </form>
     </FormProvider>
   );
-}
+};

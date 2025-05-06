@@ -21,12 +21,12 @@ interface FormFieldProps<TFormValues extends FieldValues> {
   readonly render: (props: RenderPropInput<TFormValues>) => React.ReactElement;
 }
 
-export function FormField<TFormValues extends FieldValues>({
+export const FormField = <TFormValues extends FieldValues>({
   name,
   label,
   className,
   render,
-}: FormFieldProps<TFormValues>) {
+}: FormFieldProps<TFormValues>) => {
   const { control } = useFormContext<TFormValues>();
 
   return (
@@ -55,7 +55,7 @@ export function FormField<TFormValues extends FieldValues>({
       </div>
     </div>
   );
-}
+};
 
 function extractZodErrorInfo(error: FieldError): FieldErrorInfo {
   if (!error) return { message: '' };

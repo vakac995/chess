@@ -4,7 +4,7 @@ interface HeaderProps {
   readonly scrolledPastHeader?: boolean;
 }
 
-export function Header({ scrolledPastHeader }: HeaderProps) {
+export const Header = ({ scrolledPastHeader }: HeaderProps) => {
   const { user, isAuthenticated, isLoading, error, login, logout } = useAuth();
 
   const headerBaseClasses =
@@ -56,4 +56,4 @@ export function Header({ scrolledPastHeader }: HeaderProps) {
       </div>
     </header>
   );
-}
+};
