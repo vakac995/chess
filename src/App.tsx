@@ -18,10 +18,10 @@ const App: React.FC = () => {
   }, [isAuthenticated]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="app-container">
       <Header />
 
-      <main className="flex-grow container mx-auto px-4 py-8 flex flex-col items-center justify-start">
+      <main>
         <AuthenticationStatus />
 
         <div className="mt-8 w-full flex justify-center">{Content}</div>

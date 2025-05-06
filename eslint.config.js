@@ -20,14 +20,14 @@ export default [
       },
     },
     plugins: {
-      'react': reactPlugin,
+      react: reactPlugin,
       'react-hooks': reactHooksPlugin,
       '@typescript-eslint': typescriptPlugin,
     },
     settings: {
       react: {
-        version: 'detect'
-      }
+        version: 'detect',
+      },
     },
     rules: {
       ...typescriptPlugin.configs.recommended.rules,
@@ -37,11 +37,14 @@ export default [
       'react/prop-types': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': ['warn', { 
-        'argsIgnorePattern': '^_',
-        'varsIgnorePattern': '^_' 
-      }],
-      'no-console': ['warn', { allow: ['warn', 'error'] }]
-    }
-  }
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+    },
+  },
 ];
