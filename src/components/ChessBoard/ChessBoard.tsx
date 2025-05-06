@@ -52,19 +52,19 @@ const ChessBoard = ({ width = 500 }: Readonly<ChessBoardProps>) => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className={`${styles.chessboard} rounded-md overflow-hidden`}>
+      <div className={`${styles.chessboard} overflow-hidden rounded-md`}>
         <Chessboard position={game.fen()} onPieceDrop={onDrop} boardWidth={width} />
       </div>
 
       <div className={`${styles.controlsWrapper} w-full`} style={{ maxWidth: width }}>
         <button
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="rounded bg-blue-600 px-4 py-2 font-bold text-white hover:bg-blue-700"
           onClick={() => setGame(new Chess())}
         >
           Reset
         </button>
 
-        <div className="text-gray-700 font-medium">{getGameStatus()}</div>
+        <div className="font-medium text-gray-700">{getGameStatus()}</div>
       </div>
     </div>
   );

@@ -26,13 +26,13 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app-container flex flex-col h-screen overflow-hidden">
+    <div className="app-container flex h-screen flex-col overflow-hidden">
       <Header scrolledPastHeader={scrolledPastHeader} />
 
       <ScrollableContent onScroll={handleScroll}>
-        <main className="flex-grow flex flex-col items-center justify-center p-4">
+        <main className="flex flex-grow flex-col items-center justify-center p-4">
           <AuthenticationStatus />
-          <div className="mt-8 w-full flex justify-center">{Content}</div>
+          <div className="mt-8 flex w-full justify-center">{Content}</div>
         </main>
         <Footer />
       </ScrollableContent>

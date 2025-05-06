@@ -13,8 +13,8 @@ export const AuthenticationStatus = () => {
   };
 
   return (
-    <div className="p-4 my-4 bg-gray-100 border rounded shadow">
-      <h2 className="text-xl font-semibold mb-3">Authentication Status (Debug)</h2>
+    <div className="my-4 rounded border bg-gray-100 p-4 shadow">
+      <h2 className="mb-3 text-xl font-semibold">Authentication Status (Debug)</h2>
       <p className="mb-2">
         Status:{' '}
         <span className={`font-medium ${isAuthenticated ? 'text-green-600' : 'text-red-600'}`}>
@@ -22,10 +22,10 @@ export const AuthenticationStatus = () => {
         </span>
       </p>
 
-      {isLoading && <p className="text-blue-500 animate-pulse">Loading...</p>}
+      {isLoading && <p className="animate-pulse text-blue-500">Loading...</p>}
 
       {error && (
-        <div className="my-2 p-2 bg-red-100 border border-red-300 rounded">
+        <div className="my-2 rounded border border-red-300 bg-red-100 p-2">
           <ErrorInfo error={error} />
         </div>
       )}
@@ -38,18 +38,18 @@ export const AuthenticationStatus = () => {
         </div>
       )}
 
-      <div className="flex gap-2 mt-4">
+      <div className="mt-4 flex gap-2">
         <button
           onClick={handleLogin}
           disabled={isLoading || isAuthenticated}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
+          className="rounded bg-blue-500 px-4 py-2 text-white transition duration-150 hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Log In (Test)
         </button>
         <button
           onClick={handleLogout}
           disabled={!isAuthenticated || isLoading}
-          className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
+          className="rounded bg-gray-500 px-4 py-2 text-white transition duration-150 hover:bg-gray-600 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Log Out
         </button>

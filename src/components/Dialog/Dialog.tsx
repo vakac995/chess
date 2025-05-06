@@ -34,13 +34,13 @@ const Dialog = ({ isOpen, onClose, title, children }: Readonly<DialogProps>) => 
   }, [onClose]);
 
   return (
-    <dialog ref={dialogRef} className="p-6 bg-white rounded-lg shadow-xl w-full max-w-md mx-auto">
-      {title && <h2 className="text-xl font-semibold mb-4">{title}</h2>}
+    <dialog ref={dialogRef} className="mx-auto w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+      {title && <h2 className="mb-4 text-xl font-semibold">{title}</h2>}
       <div>{children}</div>
       <div className="mt-6 flex justify-end space-x-2">
         <button
           onClick={onClose}
-          className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition duration-150"
+          className="rounded bg-gray-200 px-4 py-2 text-gray-800 transition duration-150 hover:bg-gray-300"
         >
           Close
         </button>

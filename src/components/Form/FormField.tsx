@@ -32,7 +32,7 @@ export const FormField = <TFormValues extends FieldValues>({
   return (
     <div className={className}>
       {label && (
-        <label htmlFor={name} className="block text-sm font-medium mb-1">
+        <label htmlFor={name} className="mb-1 block text-sm font-medium">
           {label}
         </label>
       )}

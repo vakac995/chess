@@ -461,3 +461,316 @@ This Prettier plugin automatically sorts Tailwind CSS classes according to the r
 -   **Understand Specificity**: Tailwind's utilities are generally low-specificity. If you mix Tailwind with custom CSS, be mindful of how CSS specificity rules apply.
 
 By implementing these strategies, the project's styling will become more maintainable, scalable, and easier for developers to work with.
+
+## Refactor Strategy Implementation Plan
+
+This section details a plan to implement a more robust and flexible theming system, enabling "visions" (e.g., corporate vs. casual looks) for the website. The focus is on leveraging Tailwind's configuration for reusable, vision-adaptive styles rather than creating new UI components from scratch.
+
+### 1. Plugins for Consistency
+
+Maintaining a consistent and readable codebase is crucial, especially when dealing with numerous utility classes.
+
+-   **`prettier-plugin-tailwindcss`**:
+    -   **Purpose**: Automatically sorts Tailwind CSS classes in a predefined order. This improves readability and reduces merge conflicts.
+    -   **Installation**:
+        ```bash
+        npm install -D prettier prettier-plugin-tailwindcss
+        # or
+        yarn add -D prettier prettier-plugin-tailwindcss
+        ```
+    -   **Configuration**:
+        Add the plugin to your Prettier configuration file (`.prettierrc.js`, `.prettierrc.json`, or `package.json`).
+        ```javascript
+        // .prettierrc.js example
+        module.exports = {
+          // ...other Prettier options
+          plugins: ['prettier-plugin-tailwindcss'],
+        };
+        ```
+        Ensure your editor is configured to use Prettier for formatting on save, or integrate Prettier into your pre-commit hooks.
+
+### 2. Core Configuration for Visions (`tailwind.config.js`)
+
+The `tailwind.config.js` file will be central to defining how visions translate into actual styles. We will use CSS Custom Properties (CSS Variables) for dynamic theming, allowing vision changes without recompiling styles.
+
+-   **Strategy**: Define semantic color names, font families, and other themeable properties in `tailwind.config.js` that map to CSS variables.
+-   **Example `tailwind.config.js` setup**:
+    ```javascript
+    // d:\work\playground\chess\tailwind.config.js
+    /** @type {import('tailwindcss').Config} */
+    export default {
+      content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+      theme: {
+        extend: {
+          colors: {
+            primary: 'hsl(var(--color-primary) / <alpha-value>)',
+            secondary: 'hsl(var(--color-secondary) / <alpha-value>)',
+            accent: 'hsl(var(--color-accent) / <alpha-value>)',
+            background: 'hsl(var(--color-background) / <alpha-value>)',
+            text: 'hsl(var(--color-text) / <alpha-value>)',
+            'text-muted': 'hsl(var(--color-text-muted) / <alpha-value>)',
+            border: 'hsl(var(--color-border) / <alpha-value>)',
+            // Add more semantic color names as needed
+          },
+          fontFamily: {
+            sans: ['var(--font-sans)', 'sans-serif'],
+            serif: ['var(--font-serif)', 'serif'], // Example for an alternative font
+          },
+          spacing: {
+            'container-padding': 'var(--spacing-container-padding)',
+            // Define other themeable spacing if necessary
+          },
+          borderRadius: {
+            'card': 'var(--border-radius-card)',
+            'button': 'var(--border-radius-button)',
+            // Define other themeable border-radius values
+          },
+          // Potentially extend other properties like boxShadows, borderWidths, etc.
+        },
+      },
+      plugins: [
+        // require('@tailwindcss/forms'),
+        // require('@tailwindcss/typography'),
+      ],
+    };
+    ```
+    *Note the use of `hsl(var(--color-primary) / <alpha-value>)`. This allows Tailwind's opacity modifiers (e.g., `bg-primary/50`) to work correctly with CSS variables that store HSL values.* For simpler hex or rgb colors, you can use `rgb(var(--color-primary) / <alpha-value>)` or just `var(--color-primary)` if opacity modification isn't needed for that specific color. For HSL, ensure your CSS variables store the H, S, L values without `hsl()` wrapper e.g. `210 40% 96%`.
+
+### 3. File Structure for Themes/Visions
+
+Organize theme-specific CSS variable definitions into separate files.
+
+-   **Directory Structure**: Create a new directory, for example, `src/styles/themes/`.
+-   **Theme Files**: Inside this directory, create CSS files for each vision:
+    -   `src/styles/themes/corporate.css`
+    -   `src/styles/themes/casual.css`
+    -   `src/styles/themes/base.css` (for common variables or fallbacks, if any)
+-   **Example `corporate.css`**:
+    ```css
+    /* src/styles/themes/corporate.css */
+    :root[data-vision="corporate"],
+    :root { /* Default to corporate if no data-vision or for base styles */
+      --color-primary: 217 91% 60%; /* e.g., HSL for a professional blue */
+      --color-secondary: 215 28% 17%; /* e.g., HSL for a dark gray */
+      --color-accent: 25 95% 53%;    /* e.g., HSL for an orange accent */
+      --color-background: 0 0% 100%; /* White */
+      --color-text: 215 28% 17%;     /* Dark Gray */
+      --color-text-muted: 215 20% 45%; /* Lighter Gray */
+      --color-border: 215 20% 90%;   /* Light Gray Border */
+
+      --font-sans: 'Inter', sans-serif; /* Clean, modern sans-serif */
+      --font-serif: 'Georgia', serif;
+
+      --spacing-container-padding: 1.5rem;
+      --border-radius-card: 0.5rem;
+      --border-radius-button: 0.375rem;
+      /* ... other corporate-specific variables */
+    }
+    ```
+-   **Example `casual.css`**:
+    ```css
+    /* src/styles/themes/casual.css */
+    :root[data-vision="casual"] {
+      --color-primary: 350 80% 60%;  /* e.g., HSL for a vibrant pink/red */
+      --color-secondary: 190 70% 50%;/* e.g., HSL for a playful teal */
+      --color-accent: 45 100% 50%;   /* e.g., HSL for a bright yellow */
+      --color-background: 30 50% 98%; /* Off-white, slightly warm */
+      --color-text: 30 30% 20%;      /* Dark, warm gray */
+      --color-text-muted: 30 25% 40%;  /* Softer warm gray */
+      --color-border: 30 30% 85%;    /* Soft warm border */
+
+      --font-sans: 'Poppins', sans-serif; /* Friendly, rounded sans-serif */
+      --font-serif: 'Lora', serif;
+
+      --spacing-container-padding: 1rem;
+      --border-radius-card: 0.75rem;
+      --border-radius-button: 9999px; /* Pill-shaped buttons */
+      /* ... other casual-specific variables */
+    }
+    ```
+-   **Import into Global CSS**: Import these theme files into your main CSS entry point (e.g., `src/styles/index.scss` or `src/styles/tailwind.css`).
+    ```css
+    /* src/styles/index.scss or tailwind.css */
+    @import './themes/base.css'; /* Optional base variables */
+    @import './themes/corporate.css';
+    @import './themes/casual.css';
+
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    /* Other global styles */
+    ```
+
+### 4. Usage and Switching Visions
+
+With CSS variables defined, Tailwind utilities like `bg-primary`, `text-text`, `font-sans`, `p-container-padding`, `rounded-card` will automatically use the values from the active vision.
+
+-   **Switching Mechanism**:
+    -   The vision is controlled by a `data-vision` attribute on the `<html>` or `<body>` element.
+    -   Implement a JavaScript function to change this attribute. This can be managed via a settings panel, user preference, or even route-based logic.
+    ```typescript jsx
+    // Example: src/context/ThemeContext.tsx or a simple utility
+    type Vision = 'corporate' | 'casual';
+
+    const applyVision = (vision: Vision) => {
+      document.documentElement.setAttribute('data-vision', vision);
+      localStorage.setItem('app-vision', vision); // Persist preference
+    };
+
+    const loadVision = () => {
+      const storedVision = localStorage.getItem('app-vision') as Vision | null;
+      if (storedVision) {
+        applyVision(storedVision);
+      } else {
+        applyVision('corporate'); // Default vision
+      }
+    };
+
+    // Call loadVision() early in your application setup (e.g., in main.tsx)
+    loadVision();
+    ```
+
+### 5. Defining Reusable Styles for Visions
+
+This strategy focuses on making existing utility classes and component styles adaptive, rather than creating entirely new sets of styles or components for each vision.
+
+-   **Semantic Naming**: The key is using the semantic names defined in `tailwind.config.js` (e.g., `bg-primary`, `text-text`, `border-border`, `font-sans`).
+-   **No New Components for Visions**: You don't create `CorporateButton` and `CasualButton`. You have one `Button` component that naturally adapts its appearance based on the active vision's CSS variables.
+-   **Variable-Based Styling**:
+    -   **Colors**: Use `bg-primary`, `text-secondary`, `border-accent`, etc.
+    -   **Fonts**: Use `font-sans` or `font-serif`.
+    -   **Spacing**: Use `p-container-padding`, `m-container-padding`.
+    -   **Borders**: Use `rounded-card`, `border-border`.
+-   **Example**:
+    A card component might use:
+    `className="bg-background p-container-padding rounded-card border border-border shadow-lg"`
+    All these utilities (`bg-background`, `p-container-padding`, `rounded-card`, `border-border`) will resolve to different actual values depending on whether the `corporate` or `casual` vision is active, thanks to the underlying CSS variables.
+
+### 6. Managing and Configuring Different Visions
+
+This involves defining the CSS variables for each vision and ensuring the system can switch between them.
+
+-   **Centralized Vision Definitions**: The `src/styles/themes/` directory holds the style definitions (CSS variables) for each vision.
+    -   `corporate.css`: Defines `--color-primary: ...; --font-sans: ...;` etc., for the corporate look.
+    -   `casual.css`: Defines the same set of variables but with different values for the casual look.
+-   **Adding a New Vision**:
+    1.  Create a new CSS file (e.g., `src/styles/themes/futuristic.css`).
+    2.  Define all the themeable CSS variables (e.g., `--color-primary`, `--font-sans`) with values appropriate for the "futuristic" vision.
+    3.  Import this new CSS file in `src/styles/index.scss` (or your main CSS file): `@import './themes/futuristic.css';`
+    4.  Update your JavaScript logic for switching visions to include "futuristic" as an option.
+-   **Configuration Scope**:
+    -   **Colors**: Primary, secondary, accent, background, text, borders.
+    -   **Typography**: Font families (sans, serif, mono), potentially font weights or base sizes if they vary significantly.
+    -   **Spacing**: Key spacing units like container padding, section padding.
+    -   **Border Radii**: Common border radius values for cards, buttons, inputs.
+    -   **Shadows**: While Tailwind provides shadow utilities, you could define themeable shadow presets if needed (e.g., `--shadow-card: 0 10px 15px -3px var(--color-shadow-primary);`). This is more advanced and might not be necessary initially.
+
+### 7. Adapting Existing Reusable Components to Visions
+
+Review existing components (like `Button`, `Container`, `Header`, `Dialog`) and update their styling to use the new vision-aware semantic Tailwind classes.
+
+-   **`Button.tsx` (using `cva`)**:
+    Modify the `cva` definition to use semantic color names.
+    ```typescript jsx
+    // src/components/Button/Button.tsx (Conceptual refactor)
+    // ...
+    const buttonStyles = cva(
+      'font-semibold border rounded-button transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2',
+      {
+        variants: {
+          intent: {
+            primary: 'bg-primary text-white border-primary hover:bg-primary/80 focus:ring-primary/50', // Assuming white text on primary is desired for all visions, or define a --color-primary-foreground
+            secondary: 'bg-secondary text-white border-secondary hover:bg-secondary/80 focus:ring-secondary/50', // Similarly, or --color-secondary-foreground
+            danger: 'bg-red-600 text-white border-red-600 hover:bg-red-700 focus:ring-red-500', // Danger might remain consistent or also be themed
+            outline: 'bg-transparent text-primary border-primary hover:bg-primary/10 focus:ring-primary/50',
+          },
+          size: { /* ... sm, md, lg ... */ },
+          // ...
+        },
+        defaultVariants: {
+          intent: 'primary',
+          size: 'md',
+        },
+      }
+    );
+    // ...
+    ```
+    *Consider adding `--color-primary-foreground`, `--color-secondary-foreground` variables in your theme files if the text color on primary/secondary buttons needs to change per vision.*
+
+-   **`Container.tsx`**:
+    If `Container.tsx` uses classes like `p-4`, `shadow-md`, update them to use themed values if applicable: `p-container-padding`, `shadow-card` (if you define themed shadows).
+    ```typescript jsx
+    // src/components/Container/Container.tsx (Conceptual refactor using cva)
+    // ...
+    const containerStyles = cva('w-full', {
+      variants: {
+        padding: {
+          default: 'p-container-padding', // Uses the themed variable
+          none: '',
+        },
+        shadow: {
+          none: '',
+          card: 'shadow-card', // If you define a --shadow-card variable and corresponding utility
+          lg: 'shadow-lg', // Standard Tailwind shadow
+        },
+        // ... other variants like display, orientation, items, justify, gridCols, gap
+      },
+      defaultVariants: {
+        padding: 'default',
+        shadow: 'none',
+      }
+    });
+    // ...
+    ```
+
+-   **`Header.tsx`**:
+    Replace hardcoded colors like `bg-gray-900` with semantic theme colors like `bg-background` or `bg-secondary` (if the header has a distinct background from the page).
+    ```typescript jsx
+    // Header.tsx example
+    import clsx from 'clsx';
+    // ...
+    const headerClasses = clsx(
+      'sticky top-0 z-50 bg-secondary text-text-muted transition-all duration-300 ease-in-out', // Using themed colors
+      {
+        'py-3 h-16': !scrolledPastHeader,
+        'py-1 h-12': scrolledPastHeader,
+      }
+    );
+    // <header className={headerClasses}>
+    ```
+
+### 8. High-Level Implementation Roadmap
+
+Here's a suggested order of operations:
+
+1.  **Setup Tooling**:
+    *   Install and configure `prettier-plugin-tailwindcss`. Run it across the project.
+2.  **Define Initial Vision Strategy & CSS Variables**:
+    *   Decide on the initial set of CSS custom properties needed (colors, fonts, spacing, border-radius).
+    *   Update `tailwind.config.js` to use these CSS variables (e.g., `colors: { primary: 'hsl(var(--color-primary))' }`).
+3.  **Create Theme Files**:
+    *   Create `src/styles/themes/` directory.
+    *   Develop `corporate.css` and `casual.css` (and `base.css` if needed), defining the chosen CSS variables for each vision.
+    *   Import these into your main CSS file (e.g., `src/styles/index.scss`).
+4.  **Implement Vision Switching**:
+    *   Add JavaScript logic to set/get `data-vision` on `<html>` (e.g., using `localStorage` and a context or simple utility).
+    *   Provide a basic UI mechanism to switch visions for testing (e.g., a temporary dropdown).
+5.  **Refactor Core Layout & Global Styles**:
+    *   Update global styles (e.g., body background, default text color) to use the new theme variables: `bg-background`, `text-text`.
+6.  **Incrementally Refactor Components**:
+    *   Start with the most reused components (e.g., `Button`, `Container`, `Card`, `Dialog`, `Header`, `Footer`).
+    *   Update their styles (and `cva` definitions) to use the semantic theme utilities (`bg-primary`, `rounded-button`, etc.) instead of hardcoded values (`bg-blue-500`, `rounded-md`).
+    *   Test each refactored component under both visions.
+7.  **Refactor Page-Level Styles**:
+    *   Go through individual pages and layouts, replacing specific styles with theme-aware utilities.
+8.  **Testing**:
+    *   Thoroughly test the entire application in all defined visions. Check for visual consistency, readability, and usability.
+    *   Test on different browsers and devices.
+9.  **Documentation**:
+    *   Document the theming system: how it works, how to switch visions, how to use themed utilities in new components.
+    *   Explain how to add a new vision or modify existing ones.
+10. **Refinement**:
+    *   Based on testing and usage, refine the set of CSS variables or add new ones if common patterns emerge that would benefit from theming.
+
+This plan provides a structured approach to refactoring your Tailwind CSS usage for better reusability and adaptability through a "vision"-based theming system.

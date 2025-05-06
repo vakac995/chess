@@ -100,23 +100,23 @@ export function RegistrationForm() {
   const submissionSuccess = combinedStatus === LoadingStatus.FULFILLED;
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">
+    <div className="mx-auto max-w-md rounded-lg bg-white p-6 shadow-md">
+      <h2 className="mb-4 text-xl font-bold">
         Register {step === 1 ? '(Step 1/2: Basic Info)' : '(Step 2/2: Personal Details)'}
       </h2>
 
       {combinedStatus === LoadingStatus.REJECTED && submissionError && (
-        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded border border-red-300">
+        <div className="mb-4 rounded border border-red-300 bg-red-100 p-3 text-red-700">
           <ErrorInfo error={submissionError} />
         </div>
       )}
 
       {submissionSuccess ? (
-        <div className="text-center p-4">
-          <div className="text-green-500 text-3xl mb-2">✓</div>
-          <h3 className="text-lg font-medium mb-2">Registration Complete!</h3>
+        <div className="p-4 text-center">
+          <div className="mb-2 text-3xl text-green-500">✓</div>
+          <h3 className="mb-2 text-lg font-medium">Registration Complete!</h3>
           <p className="text-gray-600">Thank you for registering.</p>
-          <pre className="text-xs text-left bg-gray-100 p-2 mt-4 rounded overflow-auto">
+          <pre className="mt-4 overflow-auto rounded bg-gray-100 p-2 text-left text-xs">
             {JSON.stringify(combinedDataForDisplay, null, 2)}
           </pre>
         </div>
@@ -133,7 +133,7 @@ export function RegistrationForm() {
                       {...field}
                       type="email"
                       placeholder="Enter your email"
-                      className={`w-full px-3 py-2 border rounded-md ${error ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {error && <ErrorInfo error={error} className="mt-1" />}
                   </>
@@ -148,7 +148,7 @@ export function RegistrationForm() {
                       {...field}
                       type="password"
                       placeholder="Create a password"
-                      className={`w-full px-3 py-2 border rounded-md ${error ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {error && <ErrorInfo error={error} className="mt-1" />}
                   </>
@@ -163,7 +163,7 @@ export function RegistrationForm() {
                       {...field}
                       type="password"
                       placeholder="Confirm your password"
-                      className={`w-full px-3 py-2 border rounded-md ${error ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {error && <ErrorInfo error={error} className="mt-1" />}
                   </>
@@ -172,7 +172,7 @@ export function RegistrationForm() {
               <button
                 type="submit"
                 disabled={basicInfoForm.formState.isSubmitting}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 disabled:opacity-50 transition duration-150"
+                className="w-full rounded bg-blue-600 px-4 py-2 text-white transition duration-150 hover:bg-blue-700 disabled:opacity-50"
               >
                 Continue
               </button>
@@ -190,7 +190,7 @@ export function RegistrationForm() {
                       {...field}
                       type="text"
                       placeholder="Enter your first name"
-                      className={`w-full px-3 py-2 border rounded-md ${error ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {error && <ErrorInfo error={error} className="mt-1" />}
                   </>
@@ -205,7 +205,7 @@ export function RegistrationForm() {
                       {...field}
                       type="text"
                       placeholder="Enter your last name"
-                      className={`w-full px-3 py-2 border rounded-md ${error ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {error && <ErrorInfo error={error} className="mt-1" />}
                   </>
@@ -224,7 +224,7 @@ export function RegistrationForm() {
                       }
                       value={field.value === 0 ? '' : field.value}
                       placeholder="Enter your age"
-                      className={`w-full px-3 py-2 border rounded-md ${error ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {error && <ErrorInfo error={error} className="mt-1" />}
                   </>
@@ -258,14 +258,14 @@ export function RegistrationForm() {
                   type="button"
                   onClick={handleBack}
                   disabled={isSubmitting}
-                  className="w-1/2 bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400 disabled:opacity-50 transition duration-150"
+                  className="w-1/2 rounded bg-gray-300 px-4 py-2 text-gray-800 transition duration-150 hover:bg-gray-400 disabled:opacity-50"
                 >
                   Back
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting || personalInfoForm.formState.isSubmitting}
-                  className="w-1/2 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 disabled:opacity-50 transition duration-150"
+                  className="w-1/2 rounded bg-blue-600 px-4 py-2 text-white transition duration-150 hover:bg-blue-700 disabled:opacity-50"
                 >
                   {isSubmitting ? 'Registering...' : 'Register'}
                 </button>

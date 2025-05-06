@@ -6,11 +6,11 @@ export function LoginForm() {
   const { form, onSubmit, isPending, displayError, formStatus } = useAuthForm();
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">Login</h2>
+    <div className="mx-auto max-w-md rounded-lg bg-white p-6 shadow-md">
+      <h2 className="mb-4 text-xl font-bold">Login</h2>
 
       {displayError && (
-        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded border border-red-300">
+        <div className="mb-4 rounded border border-red-300 bg-red-100 p-3 text-red-700">
           <ErrorInfo error={displayError} />
         </div>
       )}
@@ -25,7 +25,7 @@ export function LoginForm() {
                 {...field}
                 type="email"
                 placeholder="Enter your email (user@example.com)"
-                className={`w-full px-3 py-2 border rounded-md ${error ? 'border-red-500' : 'border-gray-300'}`}
+                className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
                 aria-invalid={error ? 'true' : 'false'}
               />
               {error && <ErrorInfo error={error} className="mt-1" />}
@@ -42,7 +42,7 @@ export function LoginForm() {
                 {...field}
                 type="password"
                 placeholder="Enter your password (password123)"
-                className={`w-full px-3 py-2 border rounded-md ${error ? 'border-red-500' : 'border-gray-300'}`}
+                className={`w-full rounded-md border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
                 aria-invalid={error ? 'true' : 'false'}
               />
               {error && <ErrorInfo error={error} className="mt-1" />}
@@ -53,14 +53,14 @@ export function LoginForm() {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
+          className="w-full rounded bg-blue-600 px-4 py-2 text-white transition duration-150 hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isPending ? 'Logging in...' : 'Login'}
         </button>
       </Form>
 
       {formStatus === LoadingStatus.FULFILLED && (
-        <div className="mt-4 p-3 bg-green-100 text-green-700 rounded border border-green-300">
+        <div className="mt-4 rounded border border-green-300 bg-green-100 p-3 text-green-700">
           Login successful! Redirecting or showing authenticated content...
         </div>
       )}

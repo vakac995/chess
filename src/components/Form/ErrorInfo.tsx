@@ -19,7 +19,7 @@ export const ErrorInfo = ({ error, className = '' }: Readonly<ErrorInfoProps>) =
     <div className={`error-container ${className}`}>
       <div className="flex items-start">
         {icon && (
-          <span className="error-icon text-red-500 mr-2">
+          <span className="error-icon mr-2 text-red-500">
             {icon === 'mail' && '📧'}
             {icon === 'mail-warning' && '📧⚠️'}
             {icon === 'lock' && '🔒'}
@@ -27,9 +27,9 @@ export const ErrorInfo = ({ error, className = '' }: Readonly<ErrorInfoProps>) =
           </span>
         )}
         <div className="error-content">
-          {message && <p className="text-red-500 text-sm font-medium">{message}</p>}
-          {info && <p className="text-red-400 text-xs mt-0.5">{info}</p>}
-          {description && <p className="text-gray-500 text-xs mt-1">{description}</p>}
+          {message && <p className="text-sm font-medium text-red-500">{message}</p>}
+          {info && <p className="mt-0.5 text-xs text-red-400">{info}</p>}
+          {description && <p className="mt-1 text-xs text-gray-500">{description}</p>}
         </div>
       </div>
     </div>
