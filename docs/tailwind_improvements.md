@@ -2,6 +2,39 @@
 
 This document outlines strategies and best practices for enhancing the use of Tailwind CSS in this project. As this is a template project, these recommendations aim to provide a robust and scalable foundation for your future applications. The focus is on creating reusable styles, leveraging helper functions, and understanding the necessary configurations.
 
+## High-Level Implementation Roadmap
+
+Here's a suggested order of operations:
+
+1.  **Setup Tooling**:
+    *   Install and configure `prettier-plugin-tailwindcss`. Run it across the project.
+2.  **Define Initial Vision Strategy & CSS Variables**:
+    *   Decide on the initial set of CSS custom properties needed (colors, fonts, spacing, border-radius).
+    *   Update `tailwind.config.js` to use these CSS variables (e.g., `colors: { primary: 'hsl(var(--color-primary))' }`).
+3.  **Create Theme Files**:
+    *   Create `src/styles/themes/` directory.
+    *   Develop `corporate.css` and `casual.css` (and `base.css` if needed), defining the chosen CSS variables for each vision.
+    *   Import these into your main CSS file (e.g., `src/styles/index.scss`).
+4.  **Implement Vision Switching**:
+    *   Add JavaScript logic to set/get `data-vision` on `<html>` (e.g., using `localStorage` and a context or simple utility).
+    *   Provide a basic UI mechanism to switch visions for testing (e.g., a temporary dropdown).
+5.  **Refactor Core Layout & Global Styles**:
+    *   Update global styles (e.g., body background, default text color) to use the new theme variables: `bg-background`, `text-text`.
+6.  **Incrementally Refactor Components**:
+    *   Start with the most reused components (e.g., `Button`, `Container`, `Card`, `Dialog`, `Header`, `Footer`).
+    *   Update their styles (and `cva` definitions) to use the semantic theme utilities (`bg-primary`, `rounded-button`, etc.) instead of hardcoded values (`bg-blue-500`, `rounded-md`).
+    *   Test each refactored component under both visions.
+7.  **Refactor Page-Level Styles**:
+    *   Go through individual pages and layouts, replacing specific styles with theme-aware utilities.
+8.  **Testing**:
+    *   Thoroughly test the entire application in all defined visions. Check for visual consistency, readability, and usability.
+    *   Test on different browsers and devices.
+9.  **Documentation**:
+    *   Document the theming system: how it works, how to switch visions, how to use themed utilities in new components.
+    *   Explain how to add a new vision or modify existing ones.
+10. **Refinement**:
+    *   Based on testing and usage, refine the set of CSS variables or add new ones if common patterns emerge that would benefit from theming.
+
 ## Current Tailwind CSS Setup
 
 Our project utilizes Tailwind CSS for utility-first styling. Here's a breakdown of the core configuration files:
@@ -739,38 +772,5 @@ Review existing components (like `Button`, `Container`, `Header`, `Dialog`) and 
     );
     // <header className={headerClasses}>
     ```
-
-### 8. High-Level Implementation Roadmap
-
-Here's a suggested order of operations:
-
-1.  **Setup Tooling**:
-    *   Install and configure `prettier-plugin-tailwindcss`. Run it across the project.
-2.  **Define Initial Vision Strategy & CSS Variables**:
-    *   Decide on the initial set of CSS custom properties needed (colors, fonts, spacing, border-radius).
-    *   Update `tailwind.config.js` to use these CSS variables (e.g., `colors: { primary: 'hsl(var(--color-primary))' }`).
-3.  **Create Theme Files**:
-    *   Create `src/styles/themes/` directory.
-    *   Develop `corporate.css` and `casual.css` (and `base.css` if needed), defining the chosen CSS variables for each vision.
-    *   Import these into your main CSS file (e.g., `src/styles/index.scss`).
-4.  **Implement Vision Switching**:
-    *   Add JavaScript logic to set/get `data-vision` on `<html>` (e.g., using `localStorage` and a context or simple utility).
-    *   Provide a basic UI mechanism to switch visions for testing (e.g., a temporary dropdown).
-5.  **Refactor Core Layout & Global Styles**:
-    *   Update global styles (e.g., body background, default text color) to use the new theme variables: `bg-background`, `text-text`.
-6.  **Incrementally Refactor Components**:
-    *   Start with the most reused components (e.g., `Button`, `Container`, `Card`, `Dialog`, `Header`, `Footer`).
-    *   Update their styles (and `cva` definitions) to use the semantic theme utilities (`bg-primary`, `rounded-button`, etc.) instead of hardcoded values (`bg-blue-500`, `rounded-md`).
-    *   Test each refactored component under both visions.
-7.  **Refactor Page-Level Styles**:
-    *   Go through individual pages and layouts, replacing specific styles with theme-aware utilities.
-8.  **Testing**:
-    *   Thoroughly test the entire application in all defined visions. Check for visual consistency, readability, and usability.
-    *   Test on different browsers and devices.
-9.  **Documentation**:
-    *   Document the theming system: how it works, how to switch visions, how to use themed utilities in new components.
-    *   Explain how to add a new vision or modify existing ones.
-10. **Refinement**:
-    *   Based on testing and usage, refine the set of CSS variables or add new ones if common patterns emerge that would benefit from theming.
 
 This plan provides a structured approach to refactoring your Tailwind CSS usage for better reusability and adaptability through a "vision"-based theming system.
