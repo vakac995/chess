@@ -1,10 +1,4 @@
-import React from 'react';
-
-interface SidebarProps {
-  children: React.ReactNode;
-  isOpen: boolean;
-  onToggle: () => void;
-}
+import type { SidebarProps } from './Sidebar.types';
 
 const Sidebar = ({ children, isOpen, onToggle }: SidebarProps) => {
   return (

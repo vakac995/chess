@@ -1,25 +1,40 @@
 import React, { useMemo, useState } from 'react';
 import { useAuth } from './hooks/useAuth';
 import { ChessBoard } from './components/ChessBoard';
-import { LoginForm } from './features/Authentication/LoginForm/LoginForm';
+import { LoginForm, RegistrationForm } from './features/Authentication';
 import { Header } from './components/Header/Header';
 import { AuthenticationStatus } from './components/AuthenticationStatus/AuthenticationStatus';
 import { Footer } from './components/Footer';
 import { ScrollableContent } from './components/ScrollableContent';
 import { VisionSwitcher } from './components/VisionSwitcher';
+import { DevDashboard } from './components/DevDashboard';
 
-const content = {
-  authenticated: <ChessBoard width={480} />,
-  unauthenticated: <LoginForm />,
-};
+type AuthScreenType = 'login' | 'register';
 
 const App: React.FC = () => {
   const { isAuthenticated } = useAuth();
   const [scrolledPastHeader, setScrolledPastHeader] = useState(false);
+  const [authScreen, setAuthScreen] = useState<AuthScreenType>('login');
+
+  const handleSwitchToRegister = () => {
+    setAuthScreen('register');
+  };
+
+  const handleSwitchToLogin = () => {
+    setAuthScreen('login');
+  };
 
   const Content = useMemo(() => {
-    return content[isAuthenticated ? 'authenticated' : 'unauthenticated'];
-  }, [isAuthenticated]);
+    if (isAuthenticated) {
+      return <ChessBoard width={480} />;
+    }
+
+    return authScreen === 'login' ? (
+      <LoginForm onSwitchToRegister={handleSwitchToRegister} />
+    ) : (
+      <RegistrationForm onSwitchToLogin={handleSwitchToLogin} />
+    );
+  }, [isAuthenticated, authScreen]);
 
   const handleScroll = (scrollTop: number) => {
     const headerHeight = 64;
@@ -38,6 +53,9 @@ const App: React.FC = () => {
         </main>
         <Footer />
       </ScrollableContent>
+
+      {/* Development dashboard - only shown in development mode */}
+      <DevDashboard />
     </div>
   );
 };

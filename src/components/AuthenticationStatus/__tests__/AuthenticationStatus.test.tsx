@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { AuthenticationStatus } from './AuthenticationStatus';
+import { AuthenticationStatus } from '../AuthenticationStatus';
+import type { FieldErrorInfo } from '@/types/errors';
 
 interface MockUser {
   id: string;
@@ -12,9 +13,10 @@ interface MockUseAuthReturn {
   user: MockUser | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  error: { message?: string } | null;
+  error: FieldErrorInfo | null;
   login: () => void;
   logout: () => void;
+  status: string;
 }
 
 const login = vi.fn();
@@ -22,13 +24,17 @@ const logout = vi.fn();
 
 let mockUseAuthReturn: MockUseAuthReturn;
 
-vi.mock('../../hooks/useAuth', () => ({
+vi.mock('../../../hooks/useAuth', () => ({
   useAuth: () => mockUseAuthReturn,
 }));
 
-vi.mock('../Form/ErrorInfo', () => ({
-  ErrorInfo: ({ error }: { error?: { message?: string } }) => (
-    <div data-testid="error-info">{error?.message}</div>
+vi.mock('../../../components/Form/ErrorInfo', () => ({
+  ErrorInfo: ({ error }: { error?: unknown }) => (
+    <div data-testid="error-info">
+      {error && typeof error === 'object' && 'message' in error
+        ? String(error.message)
+        : 'Unknown error'}
+    </div>
   ),
 }));
 
@@ -42,6 +48,7 @@ describe('AuthenticationStatus', () => {
       error: null,
       login,
       logout,
+      status: 'idle',
     };
   });
 
@@ -60,6 +67,7 @@ describe('AuthenticationStatus', () => {
       error: null,
       login,
       logout,
+      status: 'fulfilled',
     };
     render(<AuthenticationStatus />);
     expect(screen.getByText('Authenticated')).toBeInTheDocument();
@@ -78,6 +86,7 @@ describe('AuthenticationStatus', () => {
       error: null,
       login,
       logout,
+      status: 'pending',
     };
     render(<AuthenticationStatus />);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
@@ -92,6 +101,7 @@ describe('AuthenticationStatus', () => {
       error: { message: 'Test error' },
       login,
       logout,
+      status: 'rejected',
     };
     render(<AuthenticationStatus />);
     expect(screen.getByTestId('error-info')).toHaveTextContent('Test error');
@@ -110,6 +120,7 @@ describe('AuthenticationStatus', () => {
       error: null,
       login,
       logout,
+      status: 'fulfilled',
     };
     render(<AuthenticationStatus />);
     const logoutBtns = screen.getAllByText('Log Out');

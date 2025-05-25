@@ -1,10 +1,7 @@
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import clsx from 'clsx';
 import { Button } from '../Button';
-
-interface HeaderProps {
-  readonly scrolledPastHeader?: boolean;
-}
+import type { HeaderProps } from './Header.types';
 
 export const Header = ({ scrolledPastHeader }: HeaderProps) => {
   const { user, isAuthenticated, isLoading, error, login, logout } = useAuth();

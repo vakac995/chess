@@ -6,8 +6,8 @@ import {
   authErrorAtom,
   loginAtom,
   logoutAtom,
-} from '../store/authStore';
-import { LoadingStatus } from '../types/status';
+} from '@/store/authStore';
+import { LoadingStatus } from '@/types/status';
 
 /**
  * Hook that provides authentication state and actions

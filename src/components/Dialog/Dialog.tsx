@@ -1,11 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-
-interface DialogProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title?: string;
-  children: React.ReactNode;
-}
+import { useEffect, useRef } from 'react';
+import type { DialogProps } from './Dialog.types';
 
 const Dialog = ({ isOpen, onClose, title, children }: Readonly<DialogProps>) => {
   const dialogRef = useRef<HTMLDialogElement>(null);

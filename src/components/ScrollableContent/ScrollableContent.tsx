@@ -1,10 +1,5 @@
-import React, { useRef, useEffect } from 'react';
-
-interface ScrollableContentProps {
-  children: React.ReactNode;
-  onScroll?: (scrollTop: number) => void;
-  className?: string;
-}
+import { useRef, useEffect } from 'react';
+import type { ScrollableContentProps } from './ScrollableContent.types';
 
 const ScrollableContent = ({ children, onScroll, className = '' }: ScrollableContentProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);

@@ -1,0 +1,29 @@
+import React from 'react';
+import { formatRegistrationData } from '@/utils/formatting';
+import { dev } from '@utils/dev';
+import type { RegistrationDataDisplayProps } from './RegistrationDataDisplay.types';
+
+/**
+ * Component to display registration data in a readable format
+ */
+export const RegistrationDataDisplay: React.FC<RegistrationDataDisplayProps> = ({
+  data,
+  className = '',
+}) => {
+  // Log in development mode to help debug display issues
+  dev.debug('RegistrationDataDisplay received:', data);
+
+  if (!data) {
+    return <div className={`text-center ${className}`}>No registration data available</div>;
+  }
+
+  const formattedData = formatRegistrationData(data);
+
+  return (
+    <div
+      className={`bg-background/50 text-text mt-4 overflow-auto rounded p-2 text-left text-xs ${className}`}
+    >
+      <pre>{formattedData}</pre>
+    </div>
+  );
+};

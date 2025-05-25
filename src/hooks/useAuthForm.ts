@@ -1,11 +1,10 @@
 import { useAtom } from 'jotai';
 import { useCallback } from 'react';
-import { loginAtom, authErrorAtom } from '../store/authStore';
+import { loginAtom, authErrorAtom } from '@/store/authStore';
 import { useZodForm } from './useZodForm';
-import { loginFormAtoms, LoginFormData } from '../features/Authentication/atoms';
-import { loginSchema } from '../features/Authentication/schemas';
-import { LoadingStatus } from '../types/status';
-import { createError } from '../types/errors';
+import { loginFormAtoms, LoginFormData, loginSchema } from '@/features/Authentication';
+import { LoadingStatus } from '@/types/status';
+import { createError } from '@/types/errors';
 
 /**
  * Custom hook that connects React Hook Form with Jotai atoms for authentication

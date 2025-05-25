@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
+import type { ContainerProps } from './Container.types';
 
 const containerStyles = cva('w-full', {
   variants: {
@@ -59,14 +60,6 @@ const containerStyles = cva('w-full', {
     rounded: 'none',
   },
 });
-
-export interface ContainerProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof containerStyles> {
-  as?: React.ElementType;
-  gridCols?: string;
-  gap?: string;
-}
 
 export const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
   (

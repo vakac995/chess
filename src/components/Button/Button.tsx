@@ -1,6 +1,7 @@
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import React from 'react';
 import clsx from 'clsx';
+import type { ButtonProps } from './Button.types';
 
 const buttonStyles = cva(
   'font-semibold border rounded-button transition-colors duration-150 focus:outline-none',
@@ -38,10 +39,6 @@ const buttonStyles = cva(
     },
   }
 );
-
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    Omit<VariantProps<typeof buttonStyles>, 'disabled'> {}
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, intent, size, fullWidth, disabled, ...props }, ref) => {

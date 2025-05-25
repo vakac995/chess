@@ -53,11 +53,13 @@ chess/                          # Root project directory
 │   │   ├── useAuth.ts          # Example: Authentication logic hook
 │   │   ├── useAuthForm.ts      # Example: Hook specific to auth forms
 │   │   ├── useJotaiForm.ts     # Generic hook for Jotai-based forms with Zod
-│   │   └── useZodForm.ts       # Generic hook for Zod validation in forms
+│   │   ├── useZodForm.ts       # Generic hook for Zod validation in forms
+│   │   └── ...
 │   │   # Note: Chess game logic might reside in specific hooks or components
 │   │
 │   ├── store/                  # Global state management stores (e.g., Zustand)
-│   │   └── authStore.ts        # Example: Zustand store for authentication
+│   │   ├── authStore.ts        # Example: Zustand store for authentication
+│   │   └── ...
 │   │
 │   ├── context/                # React Context providers/consumers (if needed)
 │   │   └── ...
@@ -73,10 +75,12 @@ chess/                          # Root project directory
 │   ├── types/                  # Shared TypeScript type definitions
 │   │   ├── errors.ts           # Error type definitions
 │   │   ├── scss.d.ts           # SCSS module type definitions
-│   │   └── status.ts           # Status type definitions (e.g., loading, success)
+│   │   ├── status.ts           # Status type definitions (e.g., loading, success)
+│   │   └── ...
 │   │
 │   ├── utils/                  # Utility functions (shared across features)
-│   │   └── validation.ts       # Example: Shared validation helpers
+│   │   ├── validation.ts       # Example: Shared validation helpers
+│   │   └── ...
 │   │
 │   ├── __tests__/              # Integration/App-level tests
 │   │   └── App.test.tsx

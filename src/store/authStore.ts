@@ -1,6 +1,6 @@
 import { atom, WritableAtom, PrimitiveAtom } from 'jotai';
-import { LoadingStatus, AsyncState, createInitialAsyncState, StatusType } from '../types/status';
-import { createError, createDetailedError } from '../types/errors';
+import { LoadingStatus, AsyncState, createInitialAsyncState, StatusType } from '@/types/status';
+import { createError, createDetailedError } from '@/types/errors';
 
 export interface User {
   id: string;

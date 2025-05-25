@@ -1,25 +1,6 @@
-import React from 'react';
-import {
-  useFormContext,
-  Controller,
-  FieldValues,
-  Path,
-  ControllerRenderProps,
-  FieldError,
-} from 'react-hook-form';
-import { FieldErrorInfo } from '../../types/errors';
-
-interface RenderPropInput<TFormValues extends FieldValues> {
-  readonly field: ControllerRenderProps<TFormValues, Path<TFormValues>>;
-  readonly error?: FieldErrorInfo;
-}
-
-interface FormFieldProps<TFormValues extends FieldValues> {
-  readonly name: Path<TFormValues>;
-  readonly label?: string;
-  readonly className?: string;
-  readonly render: (props: RenderPropInput<TFormValues>) => React.ReactElement;
-}
+import { useFormContext, Controller, FieldValues } from 'react-hook-form';
+import { extractReactHookFormError } from '@/utils/error';
+import type { FormFieldProps } from './FormField.types';
 
 export const FormField = <TFormValues extends FieldValues>({
   name,
@@ -42,8 +23,9 @@ export const FormField = <TFormValues extends FieldValues>({
           control={control}
           name={name}
           render={({ field, fieldState }) => {
+            // Convert react-hook-form error to our standardized FieldErrorInfo type
             const enhancedError = fieldState.error
-              ? extractZodErrorInfo(fieldState.error)
+              ? extractReactHookFormError(fieldState.error)
               : undefined;
 
             return render({
@@ -56,13 +38,3 @@ export const FormField = <TFormValues extends FieldValues>({
     </div>
   );
 };
-
-function extractZodErrorInfo(error: FieldError): FieldErrorInfo {
-  if (!error) return { message: '' };
-
-  const message = error.message ?? 'Invalid input';
-
-  const enhancedError: FieldErrorInfo = { message };
-
-  return enhancedError;
-}

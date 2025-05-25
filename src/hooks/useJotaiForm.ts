@@ -1,6 +1,7 @@
 import { atom, Atom } from 'jotai';
-import { StatusType, LoadingStatus } from '../types/status';
-import { FieldErrorInfo } from '../types/errors';
+import { StatusType, LoadingStatus } from '@/types/status';
+import { FieldErrorInfo } from '@/types/errors';
+import { dev } from '@utils/dev';
 
 /**
  * Creates a set of form atoms for managing form state
@@ -45,15 +46,33 @@ export function combineFormAtoms<TCombined>(
 ): ReadonlyFormAtomReturn<TCombined> {
   const combinedFormAtom = atom<TCombined | null>(get => {
     const values = atoms.map(a => get(a.formAtom));
-    if (values.some(v => v === null)) {
+
+    // Debug information to help identify issues
+    dev.debug('combineFormAtoms values:', values);
+
+    // Filter out null values but proceed if at least one value exists
+    const validValues = values.filter(v => v !== null);
+    if (validValues.length === 0) {
       return null;
     }
-    return values.reduce<Partial<TCombined>>((acc, val) => {
-      if (typeof val === 'object' && val !== null) {
-        return { ...acc, ...(val as Record<string, unknown>) };
-      }
-      return acc;
-    }, {} as Partial<TCombined>) as TCombined;
+
+    try {
+      // Combine all non-null values
+      const result = validValues.reduce<Partial<TCombined>>((acc, val) => {
+        if (typeof val === 'object' && val !== null) {
+          return { ...acc, ...(val as Record<string, unknown>) };
+        }
+        return acc;
+      }, {} as Partial<TCombined>);
+
+      // Log the combined data for debugging
+      dev.debug('Combined form data:', result);
+
+      return result as TCombined;
+    } catch (error) {
+      console.error('Error combining form atoms:', error);
+      return null;
+    }
   });
 
   const combinedErrorAtom = atom<FieldErrorInfo | null>(get => {

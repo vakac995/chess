@@ -1,15 +1,15 @@
 import React from 'react';
 import { Button } from '../Button';
 import { Container } from '../Container';
+import type { Vision, VisionSwitcherProps } from './VisionSwitcher.types';
 
-type Vision = 'corporate' | 'casual';
-
-const VisionSwitcher: React.FC = () => {
+const VisionSwitcher: React.FC<VisionSwitcherProps> = ({ defaultVision = 'corporate' }) => {
   const [currentVision, setCurrentVision] = React.useState<Vision>(() => {
     const storedVision = localStorage.getItem('app-vision') as Vision | null;
     return (
-      (storedVision ?? (document.documentElement.getAttribute('data-vision') as Vision)) ||
-      'corporate'
+      storedVision ??
+      (document.documentElement.getAttribute('data-vision') as Vision) ??
+      defaultVision
     );
   });
 

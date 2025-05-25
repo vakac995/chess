@@ -2,16 +2,7 @@ import { useState } from 'react';
 import { Chessboard } from 'react-chessboard';
 import { Chess } from 'chess.js';
 import styles from './ChessBoard.module.scss';
-
-interface ChessBoardProps {
-  width?: number;
-}
-
-interface ChessMove {
-  from: string;
-  to: string;
-  promotion?: string;
-}
+import type { ChessBoardProps, ChessMove } from './ChessBoard.types';
 
 const ChessBoard = ({ width = 500 }: Readonly<ChessBoardProps>) => {
   const [game, setGame] = useState(new Chess());

@@ -1,8 +1,9 @@
-import { Form, FormField, ErrorInfo } from '../../../components/Form';
-import { useAuthForm } from '../../../hooks/useAuthForm';
-import { LoadingStatus } from '../../../types/status';
+import { Form, FormField, ErrorInfo } from '@/components/Form';
+import { useAuthForm } from '@/hooks/useAuthForm';
+import { LoadingStatus } from '@/types/status';
+import type { LoginFormProps } from './LoginForm.types';
 
-export function LoginForm() {
+export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
   const { form, onSubmit, isPending, displayError, formStatus } = useAuthForm();
 
   return (
@@ -58,6 +59,15 @@ export function LoginForm() {
           {isPending ? 'Logging in...' : 'Login'}
         </button>
       </Form>
+
+      <div className="mt-4 text-center">
+        <button
+          onClick={onSwitchToRegister}
+          className="text-primary hover:text-primary/80 text-sm underline"
+        >
+          Don&apos;t have an account? Register here
+        </button>
+      </div>
 
       {formStatus === LoadingStatus.FULFILLED && (
         <div className="mt-4 rounded border border-green-300 bg-green-100 p-3 text-green-700">

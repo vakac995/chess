@@ -1,12 +1,5 @@
-import { ReactNode } from 'react';
-import { FieldValues, SubmitHandler, UseFormReturn, FormProvider } from 'react-hook-form';
-
-interface FormProps<TFieldValues extends FieldValues> {
-  form: UseFormReturn<TFieldValues>;
-  onSubmit: SubmitHandler<TFieldValues>;
-  children: ReactNode;
-  className?: string;
-}
+import { FieldValues, FormProvider } from 'react-hook-form';
+import type { FormProps } from './Form.types';
 
 export const Form = <TFieldValues extends FieldValues>({
   form,

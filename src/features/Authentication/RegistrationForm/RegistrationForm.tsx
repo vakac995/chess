@@ -1,35 +1,42 @@
-import { useState, useCallback } from 'react';
-import { useAtom, useAtomValue } from 'jotai';
-import { Form, FormField, ErrorInfo } from '../../../components/Form';
-import { useZodForm } from '../../../hooks/useZodForm';
-import { basicInfoAtoms, personalInfoAtoms, registrationFormAtoms } from '../../Registration/atoms';
-import { LoadingStatus } from '../../../types/status';
-import { createError } from '../../../types/errors';
+import { useCallback } from 'react';
+import { useAtom } from 'jotai';
+import { Form, FormField, ErrorInfo } from '@/components/Form';
+import { useZodForm } from '@/hooks/useZodForm';
 import {
-  BasicInfoData,
-  basicInfoSchema,
-  PersonalInfoData,
-  personalInfoSchema,
-} from '../../Registration/schemas';
+  registrationStepAtom,
+  basicInfoAtoms,
+  personalInfoAtoms,
+  registrationFormAtoms,
+} from '../atoms';
+import { LoadingStatus } from '@/types/status';
+import { createError } from '@/types/errors';
+import { BasicInfoData, basicInfoSchema, PersonalInfoData, personalInfoSchema } from '../schemas';
+import { RegistrationDataDisplay } from './RegistrationDataDisplay';
+import { dev } from '@/utils';
+import type { RegistrationFormProps } from './RegistrationForm.types';
 
-export function RegistrationForm() {
-  const [step, setStep] = useState(1);
+export function RegistrationForm({ onSwitchToLogin }: Readonly<RegistrationFormProps>) {
+  // Form step state - stored in atom
+  const [step, setStep] = useAtom(registrationStepAtom);
+  // Registration status - combined data from both form steps
+  const [registrationData] = useAtom(registrationFormAtoms.formAtom); // This is typed by the atom as BasicInfoData & PersonalInfoData
+  const [combinedStatus] = useAtom(registrationFormAtoms.formStatusAtom);
+  const [combinedError] = useAtom(registrationFormAtoms.formErrorAtom);
 
-  const [basicDataFromAtom, setBasicInfoData] = useAtom(basicInfoAtoms.formAtom);
-  const [, setBasicInfoStatus] = useAtom(basicInfoAtoms.formStatusAtom);
+  // Basic info atoms
+  const [basicInfo, setBasicInfo] = useAtom(basicInfoAtoms.formAtom);
+  const [basicInfoStatus, setBasicInfoStatus] = useAtom(basicInfoAtoms.formStatusAtom);
   const [, setBasicInfoError] = useAtom(basicInfoAtoms.formErrorAtom);
 
-  const [, setPersonalInfoData] = useAtom(personalInfoAtoms.formAtom);
-  const [, setPersonalInfoStatus] = useAtom(personalInfoAtoms.formStatusAtom);
+  // Personal info atoms
+  const [personalInfo, setPersonalInfo] = useAtom(personalInfoAtoms.formAtom);
+  const [personalInfoStatus, setPersonalInfoStatus] = useAtom(personalInfoAtoms.formStatusAtom);
   const [, setPersonalInfoError] = useAtom(personalInfoAtoms.formErrorAtom);
 
-  const combinedDataForDisplay = useAtomValue(registrationFormAtoms.formAtom);
-  const combinedStatus = useAtomValue(registrationFormAtoms.formStatusAtom);
-  const combinedError = useAtomValue(registrationFormAtoms.formErrorAtom);
-
+  // Form setup using our atoms for initial values
   const basicInfoForm = useZodForm({
     schema: basicInfoSchema,
-    defaultValues: basicDataFromAtom || {
+    defaultValues: basicInfo || {
       email: '',
       password: '',
       confirmPassword: '',
@@ -37,10 +44,9 @@ export function RegistrationForm() {
     mode: 'onBlur',
   });
 
-  const personalInfoDataFromAtom = useAtomValue(personalInfoAtoms.formAtom);
   const personalInfoForm = useZodForm({
     schema: personalInfoSchema,
-    defaultValues: personalInfoDataFromAtom || {
+    defaultValues: personalInfo || {
       firstName: '',
       lastName: '',
       age: 0,
@@ -49,55 +55,111 @@ export function RegistrationForm() {
     mode: 'onBlur',
   });
 
+  /**
+   * Handle form submission for the basic information step (first step)
+   */
   const onSubmitBasicInfo = useCallback(
     (data: BasicInfoData) => {
-      setBasicInfoData(data);
+      // Store data in atom
+      setBasicInfo(data);
       setBasicInfoStatus(LoadingStatus.FULFILLED);
       setBasicInfoError(null);
+
+      // Log debug info in development
+      dev.debug('Basic info data stored', data);
+
+      // Move to next step
       setStep(2);
     },
-    [setBasicInfoData, setBasicInfoStatus, setBasicInfoError]
+    [setBasicInfo, setBasicInfoStatus, setBasicInfoError, setStep]
   );
 
+  /**
+   * Handle form submission for the personal information step (final step)
+   */
   const onSubmitPersonalInfo = useCallback(
     async (data: PersonalInfoData) => {
-      setPersonalInfoData(data);
+      // Set status to pending first to show loading state
       setPersonalInfoStatus(LoadingStatus.PENDING);
       setPersonalInfoError(null);
 
-      if (!basicDataFromAtom) {
+      // Validate that we have basic info data available
+      if (!basicInfo) {
         setPersonalInfoStatus(LoadingStatus.REJECTED);
-        setPersonalInfoError(createError('Basic information is missing. Please go back.'));
+        setPersonalInfoError(
+          createError('Basic information is missing. Please go back and complete step 1.')
+        );
         return;
       }
 
-      const combinedDataForApi = { ...basicDataFromAtom, ...data };
+      // Make sure the personal info data is fully populated
+      const personalInfoComplete =
+        data &&
+        typeof data.firstName === 'string' &&
+        typeof data.lastName === 'string' &&
+        typeof data.age === 'number' &&
+        typeof data.agreeToTerms === 'boolean';
+
+      if (!personalInfoComplete) {
+        console.warn('Personal info data is incomplete:', data);
+        setPersonalInfoStatus(LoadingStatus.REJECTED);
+        setPersonalInfoError(
+          createError('Personal information is incomplete. Please fill all required fields.')
+        );
+        return;
+      }
 
       try {
-        console.warn('Simulating API call with:', combinedDataForApi);
-        await new Promise(resolve => setTimeout(resolve, 150));
+        // Debug info in development
+        dev.logData('Simulating API call with registration data', {
+          ...basicInfo,
+          ...data,
+        });
+
+        // Simulate API delay (in real app, this would be an actual API call)
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Update atom state with personal info
+        setPersonalInfo(data);
+
+        // Update status to complete
         setPersonalInfoStatus(LoadingStatus.FULFILLED);
       } catch (error) {
+        // Handle errors gracefully
+        console.warn('Registration failed:', error);
+
         setPersonalInfoStatus(LoadingStatus.REJECTED);
         setPersonalInfoError(
           createError(
             error instanceof Error
               ? error.message
-              : 'An unexpected error occurred during registration.'
+              : 'An unexpected error occurred during registration. Please try again.'
           )
         );
       }
     },
-    [setPersonalInfoData, setPersonalInfoStatus, setPersonalInfoError, basicDataFromAtom]
+    [basicInfo, setPersonalInfo, setPersonalInfoStatus, setPersonalInfoError]
   );
 
   const handleBack = () => {
     setStep(1);
   };
 
-  const isSubmitting = combinedStatus === LoadingStatus.PENDING;
+  const isSubmitting = personalInfoStatus === LoadingStatus.PENDING;
   const submissionError = combinedError;
-  const submissionSuccess = combinedStatus === LoadingStatus.FULFILLED;
+  const submissionSuccess =
+    basicInfoStatus === LoadingStatus.FULFILLED && personalInfoStatus === LoadingStatus.FULFILLED;
+
+  // Error recovery handler
+  const handleRetry = useCallback(() => {
+    setPersonalInfoStatus(LoadingStatus.IDLE);
+    setPersonalInfoError(null);
+
+    // If we really can't recover, go back to step 1
+    if (!basicInfo) {
+      setStep(1);
+    }
+  }, [setPersonalInfoStatus, setPersonalInfoError, basicInfo, setStep]);
 
   return (
     <div className="rounded-card bg-background p-container-padding mx-auto max-w-md shadow-md">
@@ -108,17 +170,47 @@ export function RegistrationForm() {
       {combinedStatus === LoadingStatus.REJECTED && submissionError && (
         <div className="border-accent/30 bg-accent/10 text-accent mb-4 rounded border p-3">
           <ErrorInfo error={submissionError} />
+          <button onClick={handleRetry} className="text-primary mt-2 text-sm underline">
+            Try again
+          </button>
         </div>
       )}
 
       {submissionSuccess ? (
-        <div className="p-4 text-center">
-          <div className="mb-2 text-3xl text-green-500">✓</div>
-          <h3 className="text-text mb-2 text-lg font-medium">Registration Complete!</h3>
-          <p className="text-text-muted">Thank you for registering.</p>
-          <pre className="bg-background/50 text-text mt-4 overflow-auto rounded p-2 text-left text-xs">
-            {JSON.stringify(combinedDataForDisplay, null, 2)}
-          </pre>
+        <div className="p-4">
+          <div className="mb-2 text-center text-3xl text-green-500">✓</div>
+          <h3 className="text-text mb-2 text-center text-lg font-medium">Registration Complete!</h3>
+          <p className="text-text-muted mb-4 text-center">Thank you for registering.</p>
+
+          {/* Display registration data from the combined atom directly */}
+          <RegistrationDataDisplay data={registrationData} className="mt-4" />
+
+          {/* Debug data display in development mode */}
+          {dev.when('debugUI', () => (
+            <div className="border-border bg-background/30 mt-4 rounded border p-3 text-xs">
+              <h4 className="mb-1 font-semibold">Registration Data (Debug)</h4>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <p className="text-primary font-medium">Basic Info:</p>
+                  <pre className="mt-1 overflow-auto">
+                    {JSON.stringify(basicInfo, null, 2) || 'null'}
+                  </pre>
+                </div>
+                <div>
+                  <p className="text-primary font-medium">Personal Info:</p>
+                  <pre className="mt-1 overflow-auto">
+                    {JSON.stringify(personalInfo, null, 2) || 'null'}
+                  </pre>
+                </div>
+              </div>
+              <div className="mt-2">
+                <p className="text-primary font-medium">Combined Data:</p>
+                <pre className="mt-1 overflow-auto">
+                  {JSON.stringify(registrationData, null, 2) || 'null'}
+                </pre>
+              </div>
+            </div>
+          ))}
         </div>
       ) : (
         <>
@@ -273,6 +365,17 @@ export function RegistrationForm() {
             </Form>
           )}
         </>
+      )}
+
+      {step === 1 && (
+        <div className="mt-4 text-center">
+          <button
+            onClick={onSwitchToLogin}
+            className="text-primary hover:text-primary/80 text-sm underline"
+          >
+            Already have an account? Login here
+          </button>
+        </div>
       )}
     </div>
   );
