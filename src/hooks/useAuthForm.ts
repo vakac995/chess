@@ -1,16 +1,29 @@
 import { useAtom } from 'jotai';
 import { useCallback } from 'react';
+import { UseFormReturn } from 'react-hook-form';
 import { loginAtom, authErrorAtom } from '@/store/authStore';
 import { useZodForm } from './useZodForm';
 import { loginFormAtoms, LoginFormData, loginSchema } from '@/features/Authentication';
-import { LoadingStatus } from '@/types/status';
-import { createError } from '@/types/errors';
+import { LoadingStatus, StatusType } from '@/types/status';
+import { createError, FieldErrorInfo } from '@/types/errors';
+import { Nullable } from '@/types/index';
+
+/**
+ * Interface for the useAuthForm hook return type
+ */
+export interface UseAuthFormReturn {
+  readonly form: UseFormReturn<LoginFormData>;
+  readonly onSubmit: (data: LoginFormData) => Promise<boolean>;
+  readonly isPending: boolean;
+  readonly displayError: Nullable<FieldErrorInfo>;
+  readonly formStatus: StatusType;
+}
 
 /**
  * Custom hook that connects React Hook Form with Jotai atoms for authentication
  * @returns Form methods, submission handler, and relevant state
  */
-export function useAuthForm() {
+export function useAuthForm(): UseAuthFormReturn {
   const [, login] = useAtom(loginAtom);
   const [, setFormData] = useAtom(loginFormAtoms.formAtom);
   const [formError, setFormError] = useAtom(loginFormAtoms.formErrorAtom);

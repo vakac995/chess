@@ -6,11 +6,11 @@ import { z, ZodType, ZodTypeDef } from 'zod';
 /**
  * Interface for the useZodForm hook options
  */
-interface UseZodFormProps<TSchema extends ZodType<FieldValues, ZodTypeDef, FieldValues>> {
-  schema: TSchema;
-  defaultValues?: Optional<Partial<z.infer<TSchema>>>;
-  values?: Optional<Partial<z.infer<TSchema>>>;
-  validationMode?: Optional<'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all'>;
+export interface UseZodFormProps<TSchema extends ZodType<FieldValues, ZodTypeDef, FieldValues>> {
+  readonly schema: TSchema;
+  readonly defaultValues?: Optional<Partial<z.infer<TSchema>>>;
+  readonly values?: Optional<Partial<z.infer<TSchema>>>;
+  readonly validationMode?: Optional<'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all'>;
 }
 
 /**

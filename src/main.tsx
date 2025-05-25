@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'jotai';
-import App from './App';
+import { App } from './App';
 import './styles/index.scss';
 
 type Vision = 'corporate' | 'casual';

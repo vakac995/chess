@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Optional } from '@/types';
 
 // Container variant types
 export type ContainerPadding = 'default' | 'none';
@@ -20,14 +21,14 @@ export type ContainerRounded =
 
 // Container component props interface
 export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
-  readonly as?: React.ElementType;
-  readonly padding?: ContainerPadding;
-  readonly display?: ContainerDisplay;
-  readonly orientation?: ContainerOrientation;
-  readonly items?: ContainerItems;
-  readonly justify?: ContainerJustify;
-  readonly shadow?: ContainerShadow;
-  readonly rounded?: ContainerRounded;
-  readonly gridCols?: string;
-  readonly gap?: string;
+  readonly as?: Optional<React.ElementType>;
+  readonly padding?: Optional<ContainerPadding>;
+  readonly display?: Optional<ContainerDisplay>;
+  readonly orientation?: Optional<ContainerOrientation>;
+  readonly items?: Optional<ContainerItems>;
+  readonly justify?: Optional<ContainerJustify>;
+  readonly shadow?: Optional<ContainerShadow>;
+  readonly rounded?: Optional<ContainerRounded>;
+  readonly gridCols?: Optional<string>;
+  readonly gap?: Optional<string>;
 }

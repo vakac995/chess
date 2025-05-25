@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi, Mock } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import App from '../App';
+import { App } from '../App';
 import { useAuth } from '@hooks/useAuth';
 
 vi.mock('../hooks/useAuth', () => ({
