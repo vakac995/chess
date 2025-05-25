@@ -1,8 +1,7 @@
-import React from 'react';
+import type { ReactChildren, NoArgFunction, Optional } from '@/types';
 
-export interface DialogProps {
+export interface DialogProps extends ReactChildren {
   readonly isOpen: boolean;
-  readonly onClose: () => void;
-  readonly title?: string;
-  readonly children: React.ReactNode;
+  readonly onClose: NoArgFunction;
+  readonly title?: Optional<string>;
 }

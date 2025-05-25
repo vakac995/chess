@@ -1,3 +1,5 @@
+import type { Optional, NoArgFunction } from '@/types';
+
 export interface LoginFormProps {
-  readonly onSwitchToRegister?: () => void;
+  readonly onSwitchToRegister?: Optional<NoArgFunction>;
 }

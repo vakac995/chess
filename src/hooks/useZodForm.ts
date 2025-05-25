@@ -1,3 +1,4 @@
+import type { Optional } from '@/types';
 import { useForm, UseFormProps, UseFormReturn, FieldValues } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z, ZodType, ZodTypeDef } from 'zod';
@@ -7,9 +8,9 @@ import { z, ZodType, ZodTypeDef } from 'zod';
  */
 interface UseZodFormProps<TSchema extends ZodType<FieldValues, ZodTypeDef, FieldValues>> {
   schema: TSchema;
-  defaultValues?: Partial<z.infer<TSchema>>;
-  values?: Partial<z.infer<TSchema>>;
-  validationMode?: 'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all';
+  defaultValues?: Optional<Partial<z.infer<TSchema>>>;
+  values?: Optional<Partial<z.infer<TSchema>>>;
+  validationMode?: Optional<'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all'>;
 }
 
 /**

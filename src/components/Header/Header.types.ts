@@ -1,3 +1,5 @@
+import type { Optional } from '@/types';
+
 export interface HeaderProps {
-  readonly scrolledPastHeader?: boolean;
+  readonly scrolledPastHeader?: Optional<boolean>;
 }

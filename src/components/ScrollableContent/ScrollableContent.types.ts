@@ -1,7 +1,5 @@
-import React from 'react';
+import type { ReactChildren, ReactClassNameProps, Optional } from '@/types';
 
-export interface ScrollableContentProps {
-  readonly children: React.ReactNode;
-  readonly onScroll?: (scrollTop: number) => void;
-  readonly className?: string;
+export interface ScrollableContentProps extends ReactChildren, ReactClassNameProps {
+  readonly onScroll?: Optional<(scrollTop: number) => void>;
 }

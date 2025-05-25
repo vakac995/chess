@@ -1,4 +1,5 @@
 import React from 'react';
+import type { ReactClassNameProps } from '@/types';
 import { FieldValues, Path, ControllerRenderProps } from 'react-hook-form';
 import { FieldErrorInfo } from '@/types/errors';
 
@@ -9,9 +10,8 @@ export interface RenderPropInput<TFormValues extends FieldValues> {
 }
 
 // FormField component props interface
-export interface FormFieldProps<TFormValues extends FieldValues> {
+export interface FormFieldProps<TFormValues extends FieldValues> extends ReactClassNameProps {
   readonly name: Path<TFormValues>;
   readonly label?: string;
-  readonly className?: string;
   readonly render: (props: RenderPropInput<TFormValues>) => React.ReactElement;
 }

@@ -1,3 +1,5 @@
+import type { Optional } from '@/types';
+
 export interface DevDashboardProps {
-  readonly collapsed?: boolean;
+  readonly collapsed?: Optional<boolean>;
 }

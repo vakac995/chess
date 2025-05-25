@@ -1,6 +1,6 @@
+import type { ReactClassNameProps, Nullable } from '@/types';
 import { RegistrationData } from '../schemas';
 
-export interface RegistrationDataDisplayProps {
-  readonly data: Partial<RegistrationData> | null;
-  readonly className?: string;
+export interface RegistrationDataDisplayProps extends ReactClassNameProps {
+  readonly data: Nullable<Partial<RegistrationData>>;
 }

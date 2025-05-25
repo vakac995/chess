@@ -1,3 +1,5 @@
+import type { Optional } from '@/types';
+
 export interface AuthenticationStatusProps {
-  readonly compact?: boolean;
+  readonly compact?: Optional<boolean>;
 }

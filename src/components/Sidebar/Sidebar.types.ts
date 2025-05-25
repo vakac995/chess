@@ -1,7 +1,6 @@
-import React from 'react';
+import type { ReactChildren, NoArgFunction } from '@/types';
 
-export interface SidebarProps {
-  readonly children: React.ReactNode;
+export interface SidebarProps extends ReactChildren {
   readonly isOpen: boolean;
-  readonly onToggle: () => void;
+  readonly onToggle: NoArgFunction;
 }

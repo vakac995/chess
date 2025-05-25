@@ -23,11 +23,11 @@ export type ReactChildren = {
 };
 
 export type ReactClassNameProps = {
-  readonly className?: string;
+  readonly className?: Optional<string>;
 };
 
 export type ReactStylableProps = ReactClassNameProps & {
-  readonly style?: React.CSSProperties;
+  readonly style?: Optional<React.CSSProperties>;
 };
 
 // Common component type utilities

@@ -1,3 +1,5 @@
+import type { Optional } from '@/types';
+
 export interface FooterProps {
-  readonly showVersion?: boolean;
+  readonly showVersion?: Optional<boolean>;
 }
