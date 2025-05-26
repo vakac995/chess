@@ -10,6 +10,7 @@ import {
   useDev,
   useDevPerformance,
   withDevTools,
+  getRandomNumber,
 } from '@/utils';
 import type { DevDashboardProps } from './DevDashboard.types';
 
@@ -17,6 +18,8 @@ import type { DevDashboardProps } from './DevDashboard.types';
  * Example component demonstrating all development utilities
  */
 const ExampleComponent: React.FC<{ data: unknown; name: string }> = ({ data, name }) => {
+  const randomRef = React.useRef(getRandomNumber()).current;
+
   const devUtils = useDev();
 
   useDevPerformance('ExampleComponent', { name });
@@ -28,12 +31,12 @@ const ExampleComponent: React.FC<{ data: unknown; name: string }> = ({ data, nam
 
     setTimeout(() => {
       devUtils.perfEnd('data-processing');
-    }, Math.random() * 100);
+    }, randomRef * 100);
 
     return () => {
       devUtils.debug('ExampleComponent unmounting');
     };
-  }, [devUtils, name, data]);
+  }, [data, devUtils, name, randomRef]);
 
   const handleClick = () => {
     devUtils.info('Button clicked', { name });
@@ -95,17 +98,20 @@ const EnhancedExampleComponent = withDevTools(ExampleComponent, {
  * Main development dashboard component
  */
 export const DevDashboard: React.FC<DevDashboardProps> = ({ collapsed = false }) => {
-  const [exampleData, setExampleData] = React.useState({
+  const randomNumber = React.useRef(getRandomNumber()).current;
+
+  const [exampleData, setExampleData] = React.useState(() => ({
     timestamp: Date.now(),
-    random: Math.random(),
+    random: randomNumber,
     items: ['item1', 'item2', 'item3'],
-  });
+  }));
 
   const updateData = () => {
+    const newRandom = getRandomNumber();
     setExampleData({
       timestamp: Date.now(),
-      random: Math.random(),
-      items: [`item${Math.floor(Math.random() * 100)}`],
+      random: newRandom,
+      items: [`item${Math.floor(newRandom * 100)}`],
     });
   };
 
