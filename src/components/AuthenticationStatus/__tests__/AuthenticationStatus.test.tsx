@@ -77,7 +77,10 @@ describe('AuthenticationStatus', () => {
     setup({ error: testError });
     expect(screen.getByTestId('error-info')).toHaveTextContent('Login failed');
     // Match the actual call signature where a second undefined argument might be passed by React/Testing Library
-    expect(ErrorInfo).toHaveBeenCalledWith(expect.objectContaining({ error: testError }), undefined);
+    expect(ErrorInfo).toHaveBeenCalledWith(
+      expect.objectContaining({ error: testError }),
+      undefined
+    );
   });
 
   describe('Compact mode', () => {

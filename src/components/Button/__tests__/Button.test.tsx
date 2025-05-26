@@ -84,7 +84,7 @@ describe('Button', () => {
 
   it('renders children correctly', () => {
     render(
-      <Button {...defaultProps} >
+      <Button {...defaultProps}>
         <span>Test Child</span>
       </Button>
     );
