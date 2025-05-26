@@ -11,7 +11,10 @@ import {
   LoadingStatus,
   createError,
 } from '@/types';
-import { loginFormAtoms } from '@/atoms';
+import { createFormAtom } from './useJotaiForm';
+
+// Create form atoms directly here to avoid circular dependency
+const loginFormAtoms = createFormAtom<LoginFormData>();
 
 /**
  * Interface for the useAuthForm hook return type

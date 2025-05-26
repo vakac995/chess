@@ -1,5 +1,4 @@
 export {
-  loginFormAtoms,
   registrationStepAtom,
   basicInfoAtoms,
   personalInfoAtoms,

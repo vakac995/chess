@@ -6,8 +6,6 @@ import { LoadingStatus } from '@/types';
 
 export type LoginFormData = z.infer<typeof loginSchema>;
 
-export const loginFormAtoms = createFormAtom<LoginFormData>();
-
 export const registrationStepAtom = atom<1 | 2>(1);
 
 export const basicInfoAtoms = createFormAtom<BasicInfoData>();
