@@ -26,16 +26,16 @@
 ## 📊 Task Progress Overview
 
 **Total Tasks**: 27  
-**Completed**: 22  
+**Completed**: 24  
 **In Progress**: 0  
-**Pending**: 5
+**Pending**: 3
 
 ### Progress by Phase
 
 - **Phase 1 (Foundation)**: 8/8 ✅ (100% complete)
 - **Phase 2 (Interface Standardization)**: 6/6 ✅ (100% complete)
 - **Phase 3 (Export Pattern Unification)**: 7/7 ✅ (100% complete)
-- **Phase 4 (Advanced Patterns)**: 1/6 ⏳ (16.7% complete)
+- **Phase 4 (Advanced Patterns)**: 3/6 ⏳ (50% complete)
 
 ### Current State Analysis
 
@@ -43,7 +43,7 @@
 - ✅ **Interface Standardization Complete**: ALL components follow `{ComponentName}Props` naming, ALL hooks follow `Use{HookName}Props`/`Use{HookName}Return` naming patterns, ALL interfaces use proper readonly modifiers and Optional<T> pattern, ALL .types.ts files import from @/types
 - ✅ **Export Pattern Unification Complete**: ALL components use named exports, ALL imports use path aliases (@/), ALL index files follow consistent re-export patterns, circular dependencies resolved
 - ✅ **Validation Complete**: TypeScript compilation passes, production build successful, ESLint clean, dev server starts successfully, all tests pass (13/13)
-- 🎯 **Next Priority**: Begin Phase 4 Advanced Patterns starting with A4.1 (Standardize hook return types)
+- 🎯 **Next Priority**: Complete Phase 4 Advanced Patterns, focusing on A4.4 (Standardize utility function interfaces)
 
 ---
 
@@ -87,14 +87,14 @@
 
 ### 🔧 **Phase 4: Advanced Patterns**
 
-| Task ID | Task                                    | Status      | Priority | Assignee | Notes                                                                                                |
-| ------- | --------------------------------------- | ----------- | -------- | -------- | ---------------------------------------------------------------------------------------------------- |
-| A4.1    | Standardize hook return types           | ✅ Complete | Medium   | AI       | All hooks now have standardized return types                                                         |
-| A4.2    | Unify Jotai atom patterns               | ✅ Complete | Medium   | AI       | Reviewed existing patterns; deemed consistent. Documented standard patterns.                       |
-| A4.3    | Consolidate form validation patterns    | 📝 Todo     | Medium   | AI       | Unified Zod schema patterns                                                                          |
-| A4.4    | Standardize utility function interfaces | 📝 Todo     | Low      | AI       | Consistent utility function signatures       |
-| A4.5    | Create pattern documentation            | 📝 Todo     | Low      | AI       | Document established patterns for future use |
-| A4.6    | Final validation and cleanup            | 📝 Todo     | High     | AI       | Complete project validation                  |
+| Task ID | Task                                    | Status      | Priority | Assignee | Notes                                                                        |
+| ------- | --------------------------------------- | ----------- | -------- | -------- | ---------------------------------------------------------------------------- |
+| A4.1    | Standardize hook return types           | ✅ Complete | Medium   | AI       | All hooks now have standardized return types                                 |
+| A4.2    | Unify Jotai atom patterns               | ✅ Complete | Medium   | AI       | Reviewed existing patterns; deemed consistent. Documented standard patterns. |
+| A4.3    | Consolidate form validation patterns    | ✅ Complete | Medium   | AI       | Reviewed Zod schema patterns; deemed consistent. Documented standard patterns. |
+| A4.4    | Standardize utility function interfaces | 📝 Todo     | Low      | AI       | Consistent utility function signatures                                       |
+| A4.5    | Create pattern documentation            | 📝 Todo     | Low      | AI       | Document established patterns for future use                                 |
+| A4.6    | Final validation and cleanup            | 📝 Todo     | High     | AI       | Complete project validation                                                  |
 
 ---
 
@@ -205,7 +205,68 @@ interface UseAuthFormReturn {
 
 ### **Currently Working On**: Phase 4: Advanced Patterns
 
-### **Next Task**: A4.2 - Unify Jotai atom patterns
+### **Next Task**: A4.4 - Standardize utility function interfaces
+
+### **Completed Task**: A4.3 - Consolidate form validation patterns ✅
+
+**Task A4.3 Complete**: ✅ Zod schema patterns reviewed and documented.
+
+**Implementation Details**:
+
+- Reviewed Zod schema definitions in `src/schemas/Authentication.schemas.ts` and helper utilities in `src/utils/validation.ts`.
+- Existing patterns for defining and composing Zod schemas are found to be consistent, well-structured, and leverage reusable components effectively. This aligns with the goals of F1.4 (Consolidate duplicate schemas).
+- Key observed patterns (which are considered standard for this project):
+    1.  **Reusable Base Fields**: Define common atomic field validators (e.g., `emailField`, `basicPasswordField`) once and reuse them.
+        ```typescript
+        // Example: src/schemas/Authentication.schemas.ts
+        const emailField = z.string().min(1, { message: 'Email is required' }).email({ message: 'Invalid email format' });
+        ```
+    2.  **Field Factories**: Use functions to create similar field validators that vary slightly (e.g., `createNameField`).
+        ```typescript
+        // Example: src/schemas/Authentication.schemas.ts
+        const createNameField = (fieldName: string) => z.string().min(1, `${fieldName} is required`);
+        const firstNameField = createNameField('First name');
+        ```
+    3.  **Custom Refinements with `createSuperRefine`**: For complex single-field validations requiring detailed, structured error messages, use the `createSuperRefine` utility from `src/utils/validation.ts`. This ensures consistent error object shapes.
+        ```typescript
+        // Example: src/schemas/Authentication.schemas.ts
+        const strongPasswordField = basicPasswordField.superRefine(isStrongPasswordCheck);
+        // isStrongPasswordCheck is defined in src/utils/validation.ts using createSuperRefine
+        ```
+    4.  **Standard `.refine()` for Cross-Field/Simple Validations**: Use Zod's built-in `.refine()` for cross-field validations (e.g., password confirmation) or simpler single-field checks. Centralize error message objects for these if reused.
+        ```typescript
+        // Example: src/schemas/Authentication.schemas.ts
+        const passwordConfirmationRefinement = (data: { password: string; confirmPassword: string }) => data.password === data.confirmPassword;
+        const passwordConfirmationError = { message: "Passwords don't match", path: ['confirmPassword'] as ['confirmPassword'] };
+        // ...
+        .refine(passwordConfirmationRefinement, passwordConfirmationError)
+        ```
+    5.  **Schema Composition**: Build larger schemas by combining reusable field validators and applying necessary refinements.
+    6.  **Environment-Specific Validations**: Implement logic (e.g., `isValidPasswordForEnvironmentCheck`) to adjust validation rules based on the environment (production vs. development/testing).
+    7.  **Structured Error Messages**: Leverage `createDetailedError` (typically via `createSuperRefine`) to provide rich error information (message, info, description, icon) for better UI feedback.
+- No code changes were required as the existing patterns already meet a high standard of consistency and reusability.
+- The `baseRegistrationObjectSchema` and `environmentAwareSchema` in `src/schemas/Authentication.schemas.ts` were noted. While their direct usage isn't extensive, their patterns are consistent. Their necessity can be reviewed separately if desired, but they don't violate consolidation principles.
+
+**Result**: Zod schema and validation patterns are consistent and well-documented. The next task is A4.4.
+
+### **Completed Task**: A4.2 - Unify Jotai atom patterns ✅
+
+**Task A4.2 Complete**: ✅ Jotai atom patterns reviewed and documented.
+
+**Implementation Details**:
+
+- Reviewed Jotai atom usage across `src/atoms/`, `src/features/Authentication/atoms.ts` (Note: this file was listed in grep but doesn't exist, the relevant file is `src/atoms/Authentication.atoms.ts`), and `src/hooks/useJotaiForm.ts`.
+- Identified consistent patterns:
+  1.  **Primary State Atoms**: e.g., `atom(initialState)` for core state.
+  2.  **Derived Read-only Atoms**: e.g., `atom(get => ...)` for computed values.
+  3.  **Action Atoms**: e.g., `atom(null, (get, set, update) => ...)` for state-modifying logic.
+  4.  **Form Atom Factories**: `createFormAtom` from `useJotaiForm.ts` standardizes creation of `formAtom`, `formErrorAtom`, `formStatusAtom` for forms.
+  5.  **Combined Form Atoms**: `combineFormAtoms` from `useJotaiForm.ts` for aggregating multiple form atom sets.
+  6.  **Simple State Atoms**: Basic `atom()` for straightforward state needs.
+- Existing patterns are deemed consistent and well-structured, requiring no code changes for unification.
+- Documentation of these patterns is added to this plan.
+
+**Result**: Jotai atom patterns are consistent. The next task is A4.3.
 
 ### **Completed Task**: A4.1 - Standardize hook return types ✅
 
@@ -348,9 +409,6 @@ interface UseAuthFormReturn {
   - Validated ALL optional props use `Optional<T>` pattern consistently
   - Confirmed TypeScript compilation, production build, ESLint, and dev server all pass
 - 🎉 **PHASE 2 INTERFACE STANDARDIZATION 100% COMPLETE**: All 6 interface standardization tasks completed
-
-### **May 27, 2025**
-
 - ✅ **E3.1-E3.4 VERIFIED COMPLETE**: Export pattern analysis revealed all components already use named exports
   - Verified ALL components use named exports (no default exports found)
   - Verified ALL component index files use consistent re-export patterns
@@ -375,6 +433,13 @@ interface UseAuthFormReturn {
   - Hook index exports updated to export `UseZodFormReturn` type for consistent access
   - Function signatures updated to return `UseZodFormReturn<TSchema>` instead of generic `UseFormReturn`
   - Type safety enhanced for Zod-based forms while maintaining compatibility
+- ✅ **A4.2 VERIFIED COMPLETE**: Jotai atom patterns reviewed and documented
+  - Existing patterns are consistent and well-structured
+  - Documented standard patterns for future reference
+- ✅ **A4.3 VERIFIED COMPLETE**: Zod schema patterns reviewed and documented
+  - Existing patterns for defining and composing Zod schemas are consistent and well-structured
+  - Leveraged reusable components effectively, aligning with consolidation principles
+  - Documented standard patterns for future reference
 
 ---
 
@@ -415,4 +480,4 @@ interface UseAuthFormReturn {
 
 ---
 
-_Last Updated: May 26, 2025 - Phase 4 A4.1 Hook return types standardization complete (22/27 tasks, 81.5% complete)_
+_Last Updated: May 26, 2025 - Phase 4 A4.3 Form validation patterns consolidation complete (24/27 tasks, 88.9% complete)_
