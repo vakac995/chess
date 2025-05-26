@@ -1,15 +1,15 @@
 export type StorageType = 'localStorage' | 'sessionStorage';
 
 export interface StorageResult<T> {
-  success: boolean;
-  value?: T;
-  error?: Error;
+  readonly success: boolean;
+  readonly value?: T;
+  readonly error?: Error;
 }
 
 export interface StorageValidationOptions {
-  validateSchema?: boolean;
-  allowNull?: boolean;
-  maxSize?: number; // in bytes
+  readonly validateSchema?: boolean;
+  readonly allowNull?: boolean;
+  readonly maxSize?: number; // in bytes
 }
 
 const MAX_STORAGE_SIZE_BYTES = 2 * 1024 * 1024; // === 2MB

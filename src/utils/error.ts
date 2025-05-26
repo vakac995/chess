@@ -152,8 +152,8 @@ export async function createErrorFromResponse(
  * @template TFields The type of form fields
  */
 export function mapValidationErrorsToFields<TFields>(
-  errors: Array<ValidationErrorInfo>,
-  fieldMap?: Record<string, keyof TFields>
+  errors: ReadonlyArray<ValidationErrorInfo>,
+  fieldMap?: Readonly<Record<string, keyof TFields>>
 ): Partial<Record<keyof TFields, ValidationErrorInfo>> {
   const result: Partial<Record<keyof TFields, ValidationErrorInfo>> = {};
 

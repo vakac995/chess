@@ -23,7 +23,7 @@ export function safeStringify(data: unknown, indent = 2, fallback = 'No data ava
  * @param data Registration data
  * @returns Formatted string for display
  */
-export function formatRegistrationData(data: Record<string, unknown> | null): string {
+export function formatRegistrationData(data: Readonly<Record<string, unknown>> | null): string {
   if (!data) return 'No registration data available';
 
   // Create a copy to avoid modifying the original

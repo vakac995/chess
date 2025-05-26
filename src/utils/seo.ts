@@ -2,19 +2,19 @@
  * Types for page metadata
  */
 export interface PageMetadata {
-  title: string;
-  description: string;
-  keywords?: string[];
-  canonicalUrl?: string;
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
-  ogUrl?: string;
-  twitterCard?: 'summary' | 'summary_large_image';
-  twitterTitle?: string;
-  twitterDescription?: string;
-  twitterImage?: string;
-  noIndex?: boolean;
+  readonly title: string;
+  readonly description: string;
+  readonly keywords?: readonly string[];
+  readonly canonicalUrl?: string;
+  readonly ogTitle?: string;
+  readonly ogDescription?: string;
+  readonly ogImage?: string;
+  readonly ogUrl?: string;
+  readonly twitterCard?: 'summary' | 'summary_large_image';
+  readonly twitterTitle?: string;
+  readonly twitterDescription?: string;
+  readonly twitterImage?: string;
+  readonly noIndex?: boolean;
 }
 
 /**
@@ -34,7 +34,7 @@ export const defaultMetadata: PageMetadata = {
  * @param pageMetadata - Page-specific metadata
  * @returns Combined metadata
  */
-export function mergeMetadata(pageMetadata: Partial<PageMetadata>): PageMetadata {
+export function mergeMetadata(pageMetadata: Readonly<Partial<PageMetadata>>): PageMetadata {
   // Ensure keywords is always an array, even if undefined in pageMetadata
   const mergedKeywords = pageMetadata.keywords
     ? [...(defaultMetadata.keywords || []), ...pageMetadata.keywords]
@@ -52,7 +52,7 @@ export function mergeMetadata(pageMetadata: Partial<PageMetadata>): PageMetadata
  * Updates document title and meta tags based on provided metadata
  * @param metadata - The metadata to apply to the document
  */
-export function updateDocumentMetadata(metadata: PageMetadata): void {
+export function updateDocumentMetadata(metadata: Readonly<PageMetadata>): void {
   // Update document title
   document.title = metadata.title;
 
