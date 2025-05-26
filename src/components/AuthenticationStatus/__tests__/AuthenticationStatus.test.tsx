@@ -137,6 +137,11 @@ describe('AuthenticationStatus', () => {
   it('does not display username if not available in non-compact mode', () => {
     setup({ isAuthenticated: true, user: { id: '1', email: 'test@example.com' } });
     expect(screen.queryByText(/Username:/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/Status:/i)).toHaveTextContent('Authenticated');
+    expect(screen.getByText(/User ID: 1/i)).toBeInTheDocument();
+    expect(screen.getByText(/Email: test@example.com/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Log In \(Test\)/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /Log Out/i })).toBeEnabled();
   });
 
   it('does not display username in compact mode even if available', () => {
@@ -146,6 +151,9 @@ describe('AuthenticationStatus', () => {
       compact: true,
     });
     expect(screen.queryByText(/Username:/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/test@example.com/i)).toBeInTheDocument();
+    expect(screen.getByText(/Status:/i)).toHaveTextContent('Authenticated');
+    expect(screen.getByRole('button', { name: /Logout/i })).toBeEnabled();
   });
 
   it('matches snapshot in default state', () => {
