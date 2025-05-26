@@ -31,7 +31,7 @@ export function RegistrationForm({ onSwitchToLogin }: Readonly<RegistrationFormP
 
   const basicInfoForm = useZodForm({
     schema: basicInfoSchema,
-    defaultValues: basicInfo || {
+    defaultValues: basicInfo ?? {
       email: '',
       password: '',
       confirmPassword: '',
@@ -41,7 +41,7 @@ export function RegistrationForm({ onSwitchToLogin }: Readonly<RegistrationFormP
 
   const personalInfoForm = useZodForm({
     schema: personalInfoSchema,
-    defaultValues: personalInfo || {
+    defaultValues: personalInfo ?? {
       firstName: '',
       lastName: '',
       age: 0,
