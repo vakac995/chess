@@ -6,33 +6,37 @@ This document describes the comprehensive development utilities system designed 
 
 The development utilities system consists of three main modules:
 
-1. **`src/utils/dev.ts`** - Core development utilities
-2. **`src/utils/devReact.tsx`** - React-specific development utilities
-3. **`src/components/DevDashboard/`** - Example implementation and dashboard
+1.  **`src/utils/dev.ts`** - Core development utilities
+2.  **`src/utils/devReact.tsx`** - React-specific development utilities
+3.  **`src/components/DevDashboard/`** - Example implementation and dashboard
 
 ## Core Features
 
 ### 🎯 **Type-Safe & Centralized**
-- Single import for all development utilities
-- TypeScript support throughout
-- Consistent API across the entire project
+
+*   Single import for all development utilities
+*   TypeScript support throughout
+*   Consistent API across the entire project
 
 ### 🌲 **Tree-Shakable**
-- Completely removed from production builds
-- No performance impact in production
-- Smart conditional execution
+
+*   Completely removed from production builds
+*   No performance impact in production
+*   Smart conditional execution
 
 ### ⚙️ **Configurable**
-- Runtime configuration for different dev features
-- Persistent settings via localStorage
-- Granular control over functionality
+
+*   Runtime configuration for different dev features
+*   Persistent settings via localStorage
+*   Granular control over functionality
 
 ### 🔧 **Comprehensive**
-- Logging with multiple levels
-- Performance monitoring
-- Data validation
-- React component utilities
-- Debug UI components
+
+*   Logging with multiple levels
+*   Performance monitoring
+*   Data validation
+*   React component utilities
+*   Debug UI components
 
 ## Quick Start
 
@@ -86,6 +90,7 @@ function MyComponent({ data }) {
 ### Core Development Class (`dev`)
 
 #### Configuration
+
 ```typescript
 interface DevConfig {
   logging: boolean;        // Enable debug logging
@@ -104,6 +109,7 @@ dev.saveConfig(newConfig: Partial<DevConfig>): void
 ```
 
 #### Logging
+
 ```typescript
 // Different log levels
 dev.debug(message: string, ...args: unknown[]): void
@@ -116,6 +122,7 @@ dev.logData(label: string, data: unknown, collapsed?: boolean): void
 ```
 
 #### Performance Monitoring
+
 ```typescript
 // Start/end timing
 dev.perfStart(name: string, metadata?: Record<string, unknown>): void
@@ -130,6 +137,7 @@ dev.clearPerfEntries(): void
 ```
 
 #### Validation & Assertions
+
 ```typescript
 // Development assertions
 dev.assert(condition: boolean, message: string, ...args: unknown[]): void
@@ -143,6 +151,7 @@ dev.validateData<T>(
 ```
 
 #### Utility Functions
+
 ```typescript
 // Conditional execution
 dev.only<T>(fn: () => T): T | undefined
@@ -166,6 +175,7 @@ dev.inspect(obj: unknown, label?: string): unknown
 ### React Utilities
 
 #### Hooks
+
 ```typescript
 // Access dev utilities in components
 useDev(): DevUtilities
@@ -182,6 +192,7 @@ useDevPropsLogger<T>(
 ```
 
 #### Higher-Order Component
+
 ```typescript
 withDevTools<P>(
   Component: React.ComponentType<P>,
@@ -195,6 +206,7 @@ withDevTools<P>(
 ```
 
 #### Components
+
 ```tsx
 // Conditional rendering wrapper
 <DevOnly feature="debugUI">
@@ -401,6 +413,7 @@ dev.saveConfig({
 ### 1. Migrate from `import.meta.env.DEV`
 
 **Before:**
+
 ```typescript
 if (import.meta.env.DEV) {
   console.log('Debug info', data);
@@ -408,6 +421,7 @@ if (import.meta.env.DEV) {
 ```
 
 **After:**
+
 ```typescript
 dev.debug('Debug info', data);
 ```
@@ -415,12 +429,14 @@ dev.debug('Debug info', data);
 ### 2. Migrate from console logging
 
 **Before:**
+
 ```typescript
 console.log('User action:', action);
 console.warn('Potential issue:', issue);
 ```
 
 **After:**
+
 ```typescript
 dev.info('User action', action);
 dev.warn('Potential issue', issue);
@@ -429,6 +445,7 @@ dev.warn('Potential issue', issue);
 ### 3. Add debug UI to existing components
 
 **Before:**
+
 ```tsx
 function MyComponent({ data }) {
   return <div>Content</div>;
@@ -436,6 +453,7 @@ function MyComponent({ data }) {
 ```
 
 **After:**
+
 ```tsx
 function MyComponent({ data }) {
   return (
@@ -452,48 +470,53 @@ function MyComponent({ data }) {
 ## Best Practices
 
 ### 1. **Use Appropriate Log Levels**
-- `debug`: Detailed debugging information
-- `info`: General information about program execution
-- `warn`: Potentially harmful situations
-- `error`: Error events that might still allow the application to continue
+
+*   `debug`: Detailed debugging information
+*   `info`: General information about program execution
+*   `warn`: Potentially harmful situations
+*   `error`: Error events that might still allow the application to continue
 
 ### 2. **Performance Monitoring**
-- Use descriptive names for performance measurements
-- Include relevant metadata for context
-- Monitor both sync and async operations
+
+*   Use descriptive names for performance measurements
+*   Include relevant metadata for context
+*   Monitor both sync and async operations
 
 ### 3. **Validation in Development**
-- Assert invariants and assumptions
-- Validate external data and API responses
-- Use type guards for runtime type checking
+
+*   Assert invariants and assumptions
+*   Validate external data and API responses
+*   Use type guards for runtime type checking
 
 ### 4. **Component Development**
-- Use `DevOnly` for development-specific UI
-- Include data panels for state debugging
-- Log important prop changes and user interactions
+
+*   Use `DevOnly` for development-specific UI
+*   Include data panels for state debugging
+*   Log important prop changes and user interactions
 
 ### 5. **Configuration Management**
-- Start with all features enabled in development
-- Selectively disable features that cause noise
-- Use different configs for different environments
+
+*   Start with all features enabled in development
+*   Selectively disable features that cause noise
+*   Use different configs for different environments
 
 ## Production Safety
 
 The development utilities system is designed to be completely safe for production:
 
-1. **Tree Shaking**: All development code is removed in production builds
-2. **Runtime Checks**: All methods check `import.meta.env.DEV` before execution
-3. **Zero Overhead**: No performance impact in production
-4. **Type Safety**: Full TypeScript support prevents misuse
+1.  **Tree Shaking**: All development code is removed in production builds
+2.  **Runtime Checks**: All methods check `import.meta.env.DEV` before execution
+3.  **Zero Overhead**: No performance impact in production
+4.  **Type Safety**: Full TypeScript support prevents misuse
 
 ## Migration Guide
 
 To migrate your existing project to use these development utilities:
 
-1. **Install the utilities** by copying the files to your `src/utils/` directory
-2. **Update imports** to use the new dev utilities instead of direct console calls
-3. **Add debug components** to key areas of your application
-4. **Configure the system** based on your development workflow
-5. **Test thoroughly** to ensure production builds work correctly
+1.  **Install the utilities** by copying the files to your `src/utils/` directory
+2.  **Update imports** to use the new dev utilities instead of direct console calls
+3.  **Add debug components** to key areas of your application
+4.  **Configure the system** based on your development workflow
+5.  **Test thoroughly** to ensure production builds work correctly
 
 This system provides a solid foundation for development tooling that can grow with your project while maintaining clean separation between development and production code.

@@ -20,6 +20,13 @@ chess/                          # Root project directory
 ├── sonar-project.properties    # SonarQube configuration (optional)
 ├── index.html                  # Main HTML entry point for Vite
 │
+├── docs/                       # Project documentation
+│   ├── DEV_UTILITIES.md        # Documentation for development utilities
+│   ├── PATTERNS.md             # Project patterns and conventions
+│   ├── STANDARDIZATION_PLAN.md # Plan for codebase standardization (example)
+│   └── kanban.tasks/           # Kanban-style task tracking templates
+│       └── TEMPLATE.md
+│
 ├── public/                     # Static assets served directly
 │   └── ...                     # e.g., favicons, manifest.json
 │
@@ -36,18 +43,23 @@ chess/                          # Root project directory
 │   │
 │   ├── components/             # Shared, reusable UI components
 │   │   ├── AuthenticationStatus/ # Example: Displays login status
-│   │   ├── ChessBoard/         # Example: Presentational Chess Board (Part of the interactive example)
+│   │   ├── Button/             # Example: Reusable button component
+│   │   ├── ChessBoard/         # Example: Presentational Chess Board
 │   │   ├── Form/               # Reusable Form components (Form, FormField, ErrorInfo)
 │   │   ├── Header/             # Example: Site header
 │   │   └── ...                 # Other shared components
 │   │
 │   ├── features/               # Feature-specific modules (components, hooks, state)
 │   │   ├── Authentication/     # Example: Authentication feature
-│   │   │   ├── atoms.ts        # Jotai atoms for auth state
-│   │   │   ├── schemas.ts      # Zod schemas for auth forms
+│   │   │   ├── schemas.ts      # Zod schemas for auth forms (e.g., Authentication.schemas.ts)
 │   │   │   ├── LoginForm/      # Login form component
 │   │   │   └── RegistrationForm/ # Registration form component
 │   │   └── ...                 # Other feature modules
+│   │
+│   ├── atoms/                  # Global state management with Jotai
+│   │   ├── Authentication.atoms.ts # Jotai atoms for auth state
+│   │   ├── index.ts            # Barrel file for atoms
+│   │   └── ...                 # Other atom definitions
 │   │
 │   ├── hooks/                  # Custom React hooks (shared across features)
 │   │   ├── useAuth.ts          # Example: Authentication logic hook
@@ -55,13 +67,12 @@ chess/                          # Root project directory
 │   │   ├── useJotaiForm.ts     # Generic hook for Jotai-based forms with Zod
 │   │   ├── useZodForm.ts       # Generic hook for Zod validation in forms
 │   │   └── ...
-│   │   # Note: Chess game logic might reside in specific hooks or components
 │   │
-│   ├── store/                  # Global state management stores (e.g., Zustand)
-│   │   ├── authStore.ts        # Example: Zustand store for authentication
+│   ├── store/                  # Global state (Alternative: e.g., Zustand - if used)
+│   │   ├── authStore.ts        # Example: Zustand store for authentication (if using Zustand)
 │   │   └── ...
 │   │
-│   ├── context/                # React Context providers/consumers (if needed)
+│   ├── context/                # React Context providers/consumers (for simpler global state)
 │   │   └── ...
 │   │
 │   ├── styles/                 # Global styles and base configurations
@@ -98,9 +109,9 @@ chess/                          # Root project directory
     - Zod (`src/features/*/schemas.ts`) for schema definition and validation.
     - Custom hooks (`useJotaiForm`, `useZodForm`) in `src/hooks` abstract form state and validation logic.
 4.  **State Management:**
-    - **Jotai:** Atomic state, often used within features (`src/atoms`).
-    - **Zustand:** Store-based global state (`src/store`).
-    - **React Context:** (`src/context`) for simpler global state needs.
+    - **Jotai:** Primary atomic state management (`src/atoms/`). Atoms are often feature-related (e.g., `src/atoms/Authentication.atoms.ts`).
+    - **Zustand (Optional):** Store-based global state (`src/store/`) can be used as an alternative or for different types of global state if preferred.
+    - **React Context:** (`src/context/`) for simpler global state needs where Jotai/Zustand might be overkill.
     - Local component state (`useState`, `useReducer`) for UI-specific state. The Chess example might use local state combined with `chess.js` or integrate with global stores depending on complexity.
 5.  **Styling:** Tailwind CSS for utility-first styling (`tailwind.config.js`, `src/styles/tailwind.css`), with SCSS module support (`*.module.scss`) for component-scoped styles.
 6.  **Testing:**
