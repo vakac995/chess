@@ -1,0 +1,133 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ChessBoard > matches snapshot after a move 1`] = `
+<div
+  class="flex flex-col items-center"
+>
+  <div
+    class="_chessboard_e47955 rounded-card overflow-hidden"
+  >
+    <div
+      data-position="rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1"
+      data-testid="mock-chessboard"
+      data-width="500"
+    >
+      <button>
+        MockMove_e2e4
+      </button>
+      <button>
+        MockMove_e7e5
+      </button>
+      <button>
+        MockMove_f1c4
+      </button>
+       
+      <button>
+        MockMove_g8f6
+      </button>
+       
+      <button>
+        MockMove_e1g1
+      </button>
+       
+      <button>
+        MockMove_e8c8
+      </button>
+       
+      <button>
+        MockMove_d2d4
+      </button>
+      <button>
+        MockMove_c7c5
+      </button>
+      <button>
+        MockMove_g1f3
+      </button>
+      <button>
+        MockMove_b8c6
+      </button>
+    </div>
+  </div>
+  <div
+    class="_controlsWrapper_e47955 w-full"
+    style="max-width: 500px;"
+  >
+    <button
+      class="rounded-button bg-primary hover:bg-primary/80 px-4 py-2 font-bold text-white"
+    >
+      Reset
+    </button>
+    <div
+      class="text-text font-medium"
+    >
+      Black's turn
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ChessBoard > matches snapshot with initial state 1`] = `
+<div
+  class="flex flex-col items-center"
+>
+  <div
+    class="_chessboard_e47955 rounded-card overflow-hidden"
+  >
+    <div
+      data-position="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+      data-testid="mock-chessboard"
+      data-width="500"
+    >
+      <button>
+        MockMove_e2e4
+      </button>
+      <button>
+        MockMove_e7e5
+      </button>
+      <button>
+        MockMove_f1c4
+      </button>
+       
+      <button>
+        MockMove_g8f6
+      </button>
+       
+      <button>
+        MockMove_e1g1
+      </button>
+       
+      <button>
+        MockMove_e8c8
+      </button>
+       
+      <button>
+        MockMove_d2d4
+      </button>
+      <button>
+        MockMove_c7c5
+      </button>
+      <button>
+        MockMove_g1f3
+      </button>
+      <button>
+        MockMove_b8c6
+      </button>
+    </div>
+  </div>
+  <div
+    class="_controlsWrapper_e47955 w-full"
+    style="max-width: 500px;"
+  >
+    <button
+      class="rounded-button bg-primary hover:bg-primary/80 px-4 py-2 font-bold text-white"
+    >
+      Reset
+    </button>
+    <div
+      class="text-text font-medium"
+    >
+      White's turn
+    </div>
+  </div>
+</div>
+`;

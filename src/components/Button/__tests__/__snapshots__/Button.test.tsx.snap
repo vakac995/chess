@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Button > matches snapshot with danger intent and small size 1`] = `
+<DocumentFragment>
+  <button
+    class="font-semibold border rounded-button transition-colors duration-150 focus:outline-none bg-red-600 text-white border-red-600 hover:bg-red-700 py-1 px-2 text-sm"
+  >
+    Danger Small
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button > matches snapshot with default props 1`] = `
+<DocumentFragment>
+  <button
+    class="font-semibold border rounded-button transition-colors duration-150 focus:outline-none bg-primary text-white border-primary hover:bg-primary/80 py-2 px-4 text-base"
+  >
+    Click Me
+  </button>
+</DocumentFragment>
+`;
