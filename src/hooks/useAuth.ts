@@ -7,7 +7,7 @@ import {
   loginAtom,
   logoutAtom,
   User,
-} from '@/store';
+} from '@/atoms';
 import { LoadingStatus, type StatusType, type FieldErrorInfo } from '@/types';
 
 /**

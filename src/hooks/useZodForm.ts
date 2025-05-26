@@ -14,9 +14,16 @@ export interface UseZodFormProps<TSchema extends ZodType<FieldValues, ZodTypeDef
 }
 
 /**
+ * Interface for the useZodForm hook return type
+ * Extends UseFormReturn with additional Zod-specific type safety
+ */
+export type UseZodFormReturn<TSchema extends ZodType<FieldValues, ZodTypeDef, FieldValues>> =
+  UseFormReturn<z.infer<TSchema>>;
+
+/**
  * Creates a form with Zod schema validation and enhanced error handling
  * @param options Options for the hook including schema and default values
- * @returns React Hook Form's form control methods and state
+ * @returns React Hook Form's form control methods and state with Zod type safety
  */
 export function useZodForm<TSchema extends ZodType<FieldValues, ZodTypeDef, FieldValues>>({
   schema,
@@ -24,9 +31,8 @@ export function useZodForm<TSchema extends ZodType<FieldValues, ZodTypeDef, Fiel
   values,
   validationMode = 'onBlur',
   ...formConfig
-}: UseZodFormProps<TSchema> & Omit<UseFormProps<z.infer<TSchema>>, 'resolver'>): UseFormReturn<
-  z.infer<TSchema>
-> {
+}: UseZodFormProps<TSchema> &
+  Omit<UseFormProps<z.infer<TSchema>>, 'resolver'>): UseZodFormReturn<TSchema> {
   const formMethods = useForm<z.infer<TSchema>>({
     resolver: zodResolver(schema),
     defaultValues,

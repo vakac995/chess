@@ -98,7 +98,7 @@ chess/                          # Root project directory
     - Zod (`src/features/*/schemas.ts`) for schema definition and validation.
     - Custom hooks (`useJotaiForm`, `useZodForm`) in `src/hooks` abstract form state and validation logic.
 4.  **State Management:**
-    - **Jotai:** Atomic state, often used within features (`src/features/*/atoms.ts`).
+    - **Jotai:** Atomic state, often used within features (`src/atoms`).
     - **Zustand:** Store-based global state (`src/store`).
     - **React Context:** (`src/context`) for simpler global state needs.
     - Local component state (`useState`, `useReducer`) for UI-specific state. The Chess example might use local state combined with `chess.js` or integrate with global stores depending on complexity.

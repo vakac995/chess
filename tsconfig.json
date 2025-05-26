@@ -18,7 +18,6 @@
       "@/components/*": ["components/*"],
       "@/features/*": ["features/*"],
       "@/hooks/*": ["hooks/*"],
-      "@/store/*": ["store/*"],
       "@/styles/*": ["styles/*"],
       "@/assets/*": ["assets/*"],
       "@/types/*": ["types/*"],

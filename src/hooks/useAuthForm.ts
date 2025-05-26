@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { useCallback } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
-import { loginAtom, authErrorAtom } from '@/store';
+import { loginAtom, authErrorAtom, loginFormAtoms } from '@/atoms';
 import { useZodForm } from './useZodForm';
 import { type LoginFormData, loginSchema } from '@/schemas';
 import {
@@ -11,10 +11,6 @@ import {
   LoadingStatus,
   createError,
 } from '@/types';
-import { createFormAtom } from './useJotaiForm';
-
-// Create form atoms directly here to avoid circular dependency
-const loginFormAtoms = createFormAtom<LoginFormData>();
 
 /**
  * Interface for the useAuthForm hook return type
