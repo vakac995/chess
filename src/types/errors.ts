@@ -1,3 +1,5 @@
+import { Optional } from './index';
+
 /**
  * Base error interface - foundation for all error types
  */
@@ -163,13 +165,22 @@ export function createDetailedError(
  */
 export function createApiError(
   message: string,
-  status?: number,
-  code?: string,
-  requestId?: string,
-  details?: Record<string, unknown>,
-  retryable?: boolean
+  options?: Optional<{
+    status?: number;
+    code?: string;
+    requestId?: string;
+    details?: Record<string, unknown>;
+    retryable?: boolean;
+  }>
 ): ApiErrorInfo {
-  return { message, status, code, requestId, details, retryable };
+  return {
+    message,
+    status: options?.status,
+    code: options?.code,
+    requestId: options?.requestId,
+    details: options?.details,
+    retryable: options?.retryable ?? false,
+  };
 }
 
 /**
@@ -177,23 +188,25 @@ export function createApiError(
  */
 export function createValidationError(
   message: string,
-  rule?: string,
-  rules?: string[],
-  expected?: string,
-  fixable?: boolean,
-  info?: string,
-  description?: string,
-  icon?: string
+  options?: Optional<{
+    rule?: string;
+    rules?: string[];
+    expected?: string;
+    fixable?: boolean;
+    info?: string;
+    description?: string;
+    icon?: string;
+  }>
 ): ValidationErrorInfo {
   return {
     message,
-    rule,
-    rules,
-    expected,
-    fixable,
-    info,
-    description,
-    icon,
+    rule: options?.rule,
+    rules: options?.rules,
+    expected: options?.expected,
+    fixable: options?.fixable ?? false,
+    info: options?.info,
+    description: options?.description,
+    icon: options?.icon,
   };
 }
 
@@ -202,16 +215,18 @@ export function createValidationError(
  */
 export function createNetworkError(
   message: string,
-  retryable: boolean,
-  attempts?: number,
-  retryDelayMs?: number,
-  clientSide?: boolean
+  options?: Optional<{
+    retryable: boolean;
+    attempts?: number;
+    retryDelayMs?: number;
+    clientSide?: boolean;
+  }>
 ): NetworkErrorInfo {
   return {
     message,
-    retryable,
-    attempts,
-    retryDelayMs,
-    clientSide,
+    retryable: options?.retryable ?? false,
+    attempts: options?.attempts,
+    retryDelayMs: options?.retryDelayMs,
+    clientSide: options?.clientSide ?? false,
   };
 }

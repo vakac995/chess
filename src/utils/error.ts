@@ -134,14 +134,13 @@ export async function createErrorFromResponse(
     }
   }
 
-  return createApiError(
-    errorData.message ?? defaultMessage,
-    response.status,
-    errorData.code,
-    errorData.requestId,
-    errorData.details,
-    response.status >= 500 || response.status === 429
-  );
+  return createApiError(errorData.message ?? defaultMessage, {
+    status: response.status,
+    code: errorData.code,
+    requestId: errorData.requestId,
+    details: errorData.details,
+    retryable: response.status >= 500 || response.status === 429, // Retry on server errors or rate limits
+  });
 }
 
 /**
@@ -182,7 +181,12 @@ export function mapValidationErrorsToFields<TFields>(
 export function handleError(error: unknown): FieldErrorInfo | ApiErrorInfo | NetworkErrorInfo {
   // Network errors
   if (error instanceof TypeError && error.message === 'Failed to fetch') {
-    return createNetworkError('Network connection error', true, 1, undefined, true);
+    return createNetworkError('Network connection error', {
+      retryable: true,
+      attempts: 1,
+      retryDelayMs: undefined,
+      clientSide: true,
+    });
   }
 
   // Response errors (from our createErrorFromResponse utility)
