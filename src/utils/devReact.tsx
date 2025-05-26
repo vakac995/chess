@@ -100,7 +100,6 @@ export function withDevTools<P extends Record<string, unknown>>(
   } = options;
 
   const WrappedComponent: React.ComponentType<P> = props => {
-    // Props validation
     if (validateProps) {
       dev.validateData(
         props,
@@ -109,13 +108,11 @@ export function withDevTools<P extends Record<string, unknown>>(
       );
     }
 
-    // Props logging
     if (logProps) {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useDevPropsLogger(name, props);
     }
 
-    // Performance tracking
     if (trackPerformance) {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useDevPerformance(name, { props: Object.keys(props) });
@@ -277,10 +274,7 @@ export const DevLoggerPanel: React.FC<{ className?: string; maxEntries?: number 
     []
   );
 
-  // For now, just display a placeholder since the console override is complex
-  // In a real app, you'd integrate with your logging system
   useEffect(() => {
-    // Add some sample logs to demonstrate the UI
     setLogs([
       {
         level: LogLevel.INFO,

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { AuthenticationStatus } from '../AuthenticationStatus';
-import type { FieldErrorInfo } from '@/types/errors';
+import type { FieldErrorInfo } from '@/types';
 
 interface MockUser {
   id: string;

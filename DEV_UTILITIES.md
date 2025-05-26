@@ -39,7 +39,7 @@ The development utilities system consists of three main modules:
 ### Basic Usage
 
 ```typescript
-import { dev } from '@utils/dev';
+import { dev } from '@/utils';
 
 // Simple logging
 dev.debug('User action', { userId: 123 });
@@ -65,7 +65,7 @@ dev.when('debugUI', () => {
 ### React Components
 
 ```tsx
-import { DevOnly, DevPanel, DevDataPanel } from '@utils/devReact';
+import { DevOnly, DevPanel, DevDataPanel } from '@/utils';
 
 function MyComponent({ data }) {
   return (
@@ -264,7 +264,7 @@ function RegistrationForm() {
 ### 2. API Integration Development
 
 ```typescript
-import { dev } from '@utils/dev';
+import { dev } from '@/utils';
 
 class ApiService {
   async fetchUser(id: string) {
@@ -299,7 +299,7 @@ class ApiService {
 ### 3. Component Development & Testing
 
 ```tsx
-import { withDevTools, useDevPerformance } from '@utils/devReact';
+import { withDevTools, useDevPerformance } from '@/utils';
 
 const UserCard = withDevTools(
   ({ user, onEdit }) => {
@@ -330,7 +330,7 @@ const UserCard = withDevTools(
 ### 4. State Management Development
 
 ```typescript
-import { dev } from '@utils/dev';
+import { dev } from '@/utils';
 
 // Jotai atom with development logging
 const userAtom = atom(

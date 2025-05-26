@@ -1,5 +1,5 @@
-import { ErrorSeverity, isFieldErrorInfo, FieldErrorInfo } from '@/types/errors';
-import { normalizeError } from '@/utils/error';
+import { ErrorSeverity, isFieldErrorInfo, FieldErrorInfo } from '@/types';
+import { normalizeError } from '@/utils';
 
 interface ErrorInfoProps {
   readonly error?: unknown;
@@ -9,13 +9,11 @@ interface ErrorInfoProps {
 export const ErrorInfo = ({ error, className = '' }: Readonly<ErrorInfoProps>) => {
   if (!error) return null;
 
-  // Convert any error type to our standardized FieldErrorInfo
   const standardError: FieldErrorInfo = isFieldErrorInfo(error) ? error : normalizeError(error);
 
   const { message, icon, info, description, severity } = standardError;
 
-  // Determine severity class
-  let severityClass = 'text-accent'; // default (ERROR)
+  let severityClass = 'text-accent';
   if (severity === ErrorSeverity.INFO) severityClass = 'text-info';
   else if (severity === ErrorSeverity.WARNING) severityClass = 'text-warning';
   else if (severity === ErrorSeverity.CRITICAL) severityClass = 'text-critical';

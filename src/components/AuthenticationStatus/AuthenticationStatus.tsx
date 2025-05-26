@@ -1,4 +1,4 @@
-import { useAuth } from '@hooks/useAuth';
+import { useAuth } from '@/hooks';
 import { ErrorInfo } from '@/components/Form';
 import type { AuthenticationStatusProps } from './AuthenticationStatus.types';
 

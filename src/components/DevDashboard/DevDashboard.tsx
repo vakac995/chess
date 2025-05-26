@@ -1,6 +1,6 @@
 import React from 'react';
-import { dev } from '@utils/dev';
 import {
+  dev,
   DevOnly,
   DevPanel,
   DevDataPanel,
@@ -10,7 +10,7 @@ import {
   useDev,
   useDevPerformance,
   withDevTools,
-} from '@utils/devReact';
+} from '@/utils';
 import type { DevDashboardProps } from './DevDashboard.types';
 
 /**
@@ -19,17 +19,13 @@ import type { DevDashboardProps } from './DevDashboard.types';
 const ExampleComponent: React.FC<{ data: unknown; name: string }> = ({ data, name }) => {
   const devUtils = useDev();
 
-  // Track component performance
   useDevPerformance('ExampleComponent', { name });
 
-  // Log some debug information
   React.useEffect(() => {
     devUtils.debug('ExampleComponent mounted', { name, data });
 
-    // Example of performance timing
     devUtils.perfStart('data-processing');
 
-    // Simulate some work
     setTimeout(() => {
       devUtils.perfEnd('data-processing');
     }, Math.random() * 100);
@@ -39,16 +35,13 @@ const ExampleComponent: React.FC<{ data: unknown; name: string }> = ({ data, nam
     };
   }, [devUtils, name, data]);
 
-  // Example of using dev utilities
   const handleClick = () => {
     devUtils.info('Button clicked', { name });
 
-    // Example of conditional development code
     devUtils.only(() => {
       devUtils.logData('Current component state', { name, data });
     });
 
-    // Example of breakpoint (only in dev mode)
     devUtils.breakpoint('Button click handler');
   };
 
@@ -63,7 +56,6 @@ const ExampleComponent: React.FC<{ data: unknown; name: string }> = ({ data, nam
         Test Development Utilities
       </button>
 
-      {/* Development-only content */}
       <DevOnly>
         <div className="space-y-4">
           <DevDataPanel title="Component Data" data={data} />
@@ -87,7 +79,9 @@ const ExampleComponent: React.FC<{ data: unknown; name: string }> = ({ data, nam
   );
 };
 
-// Example of using the HOC
+/**
+ * Example of using the HOC withDevTools to enhance the ExampleComponent
+ */
 const EnhancedExampleComponent = withDevTools(ExampleComponent, {
   name: 'ExampleComponent',
   logProps: true,

@@ -53,7 +53,6 @@ class DevelopmentUtils {
   constructor() {
     this.isDev = import.meta.env.DEV;
 
-    // Load config from environment or localStorage
     this.config = this.loadConfig();
   }
 
@@ -124,7 +123,7 @@ class DevelopmentUtils {
     return { ...this.config };
   }
 
-  // === LOGGING UTILITIES ===
+  /** === LOGGING UTILITIES === */
 
   /**
    * Development logger with different levels
@@ -199,7 +198,7 @@ class DevelopmentUtils {
     console.groupEnd();
   }
 
-  // === PERFORMANCE UTILITIES ===
+  /** === PERFORMANCE UTILITIES === */
 
   /**
    * Start performance measurement
@@ -256,7 +255,7 @@ class DevelopmentUtils {
     this.perfEntries.clear();
   }
 
-  // === VALIDATION UTILITIES ===
+  /** === VALIDATION UTILITIES === */
 
   /**
    * Assert a condition in development mode
@@ -288,7 +287,7 @@ class DevelopmentUtils {
     return data;
   }
 
-  // === UTILITY FUNCTIONS ===
+  /** === UTILITY FUNCTIONS === */
 
   /**
    * Execute function only in development mode
@@ -331,7 +330,7 @@ class DevelopmentUtils {
     return Component;
   }
 
-  // === MOCK UTILITIES ===
+  /** === MOCK UTILITIES === */
 
   /**
    * Create mock data factory
@@ -348,7 +347,7 @@ class DevelopmentUtils {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  // === DEBUGGING HELPERS ===
+  /** === DEBUGGING HELPERS === */
 
   /**
    * Add breakpoint in development mode
@@ -398,10 +397,8 @@ class DevelopmentUtils {
   }
 }
 
-// Export singleton instance
 export const dev = new DevelopmentUtils();
 
-// Export individual utilities for convenience
 export const {
   isEnabled,
   configuration,
@@ -425,5 +422,3 @@ export const {
   inspect,
   time,
 } = dev;
-
-// Types are already exported above with interface/enum declarations

@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import { useAuth } from './hooks/useAuth';
+import { useAuth } from './hooks';
 import { ChessBoard } from './components/ChessBoard';
 import { LoginForm, RegistrationForm } from './features/Authentication';
-import { Header } from './components/Header/Header';
-import { AuthenticationStatus } from './components/AuthenticationStatus/AuthenticationStatus';
+import { Header } from './components/Header';
+import { AuthenticationStatus } from './components/AuthenticationStatus';
 import { Footer } from './components/Footer';
 import { ScrollableContent } from './components/ScrollableContent';
 import { VisionSwitcher } from './components/VisionSwitcher';
@@ -54,7 +54,6 @@ const App: React.FC = () => {
         <Footer />
       </ScrollableContent>
 
-      {/* Development dashboard - only shown in development mode */}
       <DevDashboard />
     </div>
   );

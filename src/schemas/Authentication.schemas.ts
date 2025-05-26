@@ -3,13 +3,9 @@ import {
   isStrongPasswordCheck,
   isAdultAgeCheck,
   isValidPasswordForEnvironmentCheck,
-} from '@/utils/validation';
+} from '@/utils';
 
 const isProduction = import.meta.env.PROD;
-
-// ================================
-// REUSABLE FIELD VALIDATORS
-// ================================
 
 /**
  * Reusable email field validator
@@ -81,10 +77,6 @@ const firstNameField = createNameField('First name');
  */
 const lastNameField = createNameField('Last name');
 
-// ================================
-// REUSABLE REFINEMENT FUNCTIONS
-// ================================
-
 /**
  * Password confirmation error configuration
  */
@@ -99,10 +91,6 @@ const passwordConfirmationError = {
  */
 const passwordConfirmationRefinement = (data: { password: string; confirmPassword: string }) =>
   data.password === data.confirmPassword;
-
-// ================================
-// MAIN SCHEMAS
-// ================================
 
 /**
  * Login schema for authentication
@@ -170,10 +158,6 @@ export const environmentAwareSchema = z
     confirmPassword: confirmPasswordField,
   })
   .refine(passwordConfirmationRefinement, passwordConfirmationError);
-
-// ================================
-// EXPORTED TYPES
-// ================================
 
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type BasicInfoData = z.infer<typeof basicInfoSchema>;

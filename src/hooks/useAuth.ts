@@ -7,9 +7,8 @@ import {
   loginAtom,
   logoutAtom,
   User,
-} from '@/store/authStore';
-import { LoadingStatus, StatusType } from '@/types/status';
-import { FieldErrorInfo } from '@/types/errors';
+} from '@/store';
+import { LoadingStatus, type StatusType, type FieldErrorInfo } from '@/types';
 
 /**
  * Interface for the useAuth hook return type

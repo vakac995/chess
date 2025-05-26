@@ -1,6 +1,5 @@
 import React from 'react';
-import { formatRegistrationData } from '@/utils/formatting';
-import { dev } from '@utils/dev';
+import { dev, formatRegistrationData } from '@/utils';
 import type { RegistrationDataDisplayProps } from './RegistrationDataDisplay.types';
 
 /**
@@ -10,7 +9,6 @@ export const RegistrationDataDisplay: React.FC<RegistrationDataDisplayProps> = (
   data,
   className = '',
 }) => {
-  // Log in development mode to help debug display issues
   dev.debug('RegistrationDataDisplay received:', data);
 
   if (!data) {

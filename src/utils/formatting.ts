@@ -29,12 +29,17 @@ export function formatRegistrationData(data: Record<string, unknown> | null): st
   // Create a copy to avoid modifying the original
   const displayData: Record<string, unknown> = { ...data };
 
-  // Mask sensitive fields
-  if ('password' in displayData) {
-    displayData.password = '••••••••••';
-  }
-  if ('confirmPassword' in displayData) {
-    displayData.confirmPassword = '••••••••••';
+  const SENSITIVE_FIELD_MASKS: Record<string, string> = {
+    password: '••••••••••',
+    confirmPassword: '••••••••••',
+    // creditCard: '**** **** **** ****'
+  };
+
+  // Apply masks to any sensitive fields found in the data
+  for (const [field, mask] of Object.entries(SENSITIVE_FIELD_MASKS)) {
+    if (field in displayData) {
+      displayData[field] = mask;
+    }
   }
 
   try {
@@ -50,7 +55,6 @@ export function formatRegistrationData(data: Record<string, unknown> | null): st
  * and special objects like Date or Map
  */
 function replacer(_key: string, value: unknown): unknown {
-  // Handle special object types
   if (value instanceof Date) {
     return `Date(${value.toISOString()})`;
   }

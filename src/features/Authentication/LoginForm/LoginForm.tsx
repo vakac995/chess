@@ -1,9 +1,9 @@
 import { Form, FormField, ErrorInfo } from '@/components/Form';
-import { useAuthForm } from '@/hooks/useAuthForm';
-import { LoadingStatus } from '@/types/status';
+import { useAuthForm } from '@/hooks';
+import { LoadingStatus } from '@/types';
 import type { LoginFormProps } from './LoginForm.types';
 
-export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
+export function LoginForm({ onSwitchToRegister }: Readonly<LoginFormProps>) {
   const { form, onSubmit, isPending, displayError, formStatus } = useAuthForm();
 
   return (

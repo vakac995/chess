@@ -10,7 +10,7 @@ import {
   createError,
   createApiError,
   createNetworkError,
-} from '@/types/errors';
+} from '@/types';
 
 /**
  * Extracts enhanced field error information from a Zod validation error
@@ -42,7 +42,6 @@ export function extractZodErrorInfo(zodError: z.ZodIssue): FieldErrorInfo {
     }
   }
 
-  // Create the error object with collected information
   return createDetailedError(message, info, description, icon);
 }
 

@@ -1,5 +1,5 @@
 import { z, RefinementCtx } from 'zod';
-import { FieldErrorInfo, createDetailedError } from '@/types/errors';
+import { FieldErrorInfo, createDetailedError } from '@/types';
 
 /**
  * Creates a type-safe validation function compatible with Zod's `.superRefine()`

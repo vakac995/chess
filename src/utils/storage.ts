@@ -12,7 +12,46 @@ export interface StorageValidationOptions {
   maxSize?: number; // in bytes
 }
 
-const MAX_STORAGE_SIZE_BYTES = 2 * 1024 * 1024; // 2MB
+const MAX_STORAGE_SIZE_BYTES = 2 * 1024 * 1024; // === 2MB
+
+/**
+ * Converts bytes to MB with two decimal places
+ * @param bytes - The size in bytes
+ * @returns A string representing the size in MB with two decimal places
+ */
+const convertToMB = (bytes: number): string => {
+  const mb = bytes / (1024 * 1024);
+  return `${mb.toFixed(2)} MB`;
+};
+
+/**
+ * Converts bytes to a human-readable format (MB)
+ * @param bytes - The size in bytes
+ * @returns A string representing the size in MB
+ */
+export const formatStorageSize = (bytes: number): string => {
+  if (bytes < 0) {
+    throw new Error('Size cannot be negative');
+  }
+
+  if (bytes === 0) {
+    return '0 MB';
+  }
+
+  if (bytes < 1024) {
+    return `${bytes} bytes`;
+  }
+
+  if (bytes < 1024 * 1024) {
+    return `${(bytes / 1024).toFixed(2)} KB`;
+  }
+
+  if (bytes >= MAX_STORAGE_SIZE_BYTES) {
+    return convertToMB(bytes);
+  }
+
+  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+};
 
 /**
  * A wrapper around web storage (localStorage/sessionStorage) with type safety and error handling
@@ -27,10 +66,8 @@ export const storage = {
         throw new Error('Storage key cannot be empty');
       }
 
-      // Get storage mechanism
       const storageMethod = this.getStorageMethod(type);
 
-      // Handle special case of null/undefined
       if (value === null || value === undefined) {
         storageMethod.removeItem(key);
         return { success: true };
@@ -38,9 +75,10 @@ export const storage = {
 
       const serializedValue = JSON.stringify(value);
 
-      // Check storage quota
       if (serializedValue.length > MAX_STORAGE_SIZE_BYTES) {
-        throw new Error(`Storage value exceeds maximum size (2MB) for key: ${key}`);
+        throw new Error(
+          `Storage value exceeds maximum size (${formatStorageSize(MAX_STORAGE_SIZE_BYTES)}) for key: ${key}`
+        );
       }
 
       storageMethod.setItem(key, serializedValue);

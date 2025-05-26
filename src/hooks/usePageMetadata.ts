@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { PageMetadata, mergeMetadata, updateDocumentMetadata } from '@utils/seo';
+import { PageMetadata, mergeMetadata, updateDocumentMetadata } from '@/utils';
 import type { Optional } from '@/types';
 
 /**

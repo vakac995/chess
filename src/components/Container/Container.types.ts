@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Optional } from '@/types';
 
-// Container variant types
 export type ContainerPadding = 'default' | 'none';
 export type ContainerDisplay = 'flex' | 'grid' | 'block';
 export type ContainerOrientation = 'col' | 'row';
@@ -19,7 +18,6 @@ export type ContainerRounded =
   | 'card'
   | 'button';
 
-// Container component props interface
 export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   readonly as?: Optional<React.ElementType>;
   readonly padding?: Optional<ContainerPadding>;

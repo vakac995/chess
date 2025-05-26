@@ -1,6 +1,5 @@
-import type { ReactClassNameProps, Optional } from '@/types';
 import type { FieldError } from 'react-hook-form';
-import type { FieldErrorInfo } from '@/types/errors';
+import type { ReactClassNameProps, Optional, FieldErrorInfo } from '@/types';
 
 /**
  * Props for the ErrorInfo component

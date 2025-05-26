@@ -1,4 +1,4 @@
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks';
 import clsx from 'clsx';
 import { Button } from '../Button';
 import type { HeaderProps } from './Header.types';

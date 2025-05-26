@@ -1,5 +1,5 @@
 import { useFormContext, Controller, FieldValues } from 'react-hook-form';
-import { extractReactHookFormError } from '@/utils/error';
+import { extractReactHookFormError } from '@/utils';
 import type { FormFieldProps } from './FormField.types';
 
 export const FormField = <TFormValues extends FieldValues>({
@@ -23,7 +23,6 @@ export const FormField = <TFormValues extends FieldValues>({
           control={control}
           name={name}
           render={({ field, fieldState }) => {
-            // Convert react-hook-form error to our standardized FieldErrorInfo type
             const enhancedError = fieldState.error
               ? extractReactHookFormError(fieldState.error)
               : undefined;

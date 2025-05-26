@@ -1,12 +1,17 @@
 import { useAtom } from 'jotai';
 import { useCallback } from 'react';
-import { UseFormReturn } from 'react-hook-form';
-import { loginAtom, authErrorAtom } from '@/store/authStore';
+import type { UseFormReturn } from 'react-hook-form';
+import { loginAtom, authErrorAtom } from '@/store';
 import { useZodForm } from './useZodForm';
-import { loginFormAtoms, LoginFormData, loginSchema } from '@/features/Authentication';
-import { LoadingStatus, StatusType } from '@/types/status';
-import { createError, FieldErrorInfo } from '@/types/errors';
-import { Nullable } from '@/types/index';
+import { type LoginFormData, loginSchema } from '@/schemas';
+import {
+  type Nullable,
+  type StatusType,
+  type FieldErrorInfo,
+  LoadingStatus,
+  createError,
+} from '@/types';
+import { loginFormAtoms } from '@/atoms';
 
 /**
  * Interface for the useAuthForm hook return type

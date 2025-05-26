@@ -1,39 +1,34 @@
 import { useCallback } from 'react';
 import { useAtom } from 'jotai';
 import { Form, FormField, ErrorInfo } from '@/components/Form';
-import { useZodForm } from '@/hooks/useZodForm';
+import { useZodForm } from '@/hooks';
 import {
   registrationStepAtom,
   basicInfoAtoms,
   personalInfoAtoms,
   registrationFormAtoms,
-} from '../atoms';
-import { LoadingStatus } from '@/types/status';
-import { createError } from '@/types/errors';
-import { BasicInfoData, basicInfoSchema, PersonalInfoData, personalInfoSchema } from '../schemas';
+} from '@/atoms';
+import { createError, LoadingStatus } from '@/types';
+import { BasicInfoData, basicInfoSchema, PersonalInfoData, personalInfoSchema } from '@/schemas';
 import { RegistrationDataDisplay } from './RegistrationDataDisplay';
 import { dev } from '@/utils';
 import type { RegistrationFormProps } from './RegistrationForm.types';
 
 export function RegistrationForm({ onSwitchToLogin }: Readonly<RegistrationFormProps>) {
-  // Form step state - stored in atom
   const [step, setStep] = useAtom(registrationStepAtom);
-  // Registration status - combined data from both form steps
-  const [registrationData] = useAtom(registrationFormAtoms.formAtom); // This is typed by the atom as BasicInfoData & PersonalInfoData
+
+  const [registrationData] = useAtom(registrationFormAtoms.formAtom);
   const [combinedStatus] = useAtom(registrationFormAtoms.formStatusAtom);
   const [combinedError] = useAtom(registrationFormAtoms.formErrorAtom);
 
-  // Basic info atoms
   const [basicInfo, setBasicInfo] = useAtom(basicInfoAtoms.formAtom);
   const [basicInfoStatus, setBasicInfoStatus] = useAtom(basicInfoAtoms.formStatusAtom);
   const [, setBasicInfoError] = useAtom(basicInfoAtoms.formErrorAtom);
 
-  // Personal info atoms
   const [personalInfo, setPersonalInfo] = useAtom(personalInfoAtoms.formAtom);
   const [personalInfoStatus, setPersonalInfoStatus] = useAtom(personalInfoAtoms.formStatusAtom);
   const [, setPersonalInfoError] = useAtom(personalInfoAtoms.formErrorAtom);
 
-  // Form setup using our atoms for initial values
   const basicInfoForm = useZodForm({
     schema: basicInfoSchema,
     defaultValues: basicInfo || {
@@ -60,15 +55,12 @@ export function RegistrationForm({ onSwitchToLogin }: Readonly<RegistrationFormP
    */
   const onSubmitBasicInfo = useCallback(
     (data: BasicInfoData) => {
-      // Store data in atom
       setBasicInfo(data);
       setBasicInfoStatus(LoadingStatus.FULFILLED);
       setBasicInfoError(null);
 
-      // Log debug info in development
       dev.debug('Basic info data stored', data);
 
-      // Move to next step
       setStep(2);
     },
     [setBasicInfo, setBasicInfoStatus, setBasicInfoError, setStep]
@@ -79,11 +71,9 @@ export function RegistrationForm({ onSwitchToLogin }: Readonly<RegistrationFormP
    */
   const onSubmitPersonalInfo = useCallback(
     async (data: PersonalInfoData) => {
-      // Set status to pending first to show loading state
       setPersonalInfoStatus(LoadingStatus.PENDING);
       setPersonalInfoError(null);
 
-      // Validate that we have basic info data available
       if (!basicInfo) {
         setPersonalInfoStatus(LoadingStatus.REJECTED);
         setPersonalInfoError(
@@ -92,7 +82,6 @@ export function RegistrationForm({ onSwitchToLogin }: Readonly<RegistrationFormP
         return;
       }
 
-      // Make sure the personal info data is fully populated
       const personalInfoComplete =
         data &&
         typeof data.firstName === 'string' &&
@@ -110,22 +99,17 @@ export function RegistrationForm({ onSwitchToLogin }: Readonly<RegistrationFormP
       }
 
       try {
-        // Debug info in development
         dev.logData('Simulating API call with registration data', {
           ...basicInfo,
           ...data,
         });
 
-        // Simulate API delay (in real app, this would be an actual API call)
         await new Promise(resolve => setTimeout(resolve, 500));
 
-        // Update atom state with personal info
         setPersonalInfo(data);
 
-        // Update status to complete
         setPersonalInfoStatus(LoadingStatus.FULFILLED);
       } catch (error) {
-        // Handle errors gracefully
         console.warn('Registration failed:', error);
 
         setPersonalInfoStatus(LoadingStatus.REJECTED);
@@ -150,12 +134,10 @@ export function RegistrationForm({ onSwitchToLogin }: Readonly<RegistrationFormP
   const submissionSuccess =
     basicInfoStatus === LoadingStatus.FULFILLED && personalInfoStatus === LoadingStatus.FULFILLED;
 
-  // Error recovery handler
   const handleRetry = useCallback(() => {
     setPersonalInfoStatus(LoadingStatus.IDLE);
     setPersonalInfoError(null);
 
-    // If we really can't recover, go back to step 1
     if (!basicInfo) {
       setStep(1);
     }
@@ -182,10 +164,8 @@ export function RegistrationForm({ onSwitchToLogin }: Readonly<RegistrationFormP
           <h3 className="text-text mb-2 text-center text-lg font-medium">Registration Complete!</h3>
           <p className="text-text-muted mb-4 text-center">Thank you for registering.</p>
 
-          {/* Display registration data from the combined atom directly */}
           <RegistrationDataDisplay data={registrationData} className="mt-4" />
 
-          {/* Debug data display in development mode */}
           {dev.when('debugUI', () => (
             <div className="border-border bg-background/30 mt-4 rounded border p-3 text-xs">
               <h4 className="mb-1 font-semibold">Registration Data (Debug)</h4>
@@ -367,16 +347,14 @@ export function RegistrationForm({ onSwitchToLogin }: Readonly<RegistrationFormP
         </>
       )}
 
-      {step === 1 && (
-        <div className="mt-4 text-center">
-          <button
-            onClick={onSwitchToLogin}
-            className="text-primary hover:text-primary/80 text-sm underline"
-          >
-            Already have an account? Login here
-          </button>
-        </div>
-      )}
+      <div className="mt-4 text-center">
+        <button
+          onClick={onSwitchToLogin}
+          className="text-primary hover:text-primary/80 text-sm underline"
+        >
+          Already have an account? Login here
+        </button>
+      </div>
     </div>
   );
 }

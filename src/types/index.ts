@@ -1,9 +1,148 @@
 import React from 'react';
-
 /**
- * Type Utilities for consistent usage
- * These utilities provide standardized type patterns for common scenarios
- * to ensure consistent typing across the codebase.
+ * @fileoverview Comprehensive type definitions for application development
+ *
+ * This module provides a complete set of TypeScript utility types for building
+ * robust applications. These utilities ensure consistent typing patterns across
+ * the codebase and reduce repetition of common type constructs.
+ *
+ * The types are organized into the following categories:
+ *
+ * - Basic type utilities: Wrappers for handling nullable/optional values
+ * - Function type utilities: Common function signatures
+ * - React-specific utilities: Types for React component development
+ * - Component type utilities: Helpers for component props manipulation
+ * - Record utilities: Typed Record helpers
+ * - ID and entity utilities: Common patterns for entity identification
+ * - Status handling: Types for async operation states
+ * - Nested object utilities: Deep partial and readonly type transformations
+ * - Form utilities: Types for form handling, validation, and configuration
+ * - Event handler utilities: Typed React event handlers
+ * - Type guard utilities: Types for runtime type checking
+ * - Discriminated union utilities: Helpers for union type handling
+ * - Component utilities: Common component prop patterns
+ * - Environment utilities: Types for environment-specific configurations
+ *
+ * @example
+ * // Using Maybe type for potentially undefined values
+ * const getName = (user: Maybe<User>): string => {
+ *   return user?.name ?? 'Unknown User';
+ * };
+ *
+ * @example
+ * // Creating a form configuration
+ * const formConfig: FormConfig<UserData> = {
+ *   fields: [
+ *     {
+ *       name: 'email',
+ *       label: 'Email Address',
+ *       required: true,
+ *       validate: (value) => (!value.includes('@') ? 'Invalid email' : undefined)
+ *     }
+ *   ],
+ *   onSubmit: (data) => saveUser(data)
+ * };
+ *
+ * @example
+ * // Using component utility types
+ * type ButtonProps = BaseComponentProps & {
+ *   onClick?: MouseEventHandler;
+ *   isLoading?: boolean;
+ * };
+ *
+ * @section Basic type utilities
+ * Types for handling nullable and optional values.
+ * @type {Maybe<T>} - Value that can be T, null, or undefined
+ * @type {Nullable<T>} - Value that can be T or null
+ * @type {Optional<T>} - Value that can be T or undefined
+ *
+ * @section Function type utilities
+ * Common function signature types.
+ * @type {GenericFunction} - Generic function with unknown arguments and return
+ * @type {VoidFunction} - Function returning void
+ * @type {AsyncFunction<T>} - Function returning Promise<T>
+ * @type {NoArgFunction<R>} - Function with no arguments returning R
+ *
+ * @section React-specific type utilities
+ * Types specific to React component development.
+ * @type {ReactChildren} - Props with optional children
+ * @type {ReactClassNameProps} - Props with optional className
+ * @type {ReactStylableProps} - Props with optional className and style
+ *
+ * @section Common component type utilities
+ * Utility types for component props manipulation.
+ * @type {WithRequired<T, K>} - Makes specified properties required
+ * @type {WithOptional<T, K>} - Makes specified properties optional
+ * @type {WithReadonly<T>} - Makes all properties readonly
+ *
+ * @section Record utilities
+ * Types for strongly-typed Record objects.
+ * @type {RecordOf<T>} - Record with string keys and values of type T
+ * @type {StringRecord} - Record with string values
+ * @type {NumberRecord} - Record with number values
+ * @type {BooleanRecord} - Record with boolean values
+ *
+ * @section ID and entity utilities
+ * Common patterns for entity identification.
+ * @type {ID} - String or number identifier
+ * @type {EntityWithId} - Object with an id property
+ *
+ * @section Status handling utilities
+ * Types for managing asynchronous operation states.
+ * @type {AsyncStatus} - Status of an async operation
+ * @type {RequestStatus<T, E>} - Complete request state including data and error
+ *
+ * @section Nested object utilities
+ * Types for deep partial and readonly transformations.
+ * @type {DeepPartial<T>} - Makes all properties and nested properties optional
+ * @type {DeepReadonly<T>} - Makes all properties and nested properties readonly
+ * @type {DeepReadonlyObject<T>} - Helper type for DeepReadonly
+ *
+ * @section Form and validation utilities
+ * Types for form field props and validation.
+ * @type {FormFieldProps<T>} - Common props for form field components
+ * @type {FormFieldValidator<T>} - Function to validate a form field value
+ * @type {FormErrors<T>} - Record of form field errors
+ * @type {FormFieldConfig<T>} - Configuration for a form field
+ * @type {FormConfig<T>} - Configuration for an entire form
+ *
+ * @section Event handler type utilities
+ * React event handler type aliases.
+ * @type {ChangeEventHandler<T>} - Handler for change events
+ * @type {MouseEventHandler<T>} - Handler for mouse events
+ * @type {KeyboardEventHandler<T>} - Handler for keyboard events
+ *
+ * @section Type guard utilities
+ * Types for runtime type checking.
+ * @type {TypeGuard<T>} - Function that checks if a value is of type T
+ * @type {AsyncTypeGuard<T>} - Async function that checks if a value is of type T
+ *
+ * @section Discriminated union utilities
+ * Helpers for working with discriminated unions.
+ * @type {Discriminate<T, K, V>} - Extracts union members with specified key/value
+ *
+ * @section Component utilities
+ * Common component prop patterns.
+ * @type {ComponentWithChildren<P>} - Component that accepts children
+ * @type {PropsWithTestId<P>} - Props with optional testId for testing
+ * @type {ComponentSize} - Standard component size options
+ * @type {ComponentVariant} - Standard component variant options
+ * @type {ComponentStatus} - Standard component status options
+ * @type {SizableComponent<P>} - Component with size prop
+ * @type {VariantComponent<P>} - Component with variant prop
+ * @type {StatusableComponent<P>} - Component with status prop
+ * @type {BaseComponentProps} - Common base props for components
+ *
+ * @section Environment utilities
+ * Types for environment-specific configurations.
+ * @type {Environment} - Available environment types
+ * @type {EnvConfig<T>} - Configuration per environment
+ * @type {EnvValue<T>} - Value with associated environment
+ * @type {DevelopmentOnly<T>} - Value only used in development
+ * @type {ProductionOnly<T>} - Value only used in production
+ *
+ * @see {@link './errors'} For error-specific type definitions
+ * @see {@link './status'} For status-specific type definitions
  */
 
 // Basic type utilities
