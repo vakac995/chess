@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { atom } from 'jotai';
-import { createFormAtom, combineFormAtoms, FormAtomReturn } from '@/hooks';
+import { createFormAtom, combineFormAtoms, type FormAtomReturn } from '@/hooks';
 import { loginSchema, BasicInfoData, PersonalInfoData, RegistrationData } from '@/schemas';
 import { LoadingStatus } from '@/types';
 
