@@ -1,4 +1,25 @@
 /**
+ * Custom replacer function for JSON.stringify to handle circular references
+ * and special objects like Date or Map
+ */
+function replacer(_key: string, value: unknown): unknown {
+  if (value instanceof Date) {
+    return `Date(${value.toISOString()})`;
+  }
+  if (value instanceof Map) {
+    return Object.fromEntries(value);
+  }
+  if (value instanceof Set) {
+    return Array.from(value);
+  }
+  if (typeof value === 'bigint') {
+    return value.toString();
+  }
+
+  return value;
+}
+
+/**
  * Safely stringifies data to prevent null/undefined or circular reference issues.
  * @param data The data to stringify
  * @param indent Number of spaces to use for indentation or null for no formatting
@@ -48,25 +69,4 @@ export function formatRegistrationData(data: Readonly<Record<string, unknown>> |
     console.error('Error formatting registration data:', error);
     return 'Unable to format registration data';
   }
-}
-
-/**
- * Custom replacer function for JSON.stringify to handle circular references
- * and special objects like Date or Map
- */
-function replacer(_key: string, value: unknown): unknown {
-  if (value instanceof Date) {
-    return `Date(${value.toISOString()})`;
-  }
-  if (value instanceof Map) {
-    return Object.fromEntries(value);
-  }
-  if (value instanceof Set) {
-    return Array.from(value);
-  }
-  if (typeof value === 'bigint') {
-    return value.toString();
-  }
-
-  return value;
 }
