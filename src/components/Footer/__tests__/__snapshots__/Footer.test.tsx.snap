@@ -1,0 +1,64 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Footer > Snapshots > matches snapshot with custom version 1`] = `
+<DocumentFragment>
+  <footer
+    class="bg-secondary sticky bottom-0 p-4 text-center text-white"
+  >
+    <p>
+      © 2025 Chess App. All rights reserved.
+    </p>
+    <p
+      class="mt-1 text-xs opacity-75"
+    >
+      Version 2.1.0-beta
+    </p>
+  </footer>
+</DocumentFragment>
+`;
+
+exports[`Footer > Snapshots > matches snapshot with default props 1`] = `
+<DocumentFragment>
+  <footer
+    class="bg-secondary sticky bottom-0 p-4 text-center text-white"
+  >
+    <p>
+      © 2025 Chess App. All rights reserved.
+    </p>
+  </footer>
+</DocumentFragment>
+`;
+
+exports[`Footer > Snapshots > matches snapshot with different year 1`] = `
+<DocumentFragment>
+  <footer
+    class="bg-secondary sticky bottom-0 p-4 text-center text-white"
+  >
+    <p>
+      © 2030 Chess App. All rights reserved.
+    </p>
+    <p
+      class="mt-1 text-xs opacity-75"
+    >
+      Version 1.0.0
+    </p>
+  </footer>
+</DocumentFragment>
+`;
+
+exports[`Footer > Snapshots > matches snapshot with version shown 1`] = `
+<DocumentFragment>
+  <footer
+    class="bg-secondary sticky bottom-0 p-4 text-center text-white"
+  >
+    <p>
+      © 2025 Chess App. All rights reserved.
+    </p>
+    <p
+      class="mt-1 text-xs opacity-75"
+    >
+      Version 1.0.0
+    </p>
+  </footer>
+</DocumentFragment>
+`;
