@@ -9,7 +9,9 @@ import type { RangeCalendarProps } from '../Calendar.types';
 import type { DayPickerProps, DateRange } from 'react-day-picker';
 
 // Helper functions for the mock DayPicker component
-const createMockDayPickerHelpers = (props: DayPickerProps & { mode: 'range'; selected?: DateRange }) => {
+const createMockDayPickerHelpers = (
+  props: DayPickerProps & { mode: 'range'; selected?: DateRange }
+) => {
   // Helper to check if a date is disabled
   const isDateDisabled = (date: Date) => {
     if (props.disabled) {

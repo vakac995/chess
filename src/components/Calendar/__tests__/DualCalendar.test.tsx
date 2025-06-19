@@ -391,7 +391,7 @@ describe('DualCalendar', () => {
     expect(rangeAtom.current?.from).toEqual(expectedFrom);
     expect(rangeAtom.current?.to).toBeUndefined();
 
-    currentTestProps.onSelect?.mockClear();
+    // currentTestProps.onSelect?.mockClear();
 
     const dayJuly5 = screen.getByTestId('date-2025-07-05');
     await user.click(dayJuly5);
@@ -414,7 +414,7 @@ describe('DualCalendar', () => {
     expect(currentTestProps.onSelect).toHaveBeenCalledWith(
       expect.objectContaining({ from: new Date(2025, 5, 5), to: undefined })
     );
-    currentTestProps.onSelect?.mockClear();
+    // currentTestProps.onSelect?.mockClear();
 
     await user.click(screen.getByTestId('date-2025-06-06')); // Day 6 (range is 2 days, min is 3)
     expect(currentTestProps.onSelect).not.toHaveBeenCalled(); // Validation fails, onSelect not called with new range
@@ -437,7 +437,7 @@ describe('DualCalendar', () => {
     expect(currentTestProps.onSelect).toHaveBeenCalledWith(
       expect.objectContaining({ from: new Date(2025, 5, 5), to: undefined })
     );
-    currentTestProps.onSelect?.mockClear();
+    // currentTestProps.onSelect?.mockClear();
 
     await user.click(screen.getByTestId('date-2025-06-10')); // Day 10 (range is 6 days, max is 3)
     expect(currentTestProps.onSelect).not.toHaveBeenCalled();
