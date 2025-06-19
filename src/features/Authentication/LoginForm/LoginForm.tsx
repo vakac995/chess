@@ -1,10 +1,40 @@
+import React from 'react';
 import { Form, FormField, ErrorInfo } from '@/components/Form';
+import { AutoLogoutSelector } from '@/components/AutoLogoutSelector';
 import { useAuthForm } from '@/hooks';
 import { LoadingStatus } from '@/types';
 import type { LoginFormProps } from './LoginForm.types';
+import type { AutoLogoutPreference } from '@/components/AutoLogoutSelector';
+
+const getAutoLogoutDescription = (preference: AutoLogoutPreference): string => {
+  if (preference.mode === 'duration') {
+    return `Session expires after ${preference.durationHours} hours`;
+  }
+  if (preference.mode === 'specific-date') {
+    return `Logout on ${preference.specificDate?.toLocaleDateString()}`;
+  }
+  return 'Custom schedule set';
+};
 
 export function LoginForm({ onSwitchToRegister }: Readonly<LoginFormProps>) {
   const { form, onSubmit, isPending, displayError, formStatus } = useAuthForm();
+  const [autoLogoutPreference, setAutoLogoutPreference] = React.useState<AutoLogoutPreference>({
+    mode: 'duration',
+    durationHours: 8,
+    enabled: false,
+  });
+
+  const handleLoginSubmit = async (data: { email: string; password: string }) => {
+    // Include auto-logout preference in the login data
+    const loginData = {
+      ...data,
+      autoLogout: autoLogoutPreference,
+    };
+
+    // In a real application, you would send this to your authentication service
+    console.warn('Login with auto-logout settings:', loginData);
+    return await onSubmit(data); // For now, just use the original form submission
+  };
 
   return (
     <div className="rounded-card bg-background p-container-padding mx-auto max-w-md shadow-md">
@@ -16,7 +46,7 @@ export function LoginForm({ onSwitchToRegister }: Readonly<LoginFormProps>) {
         </div>
       )}
 
-      <Form form={form} onSubmit={onSubmit} className="space-y-4">
+      <Form form={form} onSubmit={handleLoginSubmit} className="space-y-4">
         <FormField
           name="email"
           label="Email"
@@ -51,6 +81,15 @@ export function LoginForm({ onSwitchToRegister }: Readonly<LoginFormProps>) {
           )}
         />
 
+        {/* Auto-Logout Configuration */}
+        <div className="pt-2">
+          <AutoLogoutSelector
+            value={autoLogoutPreference}
+            onChange={setAutoLogoutPreference}
+            disabled={isPending}
+          />
+        </div>
+
         <button
           type="submit"
           disabled={isPending}
@@ -71,7 +110,12 @@ export function LoginForm({ onSwitchToRegister }: Readonly<LoginFormProps>) {
 
       {formStatus === LoadingStatus.FULFILLED && (
         <div className="mt-4 rounded border border-green-300 bg-green-100 p-3 text-green-700">
-          Login successful! Redirecting or showing authenticated content...
+          Login successful!
+          {autoLogoutPreference.enabled && (
+            <div className="mt-1 text-sm">
+              Auto-logout configured: {getAutoLogoutDescription(autoLogoutPreference)}
+            </div>
+          )}
         </div>
       )}
     </div>

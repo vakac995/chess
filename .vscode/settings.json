@@ -2,5 +2,31 @@
   "sonarlint.connectedMode.project": {
     "connectionId": "vakac995",
     "projectKey": "vakac995_chess"
+  },
+  // GitHub Copilot Configuration for Claude Opus 4 (Latest)
+  "github.copilot.advanced": {
+    "debug.testOverrideProxyUrl": "https://api.anthropic.com",
+    "debug.testOverrideEngine": "claude-opus-4-20250514"
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": true,
+    "plaintext": true,
+    "markdown": true,
+    "typescript": true,
+    "javascript": true,
+    "typescriptreact": true,
+    "javascriptreact": true,
+    "json": true,
+    "jsonc": true
+  },
+  // Enhanced editor settings for better AI integration
+  "editor.inlineSuggest.enabled": true,
+  "editor.inlineSuggest.showToolbar": "onHover",
+  "editor.suggest.showInlineDetails": true,
+  "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "on",
+    "strings": "on"
   }
 }
